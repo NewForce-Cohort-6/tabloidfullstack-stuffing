@@ -10,3 +10,6 @@
 
 1. Install your dependencies by running `npm install` from the same directory as your `package.json` file
 
+### ERD
+
+![Tabloid ERD](./Tabloid.png)
