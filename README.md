@@ -12,4 +12,5 @@
 
 ### ERD
 
-![Tabloid ERD](./Tabloid.png)
+![image](https://user-images.githubusercontent.com/106984214/202237041-04ee6d04-9973-4ef9-b917-93118c9ac386.png)
+
