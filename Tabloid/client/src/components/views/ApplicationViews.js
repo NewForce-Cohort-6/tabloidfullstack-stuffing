@@ -8,7 +8,7 @@ export default function ApplicationViews() {
   return (
     <Routes>
       <Route path="/" element={<Hello />} />
-      <Route path="/api/tags" element={<TagList />} />
+      <Route path="/tags" element={<TagList />} />
 
     </Routes>
   );
