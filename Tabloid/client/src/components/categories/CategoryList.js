@@ -14,26 +14,34 @@ export const CategoryList = () => {
     }, []);
 
     return (
-        <div className="container">
-            <div className="row justify-content-center">
-                <div className="cards-column">
-                    <Table>
-                    <thead>
-                        <tr>
-                            <th>
-                                Category
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
+        <div className="m-5">
+            <Table>
+                <thead>
+                    <tr>
+                        <th>
+                            Category
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
                     {categories.map((cat)=>(
                         <Category key={cat.id} category = {cat}/>
                     ))}
                     </tbody>
-                    </Table>
-                </div>
-            </div>
+            </Table>
         </div>
     );
 };
 
+// //        <div className="container">
+// <div className="row justify-content-center">
+// <div className="cards-column">
+//     <Table>
+//     <thead>
+//         <tr>
+//             <th>
+//                 Category
+//             </th>
+//         </tr>
+//     </thead>
+//     <tbody>
