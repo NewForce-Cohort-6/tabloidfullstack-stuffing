@@ -19,10 +19,12 @@ namespace Tabloid.Repositories
                 {
                     cmd.CommandText = @"
                           SELECT up.Id AS 'UserId', up.FirstName, up.LastName, up.DisplayName, 
-                               up.Email, up.CreateDateTime, up.ImageLocation, up.UserTypeId,
+                               up.Email, up.CreateDateTime, up.ImageLocation, up.UserTypeId, 
                                ut.Name AS UserTypeName
                           FROM UserProfile up
-                               LEFT JOIN UserType ut on up.UserTypeId = ut.Id";
+                               LEFT JOIN UserType ut on up.UserTypeId = ut.Id
+                           ORDER BY up.FirstName
+                           ";
 
                     var reader = cmd.ExecuteReader();
 
@@ -43,7 +45,9 @@ namespace Tabloid.Repositories
                             {
                                 Id = DbUtils.GetInt(reader, "UserTypeId"),
                                 Name = DbUtils.GetString(reader, "UserTypeName"),
-                            }
+                            },
+                           
+                           
 
                         });
                     }
