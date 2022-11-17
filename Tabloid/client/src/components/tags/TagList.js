@@ -1,14 +1,37 @@
 import React from "react"; 
+import { useState } from "react";
+import { useEffect } from "react";
+import { Table } from "reactstrap";
+import { getAllTags } from "../../Managers/TagManager";
+import { TagListItem } from "./TagListItem";
 
 export default function TagList() {
+
+    const [tags, setTags] = useState([]);
+    const getTags = () => {
+        getAllTags().then(allTags => setTags(allTags));
+    };
+
+    useEffect(() => {
+        getTags();
+    }, []);
+
     return (
-      <span style={{
-        position: "fixed",
-        left: 0,
-        right: 0,
-        top: "50%",
-        marginTop: "-0.5rem",
-        textAlign: "center",
-      }}>TAGS</span>
-    );
+        <div className="m-5">
+            <Table>
+                <thead>
+                    <tr>
+                        <th>
+                            Tags:
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {tags.map((tag) => (
+                        <TagListItem key={tag.id} tag={tag} />
+                    ))}
+                </tbody>
+            </Table>
+        </div>
+    )
   }
