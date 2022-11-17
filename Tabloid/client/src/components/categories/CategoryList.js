@@ -18,9 +18,18 @@ export const CategoryList = () => {
             <div className="row justify-content-center">
                 <div className="cards-column">
                     <Table>
+                    <thead>
+                        <tr>
+                            <th>
+                                Category
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
                     {categories.map((cat)=>(
                         <Category key={cat.id} category = {cat}/>
                     ))}
+                    </tbody>
                     </Table>
                 </div>
             </div>
