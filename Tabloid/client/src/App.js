@@ -1,9 +1,9 @@
 import React, { useState }  from 'react';
 import { BrowserRouter as Router} from "react-router-dom";
-import Header from "./components/Header";
-import ApplicationViews from "./components/ApplicationViews";
+import Header from "./components/nav/Header";
+import ApplicationViews from "./components/views/ApplicationViews";
 import { useEffect } from 'react';
-import Authorize from './components/Authorize';
+import Authorize from './components/views/Authorize';
 
 function App() {
   const [ isLoggedIn, setIsLoggedIn ] = useState(true);
