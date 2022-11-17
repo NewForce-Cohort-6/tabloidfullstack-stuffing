@@ -30,6 +30,7 @@ export default function Register({setIsLoggedIn}) {
  };
 
   return (
+    <div className="m-5">
     <Form onSubmit={registerClick}>
       <fieldset>
         <FormGroup>
@@ -65,5 +66,6 @@ export default function Register({setIsLoggedIn}) {
         </FormGroup>
       </fieldset>
     </Form>
+    </div>
   );
 }

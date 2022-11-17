@@ -24,6 +24,7 @@ export default function Login({setIsLoggedIn}) {
   };
 
   return (
+    <div className="m-5">
     <Form onSubmit={loginSubmit}>
       <fieldset>
         <FormGroup>
@@ -42,5 +43,6 @@ export default function Login({setIsLoggedIn}) {
         </em>
       </fieldset>
     </Form>
+    </div>
   );
 }
