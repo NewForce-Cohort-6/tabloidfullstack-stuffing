@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"; 
 
 export default function TagList() {
     return (
@@ -9,6 +9,6 @@ export default function TagList() {
         top: "50%",
         marginTop: "-0.5rem",
         textAlign: "center",
-      }}>hello</span>
+      }}>TAGS</span>
     );
   }
