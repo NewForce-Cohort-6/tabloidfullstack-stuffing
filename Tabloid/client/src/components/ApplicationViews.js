@@ -4,10 +4,10 @@ import Hello from "./Hello";
 
 export default function ApplicationViews() {
 
- return(
-      <Routes>
-        <Route path="/" element={<Hello />} />
-      </Routes>
-   );
- 
+  return (
+    <Routes>
+      <Route path="/" element={<Hello />} />
+    </Routes>
+  );
+
 }

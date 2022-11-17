@@ -11,7 +11,7 @@ import {
   NavLink
 } from 'reactstrap';
 
-export default function Header({isLoggedIn, setIsLoggedIn}) {
+export default function Header({ isLoggedIn, setIsLoggedIn }) {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
@@ -22,7 +22,7 @@ export default function Header({isLoggedIn, setIsLoggedIn}) {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
-            { /* When isLoggedIn === true, we will render the Home link */ }
+            { /* When isLoggedIn === true, we will render the Home link */}
             {isLoggedIn &&
               <NavItem>
                 <NavLink tag={RRNavLink} to="/">Home</NavLink>
