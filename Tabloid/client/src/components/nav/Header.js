@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink as RRNavLink } from "react-router-dom";
-import { logout } from '../Managers/UserProfileManager';
+import { logout } from '../../Managers/UserProfileManager';
 import {
   Collapse,
   Navbar,
