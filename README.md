@@ -21,5 +21,7 @@ https://github.com/NewForce-Cohort-6/tabloidfullstack-stuffing/blob/main/SQL/02_
 ![image](https://user-images.githubusercontent.com/106984214/202237041-04ee6d04-9973-4ef9-b917-93118c9ac386.png)
 
 ### WireFrame
+https://miro.com/app/board/uXjVPCnnyWQ=/
+
 ![Tabloid Web API](https://user-images.githubusercontent.com/106984214/202562706-93692f42-6d20-410d-91e6-2b1c883192d8.png)
 
