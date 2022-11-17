@@ -1,35 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getAllUsers } from "../../Managers/UserProfileManager";
+import { UserProfileItem } from "./UserProfileItem";
+import { Table } from "reactstrap";
 
-export default function UserProfiles() {
+
+export default function UserProfiles (){
+
+  const [userProfiles, setUserProfiles] = useState([]);
+
+  const getUserProfiles = () =>{
+    getAllUsers().then(allUsers => setUserProfiles(allUsers))
+  }
+  
+  useEffect(() => {
+        getUserProfiles();
+    }, []); 
+  
   return (
     <Table>
       <thead>
         <tr>
-          <th>#</th>
           <th>Full Name</th>
           <th>Display Name</th>
           <th>User Type</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
+          {userProfiles.map((user) => (
+            <UserProfileItem key={user.id} user={user} />
+          ))}
       </tbody>
     </Table>
   );

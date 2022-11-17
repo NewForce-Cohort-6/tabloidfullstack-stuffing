@@ -43,6 +43,11 @@
         localStorage.setItem("userProfile", JSON.stringify(savedUserProfile))
       });
   };
+  
+  export const getAllUsers = () => {
+    return fetch(`${apiUrl}/api/userProfile`)//http GET request or  `/api/userProfile`
+      .then((res) => res.json())
+  };
 
 
 
