@@ -26,9 +26,10 @@ export default function UserProfileDetails (){
         getSingleUserProfile();
     }, []); 
   
-  return (
+  return (<>
     
     <section className="m-5">
+    <Link to="/users">Go Back</Link>
     <Card
         style={{
             width: '18rem'
@@ -60,5 +61,5 @@ export default function UserProfileDetails (){
         </ListGroup>
     </Card>
 </section>
-  );
+</>);
 }
