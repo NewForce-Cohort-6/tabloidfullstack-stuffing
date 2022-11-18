@@ -21,9 +21,9 @@ export default function TagList() {
 
     return (
         <>
-        <button className="btn btn-primary ml-5" onClick={() => navigate("/tagform")}>Add new tag</button>
+        <button className="btn btn-primary mt-3 ml-5" onClick={() => navigate("/tagform")}>Add New Tag</button>
         
-        <div className="m-5">
+        <div className="mx-5 mt-2 mb-5">
             <Table>
                 <thead>
                     <tr>
