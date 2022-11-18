@@ -7,7 +7,6 @@ import { PostListItem } from "./PostListItem";
 
 export const PostList = ({ isMy }) => {
 
-
     const [posts, setPosts] = useState([]);
 
     const getPosts = () => {
@@ -49,7 +48,7 @@ export const PostList = ({ isMy }) => {
                 </thead>
                 <tbody>
                     {posts.map((post) => (
-                        <PostListItem key={post.id} post={post} />
+                        <PostListItem key={post.id} post={post} isMy={isMy}/>
                     ))}
                 </tbody>
             </Table>
