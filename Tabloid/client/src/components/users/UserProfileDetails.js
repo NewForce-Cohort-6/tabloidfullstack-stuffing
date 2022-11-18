@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { getAllUsers, getSingleUser } from "../../Managers/UserProfileManager";
-import { UserProfileItem } from "./UserProfileItem";
-import { Table } from "reactstrap";
+import {  getSingleUser } from "../../Managers/UserProfileManager";
 import {Link, useParams} from "react-router-dom";
-import { Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem } from "reactstrap";
+import { Card, CardBody, CardTitle, ListGroup, ListGroupItem } from "reactstrap";
 
 
 

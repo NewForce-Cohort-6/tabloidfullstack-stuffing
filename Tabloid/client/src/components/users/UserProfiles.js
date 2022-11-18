@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAllUsers } from "../../Managers/UserProfileManager";
 import { UserProfileItem } from "./UserProfileItem";
 import { Table } from "reactstrap";
-import { Link } from "react-router-dom";
+
 
 
 export default function UserProfiles (){
