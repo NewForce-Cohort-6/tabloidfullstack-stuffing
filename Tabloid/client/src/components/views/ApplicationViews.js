@@ -9,7 +9,8 @@ export default function ApplicationViews() {
   return (
     <Routes>
       <Route path="/" element={<Hello />} />
-      <Route path="/posts" element={<PostList />} />
+      <Route path="/posts" element={<PostList isMy={false} />} />
+      <Route path="/my-posts" element={<PostList isMy={true} />} />
       <Route path ="/posts/:id" element={<PostDetails />} />
     </Routes>
   );
