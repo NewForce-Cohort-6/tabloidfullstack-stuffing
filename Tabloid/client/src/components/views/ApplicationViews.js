@@ -5,6 +5,7 @@ import {CategoryList} from "../categories/CategoryList";
 import Hello from "../Hello";
 import UserProfiles from "../users/UserProfiles";
 import TagList from "../tags/TagList";
+import TagNew from "../tags/TagNew";
 import { PostDetails } from "../posts/PostDetails";
 import { PostList } from "../posts/PostList";
 import UserProfileDetails from "../users/UserProfileDetails";
@@ -20,6 +21,7 @@ export default function ApplicationViews() {
       <Route path="/users" element={<UserProfiles />} />
       <Route path="/userProfile/:id" element={<UserProfileDetails />} />
       <Route path="/tags" element={<TagList />} />
+      <Route path="/tagform" element={<TagNew />} />
       <Route path="/posts" element={<PostList />} />
       <Route path ="/posts/:id" element={<PostDetails />} />
     </Routes>
