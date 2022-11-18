@@ -10,6 +10,7 @@ export default function TagList() {
 
     const navigate = useNavigate();
     const [tags, setTags] = useState([]);
+    
     const getTags = () => {
         getAllTags().then(allTags => setTags(allTags));
     };

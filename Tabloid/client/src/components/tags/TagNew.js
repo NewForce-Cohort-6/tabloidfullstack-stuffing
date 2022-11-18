@@ -10,33 +10,26 @@ export default function TagForm() {
 
     const navigate = useNavigate();
 
-    const handleSaveNewTag = (e) => {
+    const saveNewTag = (e) => {
         e.preventDefault()
         const newTagToSendToApi = {
             name: newTagName.name
         }
-        return (
-            addTag(newTagToSendToApi).then((t) => {
-                navigate("/tags");
-            })
-        )
+        addTag(newTagToSendToApi).then((t) => {
+            navigate("/tags");
+        });
     }
 
-    const saveNewTag = (event) => {
-        const copy = {... newTagName}
-        copy[event.target.id] = event.target.value
-        setNewTagName(copy)
-    }
 
     return (
         <>
-        <form onSubmit={handleSaveNewTag}>
-            <div>
-                <label htmlFor="tag">Add New Tag</label>
-                <input type="text" onChange={saveNewTag} className="form-control" id="tag" />
-            </div>
-            <button type="submit" className="btn btn-primary">Save</button>
-        </form>
+            <form>
+                <div>
+                    <label htmlFor="tag">Add New Tag</label>
+                    <input type="text" onChange={(event) => setNewTagName(event.target.value)} className="form-control" id="tag" />
+                </div>
+                <button type="submit" className="btn btn-primary" onClick={saveNewTag}>Save</button>
+            </form>
         </>
     );
 }
