@@ -36,11 +36,12 @@ namespace Tabloid.Controllers
             return Ok(_postRepository.GetPostsByUser(id));
         }
 
-        //// POST api/<PostController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
+        // POST api/<PostController>/User/5/6
+        [HttpGet("{id}/User/{userProfileId}")]
+        public IActionResult GetByUser(int userProfileId, int id)
+        {
+            return Ok(_postRepository.GetUserPostById(userProfileId, id));
+        }
 
         //// PUT api/<PostController>/5
         //[HttpPut("{id}")]
