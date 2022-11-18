@@ -9,6 +9,7 @@ import TagNew from "../tags/TagNew";
 import { PostDetails } from "../posts/PostDetails";
 import { PostList } from "../posts/PostList";
 import UserProfileDetails from "../users/UserProfileDetails";
+import { NewPost } from "../posts/NewPost";
 
 
 
