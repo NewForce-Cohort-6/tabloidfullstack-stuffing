@@ -49,6 +49,10 @@
       .then((res) => res.json())
   };
 
+  export const getSingleUser = (id) => {
+    return fetch(`${apiUrl}/api/userProfile/${id}`)//http GET request or  `/api/userProfile/${id}`
+      .then((res) => res.json())
+  };
 
 
 

@@ -42,7 +42,7 @@ export default function Header({ isLoggedIn, setIsLoggedIn }) {
             }
           </Nav>
           
-          {localUser?.userTypeId == 1  //using ?  checking to see if there is a local user yet, Header renders in App.js before Authorize
+          {localUser?.userTypeId === 1  //using ?  checking to see if there is a local user yet, Header renders in App.js before Authorize
           
             ?<Nav className="mr-auto" navbar>
               { /* When isLoggedIn === true, we will render the Home link */}
