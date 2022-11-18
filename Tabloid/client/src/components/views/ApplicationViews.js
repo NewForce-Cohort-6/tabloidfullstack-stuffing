@@ -22,8 +22,10 @@ export default function ApplicationViews() {
       <Route path="/userProfile/:id" element={<UserProfileDetails />} />
       <Route path="/tags" element={<TagList />} />
       <Route path="/tagform" element={<TagNew />} />
-      <Route path="/posts" element={<PostList />} />
-      <Route path ="/posts/:id" element={<PostDetails />} />
+      <Route path="/posts" element={<PostList isMy={false} />} />
+      <Route path="/my-posts" element={<PostList isMy={true} />} />
+      <Route path ="/posts/:id" element={<PostDetails isMy={false} />} />
+      <Route path ="/my-posts/:id" element={<PostDetails isMy={true} />} />
     </Routes>
   );
 
