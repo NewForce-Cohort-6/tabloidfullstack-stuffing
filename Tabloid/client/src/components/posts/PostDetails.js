@@ -3,28 +3,34 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem } from "reactstrap";
-import { getPostById } from "../../Managers/PostManager";
+import { getPostById, getUserPostById } from "../../Managers/PostManager";
 
-export const PostDetails = () => {
+export const PostDetails = ({ isMy }) => {
 
     const [post, setPost] = useState({});
     const { id } = useParams();
 
-
-    
     const handleBrokenImage = (image) => {
         const defaultImage = "https://contenthub-static.grammarly.com/blog/wp-content/uploads/2017/11/how-to-write-a-blog-post.jpeg";
         image.target.src = defaultImage;
-    }
+    };
 
     const getPost = () => {
         getPostById(id).then(post => setPost(post));
-    }
+    };
+    const getPostForUser = () => {
+        getUserPostById(id).then(usersPost => setPost(usersPost))
+    };
 
     useEffect(() => {
-        getPost();
+        if (isMy) {
+            getPostForUser();
+        }
+        else {
+            getPost();
+        }
     }, []);
-    
+
     return (
         <section className="m-5">
             <Card
