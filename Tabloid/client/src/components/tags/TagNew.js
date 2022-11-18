@@ -3,17 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { addTag } from "../../Managers/TagManager";
 // import { Form, Label, Button } from "reactstrap";
 
-export default function TagForm() {
-    const [newTagName, setNewTagName] = useState({
-        name: ""
-    });
+const TagForm = () => {
+    const [newTagName, setNewTagName] = useState("");
 
     const navigate = useNavigate();
 
-    const saveNewTag = (e) => {
-        e.preventDefault()
+    const saveNewTag = (event) => {
+        event.preventDefault()
         const newTagToSendToApi = {
-            name: newTagName.name
+            name: newTagName
         }
         addTag(newTagToSendToApi).then((t) => {
             navigate("/tags");
@@ -33,6 +31,8 @@ export default function TagForm() {
         </>
     );
 }
+
+export default TagForm;
 
 // This is example adapted from the gifter repo toni pushed up
 {/* <>
