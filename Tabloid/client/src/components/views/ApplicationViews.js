@@ -24,6 +24,7 @@ export default function ApplicationViews() {
       <Route path="/my-posts" element={<PostList isMy={true} />} />
       <Route path ="/posts/:id" element={<PostDetails isMy={false} />} />
       <Route path ="/my-posts/:id" element={<PostDetails isMy={true} />} />
+      <Route path ="/new-post" element={<NewPost />} />
     </Routes>
   );
 
