@@ -21,7 +21,7 @@ export default function TagList() {
 
     return (
         <>
-        <button onClick={() => navigate("/tagform")}>Add new tag</button>
+        <button className="btn btn-primary ml-5" onClick={() => navigate("/tagform")}>Add new tag</button>
         
         <div className="m-5">
             <Table>

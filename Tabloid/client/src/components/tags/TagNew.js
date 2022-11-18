@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addTag } from "../../Managers/TagManager";
 // import { Form, Label, Button } from "reactstrap";
@@ -21,26 +21,15 @@ const TagForm = () => {
 
     return (
         <>
-            <form>
-                <div>
+            <form className="m-5">
+                <div className="col-md-3">
                     <label htmlFor="tag">Add New Tag</label>
                     <input type="text" onChange={(event) => setNewTagName(event.target.value)} className="form-control" id="tag" />
+                <button type="submit" className="btn btn-primary mt-2" onClick={saveNewTag}>Save</button>
                 </div>
-                <button type="submit" className="btn btn-primary" onClick={saveNewTag}>Save</button>
             </form>
         </>
     );
 }
 
 export default TagForm;
-
-// This is example adapted from the gifter repo toni pushed up
-{/* <>
-<form className="row g-3" onSubmit={handleSaveNewTag}>
-    <div className="col-md-6">
-        <label htmlFor="tag">Add New Tag</label>
-        <input type="text" onChange={saveNewTag} className="form-control" id="tag" />
-    </div>
-    <button type="submit" className="btn btn-primary">Save</button>
-</form>
-</> */}
