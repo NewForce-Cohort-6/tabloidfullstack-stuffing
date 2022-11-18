@@ -4,17 +4,28 @@ import { addTag } from "../../Managers/TagManager";
 import { Form, Label, Button } from "reactstrap";
 
 export default function TagForm() {
-    const [name, setName] = useState("");
+    const [newTagName, setNewTagName] = useState({
+        name: ""
+    });
 
     const navigate = useNavigate();
 
-    const saveNewTag = () => {
-        const newTag = {
-            name: name
+    const handleSaveNewTag = (e) => {
+        e.preventDefault()
+        const newTagToSendToApi = {
+            name: newTagName.name
         }
-        addTag(newTag).then((t) => {
-            navigate("/tags");
-        });
+        return (
+            addTag(newTagToSendToApi).then((t) => {
+                navigate("/tags");
+            })
+        )
+    }
+
+    const saveNewPost = (event) => {
+        const copy = {... newTagName}
+        copy[event.target.id] = event.target.value
+        setNewTagName(copy)
     }
 
     return (
