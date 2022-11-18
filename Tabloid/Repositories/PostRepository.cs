@@ -114,7 +114,8 @@ namespace Tabloid.Repositories
                               LEFT JOIN UserProfile u ON p.UserProfileId = u.Id
                               LEFT JOIN UserType ut ON u.UserTypeId = ut.id
                         WHERE u.Id = p.UserProfileId
-                       AND u.Id = @id";
+                        AND u.Id = @id
+                        ORDER BY p.CreateDateTime DESC";
                     cmd.Parameters.AddWithValue("@id", id);
                     var reader = cmd.ExecuteReader();
 
