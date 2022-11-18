@@ -22,6 +22,13 @@
   export const logout = () => {
         localStorage.clear()
   };
+  
+  export const getCurrentUser = () => {
+    const currentUser = localStorage.getItem("userProfile");
+
+    return JSON.parse(currentUser);  //JSON.parse()  the local user object coming back from API to use properties of that object
+  };
+
 
   export const register = (userObject, password) => {
     return  fetch(`${apiUrl}/api/userprofile`, {
@@ -35,6 +42,11 @@
       .then((savedUserProfile) => {
         localStorage.setItem("userProfile", JSON.stringify(savedUserProfile))
       });
+  };
+  
+  export const getAllUsers = () => {
+    return fetch(`${apiUrl}/api/userProfile`)//http GET request or  `/api/userProfile`
+      .then((res) => res.json())
   };
 
 

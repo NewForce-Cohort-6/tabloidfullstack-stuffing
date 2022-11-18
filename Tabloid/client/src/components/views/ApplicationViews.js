@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Hello from "../Hello";
+import UserProfiles from "../users/UserProfiles";
 import TagList from "../tags/TagList";
 import TagNew from "../tags/TagNew";
 import { PostDetails } from "../posts/PostDetails";
@@ -11,6 +12,7 @@ export default function ApplicationViews() {
   return (
     <Routes>
       <Route path="/" element={<Hello />} />
+      <Route path="/users" element={<UserProfiles />} />
       <Route path="/tags" element={<TagList />} />
       <Route path="/tagform" element={<TagNew />} />
       <Route path="/posts" element={<PostList />} />
