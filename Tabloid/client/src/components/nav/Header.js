@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import { NavLink as RRNavLink } from "react-router-dom";
-import { logout } from '../../Managers/UserProfileManager';
+import { getCurrentUser, logout } from '../../Managers/UserProfileManager';
 import {
   Collapse,
   Navbar,
@@ -14,6 +14,12 @@ import {
 export default function Header({ isLoggedIn, setIsLoggedIn }) {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const [localUser, setLocalUser] = useState("");
+
+  useEffect(() => {
+    const loggedInUser = getCurrentUser()
+    setLocalUser(loggedInUser)
+  }, [isLoggedIn]);
 
   return (
     <div>
@@ -21,6 +27,7 @@ export default function Header({ isLoggedIn, setIsLoggedIn }) {
         <NavbarBrand tag={RRNavLink} to="/">Tabloid</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
+          
           <Nav className="mr-auto" navbar>
             { /* When isLoggedIn === true, we will render the Home link */}
             {isLoggedIn &&
@@ -29,6 +36,20 @@ export default function Header({ isLoggedIn, setIsLoggedIn }) {
               </NavItem>
             }
           </Nav>
+          
+          {localUser?.userTypeId == 1  //using ?  checking to see if there is a local user yet, Header renders in App.js before Authorize
+          
+            ?<Nav className="mr-auto" navbar>
+              { /* When isLoggedIn === true, we will render the Home link */}
+              {isLoggedIn && 
+                <NavItem>
+                  <NavLink tag={RRNavLink} to="/users">User Profiles</NavLink>
+                </NavItem>
+              }
+            </Nav>
+            : ""
+          }
+          
           <Nav className="mr-auto" navbar>
             { /* When isLoggedIn === true, we will render the Home link */}
             {isLoggedIn &&
