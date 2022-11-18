@@ -29,6 +29,13 @@ namespace Tabloid.Controllers
             return Ok(_postRepository.GetPublishedPostById(id));
         }
 
+        // GET: api/<PostController>/User/5
+        [HttpGet("User/{id}")]
+        public IActionResult GetByUser(int id)
+        {
+            return Ok(_postRepository.GetPostsByUser(id));
+        }
+
         //// POST api/<PostController>
         //[HttpPost]
         //public void Post([FromBody] string value)
