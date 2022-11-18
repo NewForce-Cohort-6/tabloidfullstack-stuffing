@@ -1,6 +1,7 @@
 import React from "react"; 
 import { useState } from "react";
 import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import { Table } from "reactstrap";
 import { getAllTags } from "../../Managers/TagManager";
 import { TagListItem } from "./TagListItem";
@@ -17,6 +18,9 @@ export default function TagList() {
     }, []);
 
     return (
+        <>
+        <button onClick={() => Navigate("/tagform")}>Add new tag</button>
+        
         <div className="m-5">
             <Table>
                 <thead>
@@ -33,5 +37,6 @@ export default function TagList() {
                 </tbody>
             </Table>
         </div>
+        </>
     )
   }
