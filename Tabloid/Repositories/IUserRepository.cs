@@ -1,4 +1,5 @@
-﻿using Tabloid.Models;
+﻿using System.Collections.Generic;
+using Tabloid.Models;
 
 namespace Tabloid.Repositories
 {
@@ -6,5 +7,8 @@ namespace Tabloid.Repositories
     {
         void Add(UserProfile userProfile);
         UserProfile GetByEmail(string email);
+        UserProfile GetById(int id);
+
+        List<UserProfile> GetAll();
     }
 }
