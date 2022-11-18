@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { addTag } from "../../Managers/TagManager";
-import { Form, Label, Button } from "reactstrap";
+// import { Form, Label, Button } from "reactstrap";
 
 export default function TagForm() {
     const [newTagName, setNewTagName] = useState({
@@ -22,21 +22,21 @@ export default function TagForm() {
         )
     }
 
-    const saveNewPost = (event) => {
+    const saveNewTag = (event) => {
         const copy = {... newTagName}
         copy[event.target.id] = event.target.value
         setNewTagName(copy)
     }
 
     return (
-        <Form>
-            <Form.Group className="mb-3" controlId="tag">
-                <Label>Tag</Label>
-                <Form.Control type="tag" placeholder="Add new tag" />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-                Submit
-            </Button>
-        </Form>
+        <>
+        <form className="row g-3" onSubmit={handleSaveNewTag}>
+            <div className="col-md-6">
+                <label htmlFor="tag">Add New Tag</label>
+                <input type="text" onChange={saveNewTag} className="form-control" id="tag" />
+            </div>
+            <button type="submit" className="btn btn-primary">Save</button>
+        </form>
+        </>
     );
 }
