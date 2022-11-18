@@ -35,7 +35,7 @@ export const PostDetails = ({ isMy }) => {
         <section className="m-5">
             <Card
                 style={{
-                    width: '18rem'
+                    width: '100%'
                 }}
             >
                 <img
@@ -60,11 +60,17 @@ export const PostDetails = ({ isMy }) => {
                     </ListGroupItem>
                 </ListGroup>
                 <CardBody>
+                    {isMy ?
+                        <CardLink href="/my-posts">
+                            Go back to list
+                        </CardLink>
+                        :
+                        <CardLink href="/posts">
+                            Go back to list
+                        </CardLink>
+                    }
                     <CardLink href="#">
-                        Card Link
-                    </CardLink>
-                    <CardLink href="#">
-                        Another Card Link
+                        Another link
                     </CardLink>
                 </CardBody>
             </Card>
