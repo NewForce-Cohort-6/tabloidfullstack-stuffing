@@ -34,12 +34,12 @@ namespace Tabloid.Controllers
         }
 
         // POST api/<TagController>
-        //[HttpPost]
-        //public IActionResult Post(Tag tag)
-        //{
-        //    _tagRepo.AddTag(tag);
-        //    return CreatedAtAction("Get", new { id = tag.Id }, tag);
-        //}
+        [HttpPost]
+        public IActionResult Post(Tag tag)
+        {
+            _tagRepo.AddTag(tag);
+            return CreatedAtAction("Get", new { id = tag.Id }, tag);
+        }
 
         // PUT api/<TagController>/5
         [HttpPut("{id}")]
