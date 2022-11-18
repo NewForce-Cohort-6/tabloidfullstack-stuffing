@@ -17,6 +17,7 @@ export default function UserProfiles (){
     }, []); 
   
   return (
+    <div className="m-5">
     <Table>
       <thead>
         <tr>
@@ -31,5 +32,6 @@ export default function UserProfiles (){
           ))}
       </tbody>
     </Table>
+    </div>
   );
 }
