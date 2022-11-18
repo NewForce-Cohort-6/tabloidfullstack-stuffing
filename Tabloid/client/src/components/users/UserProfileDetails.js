@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getAllUsers, getSingleUser } from "../../Managers/UserProfileManager";
 import { UserProfileItem } from "./UserProfileItem";
 import { Table } from "reactstrap";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 
 
 
@@ -21,6 +21,8 @@ export default function UserProfileDetails (){
     }, []); 
   
   return (
+    <>
+    <Link to="/users">Back</Link>
     <Table>
       <thead>
         <tr>
@@ -47,13 +49,13 @@ export default function UserProfileDetails (){
                 {userProfile.email}
             </td>
             <td>
-                {userProfile.creationDate}
+                {userProfile.createDateTime}
             </td>
             <td>
                 {userProfile?.userType?.name}
             </td>
         </tr>
       </tbody>
-    </Table>
+    </Table></>
   );
 }

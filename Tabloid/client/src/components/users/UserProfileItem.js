@@ -5,7 +5,7 @@ export const UserProfileItem = ({ user }) => {
     return (
         <tr>
             <th scope="row">
-            <Link to="/userProfile/:id" className="m-5">
+            <Link to={`/userProfile/${user.id}`} className="m-5"> 
                 {user.fullName}
             </Link>
             </th>
