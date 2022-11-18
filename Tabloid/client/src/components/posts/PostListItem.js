@@ -20,7 +20,7 @@ export const PostListItem = ({ post, isMy }) => {
                 {post.userProfile.displayName}
             </td>
             <td>
-                {post.createDateTime}
+                {post.category.name}
             </td>
         </tr>
 
