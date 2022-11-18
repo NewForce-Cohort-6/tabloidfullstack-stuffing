@@ -17,11 +17,13 @@ export const CategoryList = () => {
         <div className="m-5">
             <Table>
                 <thead>
+                    
                     <tr>
                         <th>
                             Category
                         </th>
                     </tr>
+                    
                 </thead>
                 <tbody>
                     {categories.map((cat)=>(
