@@ -22,12 +22,12 @@ namespace Tabloid.Controllers
             return Ok(_postRepository.GetAllPublishedPosts());
         }
 
-        //// GET api/<PostController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        // GET: api/<PostController>/5
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            return Ok(_postRepository.GetPublishedPostById(id));
+        }
 
         //// POST api/<PostController>
         //[HttpPost]
