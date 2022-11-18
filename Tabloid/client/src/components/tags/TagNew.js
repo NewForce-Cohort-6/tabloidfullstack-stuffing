@@ -30,8 +30,8 @@ export default function TagForm() {
 
     return (
         <>
-        <form className="row g-3" onSubmit={handleSaveNewTag}>
-            <div className="col-md-6">
+        <form onSubmit={handleSaveNewTag}>
+            <div>
                 <label htmlFor="tag">Add New Tag</label>
                 <input type="text" onChange={saveNewTag} className="form-control" id="tag" />
             </div>
@@ -40,3 +40,14 @@ export default function TagForm() {
         </>
     );
 }
+
+// This is example adapted from the gifter repo toni pushed up
+{/* <>
+<form className="row g-3" onSubmit={handleSaveNewTag}>
+    <div className="col-md-6">
+        <label htmlFor="tag">Add New Tag</label>
+        <input type="text" onChange={saveNewTag} className="form-control" id="tag" />
+    </div>
+    <button type="submit" className="btn btn-primary">Save</button>
+</form>
+</> */}

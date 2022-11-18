@@ -1,13 +1,14 @@
 import React from "react"; 
 import { useState } from "react";
 import { useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Table } from "reactstrap";
 import { getAllTags } from "../../Managers/TagManager";
 import { TagListItem } from "./TagListItem";
 
 export default function TagList() {
 
+    const navigate = useNavigate();
     const [tags, setTags] = useState([]);
     const getTags = () => {
         getAllTags().then(allTags => setTags(allTags));
@@ -19,7 +20,7 @@ export default function TagList() {
 
     return (
         <>
-        <button onClick={() => Navigate("/tagform")}>Add new tag</button>
+        <button onClick={() => navigate("/tagform")}>Add new tag</button>
         
         <div className="m-5">
             <Table>
