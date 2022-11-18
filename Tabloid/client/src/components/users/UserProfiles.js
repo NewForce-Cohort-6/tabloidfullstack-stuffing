@@ -18,6 +18,7 @@ export default function UserProfiles (){
     }, []); 
   
   return (
+    
     <Table>
       <thead>
         <tr>
