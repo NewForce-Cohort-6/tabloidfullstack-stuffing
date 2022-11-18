@@ -16,9 +16,9 @@ export default function UserProfiles (){
   useEffect(() => {
         getUserProfiles();
     }, []); 
-  
-  return (
     
+  return (
+    <div className="m-5">
     <Table>
       <thead>
         <tr>
@@ -33,5 +33,6 @@ export default function UserProfiles (){
           ))}
       </tbody>
     </Table>
+    </div>
   );
 }
