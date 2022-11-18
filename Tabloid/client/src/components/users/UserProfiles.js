@@ -4,6 +4,7 @@ import { UserProfileItem } from "./UserProfileItem";
 import { Table } from "reactstrap";
 
 
+
 export default function UserProfiles (){
 
   const [userProfiles, setUserProfiles] = useState([]);
@@ -15,7 +16,7 @@ export default function UserProfiles (){
   useEffect(() => {
         getUserProfiles();
     }, []); 
-  
+    
   return (
     <div className="m-5">
     <Table>

@@ -7,6 +7,8 @@ namespace Tabloid.Repositories
     {
         void Add(UserProfile userProfile);
         UserProfile GetByEmail(string email);
+        UserProfile GetById(int id);
+
         List<UserProfile> GetAll();
     }
 }
