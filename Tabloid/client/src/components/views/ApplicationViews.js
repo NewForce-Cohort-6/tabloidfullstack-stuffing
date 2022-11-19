@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { Category } from "../categories/Category";
-import {CategoryList} from "../categories/CategoryList";
+import { CategoryList } from "../categories/CategoryList";
 import Hello from "../Hello";
 import UserProfiles from "../users/UserProfiles";
 import TagList from "../tags/TagList";
@@ -25,9 +24,9 @@ export default function ApplicationViews() {
       <Route path="/tagform" element={<TagNew />} />
       <Route path="/posts" element={<PostList isMy={false} />} />
       <Route path="/my-posts" element={<PostList isMy={true} />} />
-      <Route path ="/posts/:id" element={<PostDetails isMy={false} />} />
-      <Route path ="/my-posts/:id" element={<PostDetails isMy={true} />} />
-      <Route path ="/new-post" element={<NewPost />} />
+      <Route path="/posts/:id" element={<PostDetails isMy={false} />} />
+      <Route path="/my-posts/:id" element={<PostDetails isMy={true} />} />
+      <Route path="/new-post" element={<NewPost />} />
     </Routes>
   );
 
