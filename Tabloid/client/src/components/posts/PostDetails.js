@@ -53,7 +53,7 @@ export const PostDetails = ({ isMy }) => {
                 </CardBody>
                 <ListGroup flush>
                     <ListGroupItem>
-                        Published {post.publishDateTime}
+                        Published on {post.publishDateTimeString}
                     </ListGroupItem>
                     <ListGroupItem>
                         Posted by {post.userProfile?.displayName}

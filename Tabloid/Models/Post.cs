@@ -25,5 +25,6 @@ namespace Tabloid.Models
         public Category Category { get; set; }
         public int UserProfileId { get; set; }
         public UserProfile UserProfile { get; set; }
+        public string PublishDateTimeString => PublishDateTime?.ToString("dddd, dd MMMM yyyy");
     }
 }
