@@ -122,5 +122,27 @@ namespace Tabloid.Utils
                 cmd.Parameters.AddWithValue(name, value);
             }
         }
+
+        /// <summary>
+        ///  Determine if the value is NULL or not. If NULL return database NULL, if not return the object value.
+        /// </summary>
+        /// <param name="value">The value to evaluate</param>
+        /// <returns>A NULL value or the object value passed in as the parameter</returns>
+        public static object ValueOrDBNull(object value)
+        {
+            return value ?? DBNull.Value;
+        }
+
+        public static object DateOrDBNull(string value)
+        {
+            if(value == null)
+            {
+                return DBNull.Value;
+            }
+            else
+            {
+                return DateTime.Parse(value);
+            }
+        }
     }
 }

@@ -9,5 +9,6 @@ namespace Tabloid.Repositories
         Post GetPublishedPostById(int id);
         List<Post> GetPostsByUser(int id);
         Post GetUserPostById(int userProfileId, int id);
+        void Add(Post post);
     }
 }
