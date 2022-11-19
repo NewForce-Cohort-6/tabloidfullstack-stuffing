@@ -224,7 +224,7 @@ namespace Tabloid.Repositories
                               p.CreateDateTime AS PostCreateDateTime, p.PublishDateTime, p.IsApproved,
                               p.CategoryId, p.UserProfileId,
                               
-                              u.FirstName, u.LastName, u.DisplayName, 
+                              u.id AS PostUserProfileId, u.FirstName, u.LastName, u.DisplayName, 
                               u.Email, u.CreateDateTime AS UserProfileCreateDateTime, u.ImageLocation AS AvatarImage,
                               u.UserTypeId, 
 

@@ -69,8 +69,8 @@ export const PostDetails = ({ isMy }) => {
                             Go back to list
                         </CardLink>
                     }
-                    <CardLink href="#">
-                        Another link
+                    <CardLink href={`/comments/${post.id}`}>
+                        Comments
                     </CardLink>
                 </CardBody>
             </Card>
