@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Table } from "reactstrap";
 import { getAllTags } from "../../Managers/TagManager";
 import { TagListItem } from "./TagListItem";
@@ -37,6 +37,7 @@ export default function TagList() {
                             <>
                                 <TagListItem key={tag.id} tag={tag} />
                                 <button className="btn btn-danger ml-3 mb-3" onClick={() => navigate(`/tagdelete/${tag.id}`)}>Delete</button>
+                                {/* <Link to={`/tagdelete/${tag.id}`}>Delete</Link> */}
                             </>
                         ))}
                     </tbody>
