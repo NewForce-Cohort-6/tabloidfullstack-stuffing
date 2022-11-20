@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 const TagDelete = () => {
     const navigate = useNavigate();
 
+    //need to add to the delete function here. Am I passing id information from PostList to this component? Am I getting it from here?
     const handleDelete = () => {
         navigate("/tags")
     }

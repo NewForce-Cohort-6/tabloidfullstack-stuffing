@@ -36,7 +36,7 @@ export default function TagList() {
                         {tags.map((tag) => (
                             <>
                                 <TagListItem key={tag.id} tag={tag} />
-                                <button className="btn btn-danger ml-3 mb-3" onClick={() => navigate("/tagdelete")}>Delete</button>
+                                <button className="btn btn-danger ml-3 mb-3" onClick={() => navigate(`/tagdelete/${tag.id}`)}>Delete</button>
                             </>
                         ))}
                     </tbody>
