@@ -19,6 +19,8 @@ export default function TagList() {
         getTags();
     }, []);
 
+
+    //discuss styling for delete-- button or link? Also option to put it in the table in row aligned with associated tag, but check how to get a "blank" column header?
     return (
         <>
             <button className="btn btn-primary mt-3 ml-5" onClick={() => navigate("/tagform")}>Add New Tag</button>
