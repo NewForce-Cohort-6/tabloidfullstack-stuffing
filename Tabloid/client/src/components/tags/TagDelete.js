@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { tagPropType } from "reactstrap/lib/utils";
 import { deleteTag, getById } from "../../Managers/TagManager";
 
 const TagDelete = () => {
@@ -30,9 +31,9 @@ const TagDelete = () => {
 
     //Talk to team about reactstrap/other styling on this module.
     return (
-        <div>
-            <p>Are you sure you want to delete this?</p>
-            <button className="btn btn-danger" onClick={handleDelete}>Delete</button>
+        <div className="m-5">
+            <p>Are you sure you want to delete <b>"{thisTag.name}?"</b></p>
+            <button className="btn btn-danger mr-5" onClick={handleDelete}>Delete</button>
             <a href="/tags">No, take me back to Tag Management</a>
         </div>
     )
