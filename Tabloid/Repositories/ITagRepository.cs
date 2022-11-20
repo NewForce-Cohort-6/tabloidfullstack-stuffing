@@ -9,7 +9,7 @@ namespace Tabloid.Repositories
         void AddTag(Tag tag);
 
         //Do we need GetTagById?
-        //Tag GetTagById(int id);
+        Tag GetTagById(int id);
 
         public void DeleteTag(int tagId);
 
