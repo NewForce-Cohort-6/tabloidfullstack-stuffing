@@ -38,7 +38,7 @@ export const PostComments = ({isMy})=> {
         {
         post?.comments?.length
             ?post?.comments?.map((c)=>(<>    
-            <Card
+            <Card key={c.id}
                 style={{
                     width: '18rem'
                 }}
