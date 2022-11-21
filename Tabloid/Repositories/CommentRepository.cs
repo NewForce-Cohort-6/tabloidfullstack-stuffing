@@ -17,18 +17,19 @@ namespace Tabloid.Repositories
             using (var conn = Connection)
             {
                 conn.Open();
+                
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                                    INSERT INTO Comment(Subject, Content, UserId, PostId, CreateDateTime)
+                                    INSERT INTO Comment(Subject, Content, UserProfileId, PostId, CreateDateTime)
                                     OUTPUT INSERTED.ID
-                                    VALUES (@subject, @content, @userProileId, @postId, @createDateTime)";
+                                    VALUES (@subject, @content, @userProfileId, @postId, @createDateTime)";
                     cmd.Parameters.AddWithValue("@subject", newComment.Subject);
                     cmd.Parameters.AddWithValue("@content", newComment.Content);
                     cmd.Parameters.AddWithValue("@userProfileId", newComment.UserProfileId);
                     cmd.Parameters.AddWithValue("@postId", newComment.PostId);
-                    cmd.Parameters.AddWithValue("@createDateTime", DateTime.Now);
-                    
+                    cmd.Parameters.AddWithValue("@createDateTime",DateTime.Now);
+
                     newComment.Id = (int)cmd.ExecuteScalar();
                 }
 
