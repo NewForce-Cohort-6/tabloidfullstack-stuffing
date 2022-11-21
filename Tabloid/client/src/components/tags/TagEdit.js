@@ -20,7 +20,7 @@ const TagEdit = () => {
     )
     
     //edits persist after I refresh and manually navigate back to /tags. line 29 "navigate("/tags") is not working. Ask team or instructors for help tracking down what I'm missing on this.
-    //Any time I'm in a form, the method I'm using in the form needs to have a prevent default.
+    //Any time there's a method in a form, the method needs to have a prevent default.
     const saveTagEdit = (e) => {
         e.preventDefault();
         const updatedTag = {
