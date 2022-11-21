@@ -1,0 +1,35 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { addCategory } from "../../Managers/CategoryManager";
+// import { Form, Label, Button } from "reactstrap";
+
+const TagForm = () => {
+    const [newCatName, setNewCategoryName] = useState("");
+
+    const navigate = useNavigate();
+
+    const saveNewCategory = (event) => {
+        event.preventDefault()
+        const newCatToSendToApi = {
+            name: newCatName
+        }
+        addCategory(newCatToSendToApi).then((t) => {
+            navigate("/category");
+        });
+    }
+
+
+    return (
+        <>
+            <form className="m-5">
+                <div className="col-md-3">
+                    <label htmlFor="tag">Add New Tag</label>
+                    <input type="text" onChange={(event) => setNewCategoryName(event.target.value)} className="form-control" id="tag" />
+                <button type="submit" className="btn btn-primary mt-2" onClick={saveNewCat}>Save</button>
+                </div>
+            </form>
+        </>
+    );
+}
+
+export default CatForm;

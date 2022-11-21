@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { Category } from "../categories/Category";
 import {CategoryList} from "../categories/CategoryList";
+import {CategoryNew} from "../categories/CategoryNew"
 import Hello from "../Hello";
 import UserProfiles from "../users/UserProfiles";
 import TagList from "../tags/TagList";
@@ -19,6 +20,7 @@ export default function ApplicationViews() {
     <Routes>
       <Route path="/" element={<Hello />} />
       <Route path="/categories" element={<CategoryList />} />
+      <Route path="/categories" element={<CategoryNew />} />
       <Route path="/users" element={<UserProfiles />} />
       <Route path="/userProfile/:id" element={<UserProfileDetails />} />
       <Route path="/tags" element={<TagList />} />
