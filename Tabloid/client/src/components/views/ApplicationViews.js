@@ -9,6 +9,7 @@ import TagNew from "../tags/TagNew";
 import { PostDetails } from "../posts/PostDetails";
 import { PostList } from "../posts/PostList";
 import UserProfileDetails from "../users/UserProfileDetails";
+import TagDelete from "../tags/TagDelete";
 
 
 
@@ -22,6 +23,7 @@ export default function ApplicationViews() {
       <Route path="/userProfile/:id" element={<UserProfileDetails />} />
       <Route path="/tags" element={<TagList />} />
       <Route path="/tagform" element={<TagNew />} />
+      <Route path="/tagdelete/:id" element={<TagDelete />} />
       <Route path="/posts" element={<PostList isMy={false} />} />
       <Route path="/my-posts" element={<PostList isMy={true} />} />
       <Route path ="/posts/:id" element={<PostDetails isMy={false} />} />
