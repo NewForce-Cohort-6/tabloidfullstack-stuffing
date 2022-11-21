@@ -40,6 +40,7 @@ export default function TagList() {
                                 <TagListItem key={tag.id} tag={tag} />
                                 <button className="btn btn-danger ml-3 mb-3" onClick={() => navigate(`/tagdelete/${tag.id}`)}>Delete</button>
                                 {/* <Link to={`/tagdelete/${tag.id}`}>Delete</Link> */}
+                                <button className="btn btn-primary ml-3 mb-3" onClick={() => navigate(`/tagedit/${tag.id}`)}>Edit</button>
                             </>
                         ))}
                     </tbody>
