@@ -29,9 +29,9 @@ export const CommentNew = ({isMy}) => {
         addComment(newCommentToSendToApi).then((t) => {
             
             {isMy ? 
-                navigate(`/my-posts/${id}`)
+                navigate(`/my-posts/${id}/comments`)
                 
-                :navigate(`/posts/${id}`)
+                :navigate(`/posts/${id}/comments`)
             };
         });
     }

@@ -28,7 +28,7 @@ namespace Tabloid.Repositories
                     cmd.Parameters.AddWithValue("@content", newComment.Content);
                     cmd.Parameters.AddWithValue("@userProfileId", newComment.UserProfileId);
                     cmd.Parameters.AddWithValue("@postId", newComment.PostId);
-                    cmd.Parameters.AddWithValue("@createDateTime",DateTime.Now);
+                    cmd.Parameters.AddWithValue("@createDateTime", DateTime.Now);
 
                     newComment.Id = (int)cmd.ExecuteScalar();
                 }
