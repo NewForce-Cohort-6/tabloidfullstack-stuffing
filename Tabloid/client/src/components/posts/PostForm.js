@@ -8,6 +8,7 @@ import { createPost, getCurrentUserId } from "../../Managers/PostManager";
 export const NewPost = () => {
 
     const [categories, setCategories] = useState([]);
+    const [categoryRequiredNotice, setCategoryRequiredNotice] = useState(false);
 
     const navigate = useNavigate();
 
@@ -18,25 +19,34 @@ export const NewPost = () => {
     const publishDateRef = useRef();
 
     const preApproval = true;
-
     const getCategories = () => {
         getAllCategories().then(c => setCategories(c));
     };
 
-    const handleSave = (e) => {
-        e.preventDefault()
+    const handleCategoryRequired = () => {
+        setCategoryRequiredNotice(true);
+    }
 
-        const newPost = {
-            title: titleRef.current.value,
-            content: contentRef.current.value,
-            categoryId: parseInt(categoryRef.current.value),
-            imageLocation: imageLocationRef.current.value,
-            publishDateTime: publishDateRef.current.value,
-            userProfileId: getCurrentUserId(),
-            isApproved: preApproval
+    const handleSave = (e) => {
+        e.preventDefault();
+        let newPost = {};
+
+        if (categoryRef.current.value === "none") {
+            handleCategoryRequired();
+        }
+
+        else {
+            newPost = {
+                title: titleRef.current.value,
+                content: contentRef.current.value,
+                categoryId: parseInt(categoryRef.current.value),
+                imageLocation: imageLocationRef.current.value,
+                incomingPublishDateTimeString: publishDateRef.current.value,
+                userProfileId: getCurrentUserId(),
+                isApproved: preApproval
+            }
+            createPost(newPost).then(post => navigate(`my-posts/:${post.id}`));
         };
-        
-        createPost(newPost).then(post => navigate(`my-posts/:${post.id}`));
     }
 
     const handleCancel = (e) => {
@@ -63,13 +73,16 @@ export const NewPost = () => {
                     </FormGroup>
                     <FormGroup>
                         <Label for="category">Category</Label>
-                        <Input type="select" name="category" defaultValue="none" required innerRef={categoryRef} >
+                        <Input type="select" name="category" defaultValue="none" required innerRef={categoryRef}>
                             <option value="none" disabled hidden>Select a Category</option>
                             {categories.map((category) => (
                                 <option key={category.id} value={category.id}>{category.name}</option>
                             ))}
                         </Input>
                     </FormGroup>
+                    {categoryRequiredNotice ?
+                        <p className="text-danger">Category is required</p>
+                        : <></>}
                     <FormGroup>
                         <Label for="imageLocation">Header Image URL</Label>
                         <Input type="url" name="imageLocation" innerRef={imageLocationRef} />
