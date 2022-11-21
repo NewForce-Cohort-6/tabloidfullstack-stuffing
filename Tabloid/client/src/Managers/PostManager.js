@@ -21,3 +21,10 @@ export const getUserPostById = (id) => {
   return fetch(`${apiUrl}/Post/${id}/User/${currentUser.id}`)
     .then((res) => res.json())
 };
+
+export const getPostByIdWithComments = (id) => {
+  return fetch(`${apiUrl}/Post/GetWithComments/${id}`)
+      .then((res) => res.json())
+};
+
+
