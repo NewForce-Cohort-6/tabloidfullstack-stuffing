@@ -34,5 +34,5 @@ export const editTag = (tag) => {
         },
         body: JSON.stringify(tag)
     })
-    .then((res) => res.json())
+    .then(getAllTags)
 }
