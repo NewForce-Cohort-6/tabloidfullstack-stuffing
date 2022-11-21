@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import {Category} from "./Category";
 import { getAllCategories } from "../../Managers/CategoryManager";
 import {Table} from "reactstrap";
+import { useNavigate } from "react-router-dom";
 
 export const CategoryList = () => {
+    const navigate = useNavigate
     const [categories, setCategories] = useState([]);
 
     const getCategories = () => {
@@ -15,6 +17,8 @@ export const CategoryList = () => {
 
     return (
         <div className="m-5">
+            <button className="btn btn-primary mt-3 ml-5" onClick={() => navigate("/CatForm")}>Add New Tag</button>
+            
             <Table>
                 <thead>
                     
