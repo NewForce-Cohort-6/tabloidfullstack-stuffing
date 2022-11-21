@@ -135,7 +135,7 @@ namespace Tabloid.Utils
 
         public static object DateOrDBNull(string value)
         {
-            if(value == null)
+            if (String.IsNullOrEmpty(value))
             {
                 return DBNull.Value;
             }
