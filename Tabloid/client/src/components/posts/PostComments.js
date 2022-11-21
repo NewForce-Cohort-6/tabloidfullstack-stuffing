@@ -6,7 +6,7 @@ import { Card, CardBody, CardLink, CardTitle, ListGroup, ListGroupItem } from "r
 import { getPostByIdWithComments } from "../../Managers/PostManager";
 
 
-export const PostComments = ()=> {
+export const PostComments = ({isMy})=> {
     const [post, setPost] = useState({});
     const { id } = useParams();
     
@@ -20,41 +20,46 @@ export const PostComments = ()=> {
             getPostWithComments(); 
     },[]);
     
+    
+    
     return (
     <div className= "m-5">
-    <h1>{post.title}</h1>    
-    <section>
-            
-        <Card
-            style={{
-                width: '18rem'
-            }}
-        >
-            <CardBody>
-                <CardTitle tag="h5">
-                    Comments
-                </CardTitle>
-            </CardBody>
-            
-                <ListGroup flush>
-                {post?.comments?.map((c)=>(<>
+        <h1>{post.title}</h1> 
+        {isMy ?
+            <CardLink href={`/my-posts/${id}`}>
+                Go back to post
+            </CardLink>
+            :
+            <CardLink href={`/posts/${id}`}>
+                Go back to post
+            </CardLink>
+        }   
+        <section>
+        {
+        post?.comments?.length
+            ?post?.comments?.map((c)=>(<>    
+            <Card
+                style={{
+                    width: '18rem'
+                }}
+            >
+                <CardBody>
+                    <CardTitle tag="h5">
+                        Comment
+                    </CardTitle>
+                </CardBody>
+                    <ListGroup flush>
                         <ListGroupItem>
-                            <h6>Subject:</h6><br/> {c.subject}
+                            <h6>Subject:</h6> {c.subject}<br/>
+                            <h6>Author:</h6> {c.userProfile?.displayName}
+                            <h6>User Creation Date:</h6> {c.createDateTimeString}<br/>
+                            <h6>Content:</h6> {c.content}
                         </ListGroupItem>
-                        <ListGroupItem>
-                            Author:<br/> {c.userProfileId}
-                        </ListGroupItem>
-                        <ListGroupItem>
-                            Content:<br/> {c.content}
-                        </ListGroupItem>
-                        <ListGroupItem>
-                            User Creation Date:<br/> {c.createDateTime}
-                        </ListGroupItem> 
-                        </>  ))}
-                </ListGroup>
-           
-        </Card>
-    </section>
-    
-</div>)
+                    </ListGroup>
+            </Card></>  
+        ))
+        : <h4>"No Comments"</h4>
+        } 
+        </section>
+    </div>)
 }

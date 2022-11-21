@@ -228,11 +228,12 @@ namespace Tabloid.Repositories
                               u.Email, u.CreateDateTime AS UserProfileCreateDateTime, u.ImageLocation AS AvatarImage,
                               u.UserTypeId, 
 
-                              c.Id AS CommentId, c.Subject, c.Content AS CommentContent, c.UserProfileId AS CommentUserProfileId, c.PostId AS PostId
-                          
+                              c.Id AS CommentId, c.Subject, c.Content AS CommentContent, c.UserProfileId AS CommentUserProfileId, c.PostId AS PostId,
+                              up.DisplayName AS CommentDisplayName, up.id AS CommentUserProfileId
                            FROM Post p
                                LEFT JOIN UserProfile u ON p.UserProfileId = u.id
                                LEFT JOIN Comment c on c.PostId = p.id
+                               LEFT JOIN UserProfile up ON c.UserProfileId = up.id
                                WHERE p.Id = @Id";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
@@ -276,8 +277,13 @@ namespace Tabloid.Repositories
                                 Content = DbUtils.GetString(reader, "CommentContent"),
                                 Subject = DbUtils.GetString(reader, "Subject"),
                                 PostId = id,
-                                UserProfileId = DbUtils.GetInt(reader, "CommentUserProfileId")
-                            
+                                UserProfileId = DbUtils.GetInt(reader, "CommentUserProfileId"),
+                                
+                                UserProfile = new UserProfile()
+                                {
+                                    Id = DbUtils.GetInt(reader, "CommentUserProfileId"),
+                                    DisplayName = DbUtils.GetString(reader, "CommentDisplayName")
+                                }
                             });
                         }
 

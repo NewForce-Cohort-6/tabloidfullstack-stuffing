@@ -27,7 +27,9 @@ export default function ApplicationViews() {
       <Route path="/my-posts" element={<PostList isMy={true} />} />
       <Route path ="/posts/:id" element={<PostDetails isMy={false} />} />
       <Route path ="/my-posts/:id" element={<PostDetails isMy={true} />} />
-      <Route path ="/comments/:id" element={<PostComments />} />
+      <Route path ="/my-posts/:id/comments" element={<PostComments isMy={true}/>} />
+      <Route path ="/posts/:id/comments" element={<PostComments isMy={false}/>} />
+
 
     </Routes>
   );
