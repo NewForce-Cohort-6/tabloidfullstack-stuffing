@@ -7,7 +7,7 @@ export const getAllCategories = () => {
     .then((res)=> res.json())
 };
 
-export const addCategory = () =>{
+export const addCategory = (singleCategory) =>{
     return fetch (`${baseURL}`, {
         method: "Post",
         headersL: {
@@ -16,3 +16,25 @@ export const addCategory = () =>{
         body: JSON.stringify(singleCategory),
     });
 };
+
+// export const getCatById = (id) => {
+//     return fetch(`${baseUrl}/Category/${id}`)
+//         .then((res) => res.json())
+// }
+
+// export const deleteCat = (id) => {
+//     return fetch(`${baseUrl}/Category/${id}`, {
+//         method: "DELETE"
+//     })
+// }
+
+// export const editTag = (category) => {
+//     return fetch(`${baseUrl}/Category/${category.id}`, {
+//         method: "PUT",
+//         headers: {
+//             "Content-Type": "application/json"
+//         },
+//         body: JSON.stringify(category)
+//     })
+//     .then(getAllCategories)
+// }
