@@ -13,6 +13,7 @@ import TagDelete from "../tags/TagDelete";
 import TagEdit from "../tags/TagEdit";
 import { PostComments } from "../posts/PostComments";
 import { CommentNew } from "../comments/CommentNew";
+import { CommentDelete } from "../comments/CommentDelete";
 
 
 
@@ -38,6 +39,8 @@ export default function ApplicationViews() {
       <Route path="/addComment" element={<CommentNew />} />
       <Route path ="/my-posts/:id/addComment" element={<CommentNew isMy={true}/>} />
       <Route path ="/posts/:id/addComment" element={<CommentNew isMy={false}/>} />
+      <Route path ="/commentDelete/:id" element={<CommentDelete />} />
+
 
 
 

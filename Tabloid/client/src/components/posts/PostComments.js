@@ -1,12 +1,15 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Card, CardBody, CardLink, CardTitle, ListGroup, ListGroupItem } from "reactstrap";
 import { getPostByIdWithComments } from "../../Managers/PostManager";
+import { getCurrentUser } from "../../Managers/UserProfileManager";
 
 
 export const PostComments = ({isMy})=> {
+    const currentUser = getCurrentUser();
+    const navigate = useNavigate();
     const [post, setPost] = useState({});
     const { id } = useParams();
     
@@ -56,6 +59,9 @@ export const PostComments = ({isMy})=> {
                             <h6>Content:</h6> {c.content}
                         </ListGroupItem>
                     </ListGroup>
+                    <div>stuff
+                    <button className="btn btn-danger ml-3 mb-3" onClick={() => navigate(`/commentDelete/${c.id}`)}>Delete</button>   
+                    </div>
             </Card></>  
         ))
         : <h4>"No Comments"</h4>
