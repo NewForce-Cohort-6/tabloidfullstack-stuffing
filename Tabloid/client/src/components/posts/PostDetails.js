@@ -78,6 +78,15 @@ export const PostDetails = ({ isMy }) => {
                             Comments
                         </CardLink>
                     }
+                    {isMy ?
+                        <CardLink href={`/my-posts/${id}/addComment`}>
+                            Add Comment
+                        </CardLink>
+                        :
+                        <CardLink href={`/posts/${id}/addComment`}>
+                            Add Comment
+                        </CardLink>
+                    }
                 </CardBody>
             </Card>
         </section>
