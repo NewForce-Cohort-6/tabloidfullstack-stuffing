@@ -22,6 +22,7 @@ export const getUserPostById = (id) => {
     .then((res) => res.json())
 };
 
+//currently this also pulls tags associated with post by id
 export const getPostByIdWithComments = (id) => {
   return fetch(`${apiUrl}/Post/GetWithComments/${id}`)
       .then((res) => res.json())

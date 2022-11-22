@@ -71,25 +71,49 @@ export const PostDetails = ({ isMy }) => {
                     }
                     {isMy ?
                         <>
-                        <CardLink href={`/my-posts/${id}/comments`}>
-                            Comments
-                        </CardLink>
-                        <CardLink href={`/my-posts/${id}/tags`}>
-                            Tags
-                        </CardLink>
+                            <CardLink href={`/my-posts/${id}/comments`}>
+                                Comments
+                            </CardLink>
+                            <CardLink href={`/my-posts/${id}/tags`}>
+                                Tags
+                            </CardLink>
                         </>
                         :
                         <>
-                        <CardLink href={`/posts/${id}/comments`}>
-                            Comments
-                        </CardLink>
-                        <CardLink href={`/posts/${id}/tags`}>
-                            Tags
-                        </CardLink>
+                            <CardLink href={`/posts/${id}/comments`}>
+                                Comments
+                            </CardLink>
+                            <CardLink href={`/posts/${id}/tags`}>
+                                Manage Tags
+                            </CardLink>
                         </>
                     }
                 </CardBody>
             </Card>
+            <section>
+                {
+                    post?.tags?.length
+                        ? post?.tags?.map((t) => (<>
+                            <Card key={t.id}
+                                style={{
+                                    width: '18rem'
+                                }}
+                            >
+                                <CardBody>
+                                    <CardTitle tag="h5">
+                                        Tag
+                                    </CardTitle>
+                                </CardBody>
+                                <ListGroup flush>
+                                    <ListGroupItem>
+                                        <h6>t.name</h6><br />
+                                    </ListGroupItem>
+                                </ListGroup>
+                            </Card></>
+                        ))
+                        : <h4>"No Tags"</h4>
+                }
+            </section>
         </section>
     )
 }
