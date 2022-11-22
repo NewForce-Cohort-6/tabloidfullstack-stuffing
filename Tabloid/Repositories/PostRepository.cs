@@ -261,7 +261,7 @@ namespace Tabloid.Repositories
                               c.Id AS CommentId, c.Subject, c.Content AS CommentContent, c.UserProfileId AS CommentUserProfileId, c.PostId AS PostId, c.CreateDateTime AS CommentCreateDateTime,
                               up.DisplayName AS CommentDisplayName, up.id AS CommentUserProfileId,
 
-                            pt.Id as PostTagId, pt.PostId as PostTagPostId, pt.TagId as PostTagTagId,
+                              pt.Id as PostTagId, pt.PostId as PostTagPostId, pt.TagId as PostTagTagId,
 
                               t.Id AS TagId, t.Name
                            FROM Post p
