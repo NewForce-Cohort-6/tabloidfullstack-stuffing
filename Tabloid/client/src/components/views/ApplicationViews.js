@@ -12,8 +12,8 @@ import TagDelete from "../tags/TagDelete";
 import TagEdit from "../tags/TagEdit";
 import { PostComments } from "../posts/PostComments";
 import { CommentNew } from "../comments/CommentNew";
-
 import { NewPost } from "../posts/PostForm";
+import { PostEdit } from "../posts/PostEdit";
 
 
 
@@ -37,6 +37,7 @@ export default function ApplicationViews() {
       <Route path ="/posts/:id/comments" element={<PostComments isMy={false}/>} />
       <Route path ="/my-posts/:id/addComment" element={<CommentNew isMy={true}/>} />
       <Route path ="/posts/:id/addComment" element={<CommentNew isMy={false}/>} />
+      <Route path ="/my-posts/:id/edit" element={<PostEdit />} />
       <Route path="/new-post" element={<NewPost />} />
       <Route path="/addComment" element={<CommentNew />} />
     </Routes>
