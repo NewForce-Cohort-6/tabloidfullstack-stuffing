@@ -17,7 +17,7 @@ export const CategoryList = () => {
 
     return (
         <div className="m-5">
-            <button className="btn btn-primary mt-3 ml-5" onClick={() => navigate("/CatForm")}>Add New Tag</button>
+            <button className="btn btn-primary mt-3 ml-5" onClick={() => navigate("/CatForm")}>Add New Category</button>
             
             <Table>
                 <thead>
