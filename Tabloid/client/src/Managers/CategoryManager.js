@@ -8,9 +8,9 @@ export const getAllCategories = () => {
 };
 
 export const addCategory = (singleCategory) =>{
-    return fetch (`https://localhost:5001/api/Category`, {
+    return fetch (`${baseURL}`, {
         method: "POST",
-        headersL: {
+        headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(singleCategory),
@@ -38,3 +38,4 @@ export const addCategory = (singleCategory) =>{
 //     })
 //     .then(getAllCategories)
 // }
+//https://localhost:5001/api/Category
