@@ -211,6 +211,7 @@ namespace Tabloid.Repositories
             };
         }
 
+        //Should I rename to GetByIdWithCommentsAndTags? This adds a post's associated tag list to this method.
         public Post GetByIdWithComments(int id)
         {
             using (var conn = Connection)
@@ -229,11 +230,18 @@ namespace Tabloid.Repositories
                               u.UserTypeId, 
 
                               c.Id AS CommentId, c.Subject, c.Content AS CommentContent, c.UserProfileId AS CommentUserProfileId, c.PostId AS PostId,
-                              up.DisplayName AS CommentDisplayName, up.id AS CommentUserProfileId
+                              up.DisplayName AS CommentDisplayName, up.id AS CommentUserProfileId,
+
+                              pt.Id as PostTagId, pt.PostId as PostTagPostId, pt.TagId as PostTagTagId,
+
+                              t.Id AS TagId, t.Name
                            FROM Post p
                                LEFT JOIN UserProfile u ON p.UserProfileId = u.id
                                LEFT JOIN Comment c on c.PostId = p.id
                                LEFT JOIN UserProfile up ON c.UserProfileId = up.id
+                               LEFT JOIN PostTag pt ON pt.PostId = p.id
+                               LEFT JOIN Tag t ON t.Id = pt.TagId
+
                                WHERE p.Id = @Id";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
@@ -266,7 +274,8 @@ namespace Tabloid.Repositories
                                     CreateDateTime = DbUtils.GetDateTime(reader, "UserProfileCreateDateTime"),
                                     ImageLocation = DbUtils.GetString(reader, "AvatarImage")
                                 },
-                                Comments = new List<Comment>()
+                                Comments = new List<Comment>(),
+                                Tags = new List<Tag>()
                             };
                         }
                         if (DbUtils.IsNotDbNull(reader, "CommentId"))
@@ -284,6 +293,14 @@ namespace Tabloid.Repositories
                                     Id = DbUtils.GetInt(reader, "CommentUserProfileId"),
                                     DisplayName = DbUtils.GetString(reader, "CommentDisplayName")
                                 }
+                            });
+                        }
+                        if (DbUtils.IsNotDbNull(reader, "TagId"))
+                        {
+                            post.Tags.Add(new Tag()
+                            {
+                                Id = DbUtils.GetInt(reader, "TagId"),
+                                Name = DbUtils.GetString(reader, "Name"),
                             });
                         }
 
