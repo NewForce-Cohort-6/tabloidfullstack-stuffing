@@ -251,7 +251,7 @@ namespace Tabloid.Repositories
                                 Title = DbUtils.GetString(reader, "Title"),
                                 Content = DbUtils.GetString(reader, "PostContent"),
                                 CreateDateTime = DbUtils.GetDateTime(reader, "PostCreateDateTime"),
-                                PublishDateTime = DbUtils.GetDateTime(reader, "PublishDateTime"),
+                                PublishDateTime = DbUtils.GetNullableDateTime(reader, "PublishDateTime"),
                                 ImageLocation = DbUtils.GetString(reader, "HeaderImage"),
                                 UserProfileId = DbUtils.GetInt(reader, "PostUserProfileId"),
                                 CategoryId = DbUtils.GetInt(reader, "CategoryId"),
