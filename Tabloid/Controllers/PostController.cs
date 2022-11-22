@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Tabloid.Models;
 using Tabloid.Repositories;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -48,18 +49,20 @@ namespace Tabloid.Controllers
             return Ok(post);
         }
 
-        // POST api/<PostController>/User/5/6
+        // GET: api/<PostController>/5/User/6
         [HttpGet("{id}/User/{userProfileId}")]
         public IActionResult GetByUser(int userProfileId, int id)
         {
             return Ok(_postRepository.GetUserPostById(userProfileId, id));
         }
 
-        //// PUT api/<PostController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        // POST: api/<PostController>
+        [HttpPost]
+        public IActionResult Create(Post post)
+        {
+            _postRepository.Add(post);
+            return CreatedAtAction("Get", new { id = post.Id }, post);
+        }
 
         //// DELETE api/<PostController>/5
         //[HttpDelete("{id}")]
