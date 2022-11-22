@@ -19,13 +19,14 @@ export const NewPost = () => {
     const publishDateRef = useRef();
 
     const preApproval = true;
+    
     const getCategories = () => {
         getAllCategories().then(c => setCategories(c));
     };
 
     const handleCategoryRequired = () => {
         setCategoryRequiredNotice(true);
-    }
+    };
 
     const handleSave = (e) => {
         e.preventDefault();
@@ -46,13 +47,13 @@ export const NewPost = () => {
                 isApproved: preApproval
             }
             createPost(newPost).then(post => navigate(`/my-posts/${post.id}`));
-        };
-    }
+        }
+    };
 
     const handleCancel = (e) => {
         e.preventDefault()
         navigate("/")
-    }
+    };
 
     useEffect(() => {
         getCategories();
