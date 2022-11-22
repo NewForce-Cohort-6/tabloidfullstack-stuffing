@@ -5,7 +5,7 @@ import {Table} from "reactstrap";
 import { useNavigate } from "react-router-dom";
 
 export const CategoryList = () => {
-    const navigate = useNavigate
+    const navigate = useNavigate();
     const [categories, setCategories] = useState([]);
 
     const getCategories = () => {
@@ -39,15 +39,3 @@ export const CategoryList = () => {
     );
 };
 
-// //        <div className="container">
-// <div className="row justify-content-center">
-// <div className="cards-column">
-//     <Table>
-//     <thead>
-//         <tr>
-//             <th>
-//                 Category
-//             </th>
-//         </tr>
-//     </thead>
-//     <tbody>

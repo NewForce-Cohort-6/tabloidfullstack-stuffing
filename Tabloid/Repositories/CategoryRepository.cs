@@ -51,9 +51,9 @@ namespace Tabloid.Repositories
                                         VALUES (@name)";
                     cmd.Parameters.AddWithValue("@name", category.Name);
 
-                    int id = (int)cmd.ExecuteScalar();
+                    category.Id = (int)cmd.ExecuteScalar();
 
-                    category.Id = id;
+                    //category.Id = id;
                 }
             }
         }

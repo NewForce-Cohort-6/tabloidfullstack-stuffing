@@ -5,7 +5,9 @@ import { Form, Label, Button } from "reactstrap";
 
 export default function CatForm() {
 // const CatForm = () => {
-    const [newCategory, setNewCategory] = useState("");
+    const [newCategory, setNewCategory] = useState({
+        name:""
+    });
 
     const navigate = useNavigate();
 
@@ -14,23 +16,32 @@ export default function CatForm() {
         const newCatToSendToApi = {
             name: newCategory
         }
+
         addCategory(newCatToSendToApi).then((Cat) => {
-            navigate("/Category");
+            navigate("/categories");
         });
+        
     }
     return (
         <>
         <form className="m-5">
             <div className="col-md-3">
-                <label htmlFor="tag">Add New Category</label>
-                <input type="text" onChange={(event) => setNewCategory(event.target.value)} className="form-control" id="tag" />
+                <label htmlFor="category">Add New Category</label>
+                <input type="text" onChange={(event) => {setNewCategory(event.target.value)}} className="form-control" id="category" />
             <button type="submit" className="btn btn-primary mt-2" onClick={saveNewCat}>Save</button>
             </div>
         </form>
     </>
         
-
-    );
-}
-
-// export default CatForm;
+        
+        );
+    }
+    
+    // export default CatForm;
+    //     const saveCategory = () => {
+    //         const newC = {
+    //             name: newCategory.name,
+    //         }
+    //         addCategory(newC).then((p) => {
+    //          navigate("/categories");
+    // });

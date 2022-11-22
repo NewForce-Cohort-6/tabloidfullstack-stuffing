@@ -8,8 +8,8 @@ export const getAllCategories = () => {
 };
 
 export const addCategory = (singleCategory) =>{
-    return fetch (`${baseURL}`, {
-        method: "Post",
+    return fetch (`https://localhost:5001/api/Category`, {
+        method: "POST",
         headersL: {
             "Content-Type": "application/json",
         },
