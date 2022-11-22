@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem } from "reactstrap";
-import { getPostById, getUserPostById } from "../../Managers/PostManager";
+import { getPostById, getPostByIdWithComments, getUserPostById } from "../../Managers/PostManager";
 
 export const PostDetails = ({ isMy }) => {
 
@@ -15,8 +15,9 @@ export const PostDetails = ({ isMy }) => {
         image.target.src = defaultImage;
     };
 
+    //go and add tags to getuserpostbyId b/c of routes ismy etc.
     const getPost = () => {
-        getPostById(id).then(post => setPost(post));
+        getPostByIdWithComments(id).then(post => setPost(post));
     };
     const getPostForUser = () => {
         getUserPostById(id).then(usersPost => setPost(usersPost))
@@ -115,7 +116,7 @@ export const PostDetails = ({ isMy }) => {
                                 </CardBody>
                                 <ListGroup flush>
                                     <ListGroupItem>
-                                        <h6>t.name</h6><br />
+                                        <h6>{t.name}</h6><br />
                                     </ListGroupItem>
                                 </ListGroup>
                             </Card></>

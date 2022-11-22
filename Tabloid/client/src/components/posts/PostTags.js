@@ -50,7 +50,7 @@ export const PostTags = ({isMy})=> {
                 </CardBody>
                     <ListGroup flush>
                         <ListGroupItem>
-                            <h6>t.name</h6><br/>
+                            <h6>{t.name}</h6><br/>
                         </ListGroupItem>
                     </ListGroup>
             </Card></>  

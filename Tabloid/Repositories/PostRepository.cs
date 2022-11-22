@@ -4,6 +4,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Tabloid.Models;
 using Tabloid.Utils;
+using System.Linq;
 
 namespace Tabloid.Repositories
 {
@@ -325,9 +326,9 @@ namespace Tabloid.Repositories
                                 }
                             });
                         }
-                        if (DbUtils.IsNotDbNull(reader, "TagId"))
+                        if (DbUtils.IsNotDbNull(reader, "TagId") && !post.Tags.Any(x => x.Id == DbUtils.GetNullableInt(reader, "TagId")))
                         {
-                            post.Tags.Add(new Tag()
+                            post.Tags.Add(new Tag
                             {
                                 Id = DbUtils.GetInt(reader, "TagId"),
                                 Name = DbUtils.GetString(reader, "Name"),
