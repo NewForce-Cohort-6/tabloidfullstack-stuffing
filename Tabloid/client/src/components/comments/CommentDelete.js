@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { deleteComment, getCommentById } from "../../Managers/CommentManager";
+import { CardLink } from "reactstrap";
 
 export const CommentDelete= ()=> {
  const navigate = useNavigate();
@@ -31,6 +32,9 @@ return(<div className="m-5">
     <h6>User Creation Date:</h6> {commentToDelete.createDateTimeString}<br/>
     <h6>Content:</h6> {commentToDelete.content}<br/>
     <button className="btn btn-danger mr-5" onClick={handleDelete}>Delete</button>
+    <CardLink href={`/posts/${commentToDelete.postId}/Comments`}>
+        Back To Comments
+    </CardLink>
     </div>)
 
 }
