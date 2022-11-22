@@ -63,6 +63,7 @@ export const PostComments = ({isMy})=> {
                     {currentUser.id === c.userProfileId
                     ?<div>
                     <button className="btn btn-danger ml-3 mb-3" onClick={() => navigate(`/commentDelete/${c.id}`)}>Delete</button> 
+                    <button className="btn btn-danger ml-3 mb-3" onClick={() => navigate(`/commentEdit/${c.id}`)}>Edit</button> 
                     </div>
                     :""  }
             

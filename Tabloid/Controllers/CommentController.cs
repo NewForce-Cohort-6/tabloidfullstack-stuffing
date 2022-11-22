@@ -17,7 +17,13 @@ namespace Tabloid.Controllers
             _commentRepo = commentRepo;
         }
 
-
+        // GET: api/<TagController>
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok(_commentRepo.GetAllComments());
+        }
+        
         // GET api/<CommentController>/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)

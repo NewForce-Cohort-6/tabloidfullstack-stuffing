@@ -15,6 +15,7 @@ import { CommentNew } from "../comments/CommentNew";
 import { CommentDelete } from "../comments/CommentDelete";
 
 import { NewPost } from "../posts/PostForm";
+import { CommentEdit } from "../comments/CommentEdit";
 
 
 
@@ -42,6 +43,8 @@ export default function ApplicationViews() {
 
       <Route path="/new-post" element={<NewPost />} />
       <Route path="/addComment" element={<CommentNew />} />
+      <Route path ="/commentEdit/:id" element={<CommentEdit />} />
+
     </Routes>
   );
 
