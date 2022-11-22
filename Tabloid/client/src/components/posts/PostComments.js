@@ -59,9 +59,13 @@ export const PostComments = ({isMy})=> {
                             <h6>Content:</h6> {c.content}
                         </ListGroupItem>
                     </ListGroup>
-                    <div>stuff
-                    <button className="btn btn-danger ml-3 mb-3" onClick={() => navigate(`/commentDelete/${c.id}`)}>Delete</button>   
+                    
+                    {currentUser.id === c.userProfileId
+                    ?<div>
+                    <button className="btn btn-danger ml-3 mb-3" onClick={() => navigate(`/commentDelete/${c.id}`)}>Delete</button> 
                     </div>
+                    :""  }
+            
             </Card></>  
         ))
         : <h4>"No Comments"</h4>
