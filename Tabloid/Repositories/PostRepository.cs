@@ -174,6 +174,35 @@ namespace Tabloid.Repositories
             }
         }
 
+        public void Add(Post post)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        INSERT INTO Post (
+                            Title, Content, ImageLocation, CreateDateTime, PublishDateTime,
+                            IsApproved, CategoryId, UserProfileId )
+                        OUTPUT INSERTED.ID
+                        VALUES (
+                            @Title, @Content, @ImageLocation, @CreateDateTime, @PublishDateTime,
+                            @IsApproved, @CategoryId, @UserProfileId )";
+                    cmd.Parameters.AddWithValue("@Title", post.Title);
+                    cmd.Parameters.AddWithValue("@Content", post.Content);
+                    cmd.Parameters.AddWithValue("@ImageLocation", DbUtils.ValueOrDBNull(post.ImageLocation));
+                    cmd.Parameters.AddWithValue("@CreateDateTime", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@PublishDateTime", DbUtils.DateOrDBNull(post.PublishDateTimeString));
+                    cmd.Parameters.AddWithValue("@IsApproved", post.IsApproved);
+                    cmd.Parameters.AddWithValue("@CategoryId", post.CategoryId);
+                    cmd.Parameters.AddWithValue("@UserProfileId", post.UserProfileId);
+
+                    post.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
         private Post NewPostFromReader(SqlDataReader reader)
         {
             return new Post()
@@ -228,7 +257,7 @@ namespace Tabloid.Repositories
                               u.Email, u.CreateDateTime AS UserProfileCreateDateTime, u.ImageLocation AS AvatarImage,
                               u.UserTypeId, 
 
-                              c.Id AS CommentId, c.Subject, c.Content AS CommentContent, c.UserProfileId AS CommentUserProfileId, c.PostId AS PostId,
+                              c.Id AS CommentId, c.Subject, c.Content AS CommentContent, c.UserProfileId AS CommentUserProfileId, c.PostId AS PostId, c.CreateDateTime AS CommentCreateDateTime,
                               up.DisplayName AS CommentDisplayName, up.id AS CommentUserProfileId
                            FROM Post p
                                LEFT JOIN UserProfile u ON p.UserProfileId = u.id
@@ -251,7 +280,7 @@ namespace Tabloid.Repositories
                                 Title = DbUtils.GetString(reader, "Title"),
                                 Content = DbUtils.GetString(reader, "PostContent"),
                                 CreateDateTime = DbUtils.GetDateTime(reader, "PostCreateDateTime"),
-                                PublishDateTime = DbUtils.GetDateTime(reader, "PublishDateTime"),
+                                PublishDateTime = DbUtils.GetNullableDateTime(reader, "PublishDateTime"),
                                 ImageLocation = DbUtils.GetString(reader, "HeaderImage"),
                                 UserProfileId = DbUtils.GetInt(reader, "PostUserProfileId"),
                                 CategoryId = DbUtils.GetInt(reader, "CategoryId"),
@@ -278,7 +307,8 @@ namespace Tabloid.Repositories
                                 Subject = DbUtils.GetString(reader, "Subject"),
                                 PostId = id,
                                 UserProfileId = DbUtils.GetInt(reader, "CommentUserProfileId"),
-                                
+                                CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CommentCreateDateTime")),
+
                                 UserProfile = new UserProfile()
                                 {
                                     Id = DbUtils.GetInt(reader, "CommentUserProfileId"),

@@ -53,7 +53,7 @@ export const PostDetails = ({ isMy }) => {
                 </CardBody>
                 <ListGroup flush>
                     <ListGroupItem>
-                        Published {post.publishDateTime}
+                        Published on {post.publishDateTimeString}
                     </ListGroupItem>
                     <ListGroupItem>
                         Posted by {post.userProfile?.displayName}
@@ -76,6 +76,15 @@ export const PostDetails = ({ isMy }) => {
                         :
                         <CardLink href={`/posts/${id}/comments`}>
                             Comments
+                        </CardLink>
+                    }
+                    {isMy ?
+                        <CardLink href={`/my-posts/${id}/addComment`}>
+                            Add Comment
+                        </CardLink>
+                        :
+                        <CardLink href={`/posts/${id}/addComment`}>
+                            Add Comment
                         </CardLink>
                     }
                 </CardBody>
