@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { Form, FormGroup, Label, Input, Button, CardLink } from "reactstrap";
 import { editComment, getCommentById } from "../../Managers/CommentManager";
 
 
@@ -57,6 +57,9 @@ Lets Get Editing
                     </FormGroup>
                     
                     <Button type="submit" className="button mr-2" >Save</Button>
+                    <CardLink href={`/posts/${commentToEdit.postId}/Comments`}>
+                    Back To Comments
+                    </CardLink>
                     
                 </Form>
             </div>
