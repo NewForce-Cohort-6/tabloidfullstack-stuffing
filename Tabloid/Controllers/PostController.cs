@@ -37,6 +37,18 @@ namespace Tabloid.Controllers
             return Ok(_postRepository.GetPostsByUser(id));
         }
 
+        // GET api/<PostController>/GetWithComments/5
+        [HttpGet("GetWithComments/{id}")]
+        public IActionResult GetWithComments(int id)
+        {
+            var post = _postRepository.GetByIdWithComments(id);
+            if (post == null)
+            {
+                return NotFound();
+            }
+            return Ok(post);
+        }
+
         // GET: api/<PostController>/5/User/6
         [HttpGet("{id}/User/{userProfileId}")]
         public IActionResult GetByUser(int userProfileId, int id)

@@ -33,6 +33,11 @@ export const getUserPostById = (id) => {
     .then((res) => res.json())
 };
 
+export const getPostByIdWithComments = (id) => {
+  return fetch(`${apiUrl}/Post/GetWithComments/${id}`)
+      .then((res) => res.json())
+};
+
 export const createPost = (postBody) => {
   return fetch(`${apiUrl}/Post`, postOption(postBody))
         .then((res) => res.json())
