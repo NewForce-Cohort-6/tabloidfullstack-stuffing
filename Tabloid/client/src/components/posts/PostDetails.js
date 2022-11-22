@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem } from "reactstrap";
+import { Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem, ListGroupItemHeading } from "reactstrap";
 import { getPostById, getPostByIdWithComments, getUserPostById } from "../../Managers/PostManager";
 
 export const PostDetails = ({ isMy }) => {
@@ -101,6 +101,9 @@ export const PostDetails = ({ isMy }) => {
                 </CardBody>
             </Card>
             <section>
+
+                <ListGroup flush>
+                    <ListGroupItemHeading>Tags</ListGroupItemHeading>
                 {
                     post?.tags?.length
                         ? post?.tags?.map((t) => (<>
@@ -109,20 +112,16 @@ export const PostDetails = ({ isMy }) => {
                                     width: '18rem'
                                 }}
                             >
-                                <CardBody>
-                                    <CardTitle tag="h5">
-                                        Tag
-                                    </CardTitle>
-                                </CardBody>
-                                <ListGroup flush>
+                                    <ListGroup flush>
                                     <ListGroupItem>
                                         <h6>{t.name}</h6><br />
                                     </ListGroupItem>
                                 </ListGroup>
                             </Card></>
                         ))
-                        : <h4>"No Tags"</h4>
+                        : <h6>No tags have been associated with this post</h6>
                 }
+                </ListGroup>
             </section>
         </section>
     )
