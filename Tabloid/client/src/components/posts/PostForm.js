@@ -45,7 +45,7 @@ export const NewPost = () => {
                 userProfileId: getCurrentUserId(),
                 isApproved: preApproval
             }
-            createPost(newPost).then(post => navigate(`my-posts/:${post.id}`));
+            createPost(newPost).then(post => navigate(`/my-posts/${post.id}`));
         };
     }
 

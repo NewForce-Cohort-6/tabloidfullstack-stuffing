@@ -34,7 +34,6 @@ export const getUserPostById = (id) => {
 };
 
 export const createPost = (postBody) => {
-  return (
-    fetch(`${apiUrl}/Post`, postOption(postBody))
-        .then((res) => res.json))
-}
+  return fetch(`${apiUrl}/Post`, postOption(postBody))
+        .then((res) => res.json())
+};
