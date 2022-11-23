@@ -1,7 +1,7 @@
 const baseUrl = 'https://localhost:5001/api';
 
 
-export const addComment = (singlePostTag) => {
+export const addPostTag = (singlePostTag) => {
     return fetch(`${baseUrl}/PostTag`, {
         method: "POST",
         headers: {
