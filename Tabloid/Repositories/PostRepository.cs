@@ -134,6 +134,7 @@ namespace Tabloid.Repositories
             }
         }
 
+        //Adding tags to this method because of the way we need to associate tags with posts in both Posts and MyPosts
         public Post GetUserPostById(int userProfileId, int id)
         {
             using (var conn = Connection)
@@ -142,7 +143,7 @@ namespace Tabloid.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                       SELECT p.Id, p.Title, p.Content, 
+                                              SELECT p.Id, p.Title, p.Content, 
                               p.ImageLocation AS HeaderImage,
                               p.CreateDateTime, p.PublishDateTime, p.IsApproved,
                               p.CategoryId, p.UserProfileId,
@@ -150,11 +151,17 @@ namespace Tabloid.Repositories
                               u.FirstName, u.LastName, u.DisplayName, 
                               u.Email, u.CreateDateTime, u.ImageLocation AS AvatarImage,
                               u.UserTypeId, 
-                              ut.[Name] AS UserTypeName
-                         FROM Post p
+                              ut.[Name] AS UserTypeName,
+
+                         pt.Id as PostTagId, pt.PostId as PostTagPostId, pt.TagId as PostTagTagId,
+
+                              t.Id AS TagId, t.Name
+                           FROM Post p
                               LEFT JOIN Category c ON p.CategoryId = c.id
                               LEFT JOIN UserProfile u ON p.UserProfileId = u.id
                               LEFT JOIN UserType ut ON u.UserTypeId = ut.id
+                               LEFT JOIN PostTag pt ON pt.PostId = p.id
+                               LEFT JOIN Tag t ON t.Id = pt.TagId
                         WHERE p.id = @id AND p.UserProfileId = @userProfileId";
 
                     cmd.Parameters.AddWithValue("@id", id);
