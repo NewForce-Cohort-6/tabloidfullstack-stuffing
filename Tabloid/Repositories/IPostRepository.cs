@@ -11,7 +11,7 @@ namespace Tabloid.Repositories
         Post GetUserPostById(int userProfileId, int id);
         Post GetByIdWithComments(int id);
         void Add(Post post);
-        void UpdatePost(Post post);
+        void Update(Post post);
 
     }
 }
