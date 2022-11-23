@@ -16,14 +16,19 @@ namespace Tabloid.Controllers
         {
             _commentRepo = commentRepo;
         }
-        
+
 
         // GET api/<CommentController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var comment = _commentRepo.GetCommentById(id);
+            if (comment == null)
+            {
+                return NotFound();
+            }
+            return Ok(comment);
+        }
 
         // POST api/<CommentController>
         [HttpPost]
@@ -34,15 +39,23 @@ namespace Tabloid.Controllers
         }
 
         // PUT api/<CommentController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Comment comment)
+        {
+            if (id != comment.Id)
+            {
+                return BadRequest();
+            }
+            _commentRepo.EditComment(comment);
+            return NoContent();
+        }
 
         // DELETE api/<CommentController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _commentRepo.DeleteComment(id);
+            return NoContent();
+        }
     }
 }
