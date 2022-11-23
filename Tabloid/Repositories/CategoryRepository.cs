@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Tabloid.Models;
 using Tabloid.Utils;
 using Microsoft.AspNetCore.Connections;
+using Microsoft.Data.SqlClient;
 
 namespace Tabloid.Repositories
 {
@@ -33,6 +34,26 @@ namespace Tabloid.Repositories
                     }
                     reader.Close();
                     return categories;
+                }
+            }
+        }
+        // Adding method to create a new category and add to database
+        public void AddCategory(Category category)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        INSERT INTO Category ([Name])
+                                        OUTPUT INSERTED.ID
+                                        VALUES (@name)";
+                    cmd.Parameters.AddWithValue("@name", category.Name);
+
+                    category.Id = (int)cmd.ExecuteScalar();
+
+                    //category.Id = id;
                 }
             }
         }
