@@ -32,9 +32,8 @@ export const PostEdit = () => {
             categoryId: parseInt(post.categoryId),
             imageLocation: post.imageLocation
         };
-
-        console.log(editedPost);
-        updatePost(editedPost).then(post => navigate(`/my-posts/${post.id}`));
+        updatePost(editedPost);
+        navigate(`/my-posts/${post.id}`);
     };
 
     const handleCancel = (e) => {
