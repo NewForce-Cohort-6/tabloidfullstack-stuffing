@@ -170,9 +170,61 @@ namespace Tabloid.Repositories
 
                     Post post = null;
 
-                    if (reader.Read())
+                    //replacing this with longer chunk because I'm not sure how to handle adding tags to this method otherwise.
+                    //if (reader.Read())
+                    //{
+                    //    post = NewPostFromReader(reader);
+                    //}
+
+                    while (reader.Read())
                     {
-                        post = NewPostFromReader(reader);
+                        if (post == null)
+                        {
+                            post = new Post()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Content = reader.GetString(reader.GetOrdinal("Content")),
+                                ImageLocation = DbUtils.GetString(reader, "HeaderImage"),
+                                CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
+                                PublishDateTime = DbUtils.GetNullableDateTime(reader, "PublishDateTime"),
+                                IsApproved = reader.GetBoolean(reader.GetOrdinal("IsApproved")),
+                                CategoryId = reader.GetInt32(reader.GetOrdinal("CategoryId")),
+                                Category = new Category()
+                                {
+                                    Id = reader.GetInt32(reader.GetOrdinal("CategoryId")),
+                                    Name = reader.GetString(reader.GetOrdinal("CategoryName"))
+                                },
+                                UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
+                                UserProfile = new UserProfile()
+                                {
+                                    Id = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
+                                    FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                                    LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                                    DisplayName = reader.GetString(reader.GetOrdinal("DisplayName")),
+                                    Email = reader.GetString(reader.GetOrdinal("Email")),
+                                    CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
+                                    ImageLocation = DbUtils.GetString(reader, "AvatarImage"),
+                                    UserTypeId = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
+                                    UserType = new UserType()
+                                    {
+                                        Id = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
+                                        Name = reader.GetString(reader.GetOrdinal("UserTypeName"))
+                                    }
+                                },
+                                Tags = new List<Tag>()
+                            };
+                        }
+                       
+                        if (DbUtils.IsNotDbNull(reader, "TagId") && !post.Tags.Any(x => x.Id == DbUtils.GetNullableInt(reader, "TagId")))
+                        {
+                            post.Tags.Add(new Tag
+                            {
+                                Id = DbUtils.GetInt(reader, "TagId"),
+                                Name = DbUtils.GetString(reader, "Name"),
+                            });
+                        }
+
                     }
 
                     reader.Close();

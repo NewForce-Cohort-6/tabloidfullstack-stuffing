@@ -20,7 +20,13 @@ export const PostTags = ({ isMy }) => {
         tagId: ""
     });
 
-    //I think this is similar to what we'll need eventually. Can't wrap my head around what kind of form/button to use in the tag list table. I tried reactstrap toggle switches and couldn't get them to appear. Conditionally render an add button (think through that) but also have button both set state and save the tag?
+    //I think this is similar to what we'll need eventually. 
+    //Can't wrap my head around what kind of form/button to use in the tag list table. 
+    //I tried reactstrap toggle switches and couldn't get them to appear. 
+    //Conditionally render an add button (think through that) but also have button both set state and save the tag?
+    //radio button or toggle for activate/deactivate?
+    //for now just a button
+    //do not nav back to comments.
     const savePostTag = (event) => {
         event.preventDefault()
         const newPostTag = {
@@ -28,11 +34,12 @@ export const PostTags = ({ isMy }) => {
             tagId: postTag.tagId
         }
         addPostTag(newPostTag).then((t) => {
-            {isMy ? 
-                navigate(`/my-posts/${id}/comments`)
-                
-                :navigate(`/posts/${id}/comments`)
-            };        
+            {
+                isMy ?
+                    navigate(`/my-posts/${id}/comments`)
+
+                    : navigate(`/posts/${id}/comments`)
+            };
         });
     }
 
@@ -77,15 +84,31 @@ export const PostTags = ({ isMy }) => {
                             <th>
                                 Tags
                             </th>
+                            <th>Action</th>
                         </tr>
                     </thead>
-
+                    {/* post?.tags?.length
+                    ?post?.tags?.map((pt) => ) */}
                     {tags.map((tag) => (
                         <>
                             <tbody>
-                                <p>{tag.name}</p>
+                                <td>{tag.name}</td>
+                                <td>
+                                    <button className="btn btn-primary" >
+                                        Add Tag
+                                    </button>
+                                </td>
                             </tbody>
-                            {/* if tag is is same as post tag tag id, render "remove" button, else render "add" button. */}
+                            {/* if tag is is same as post tag tag id, render "remove" button, else render "add" button. For now, get C# JS and Funny to not have buttons*/}
+                            {/* look through list of tags, if tag exists on post, don't render button
+                            
+                            
+                            post.tags.map((tag) => tag.id != )
+                        
+                            
+                            
+                            
+                            */}
                         </>
                     ))}
 
