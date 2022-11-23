@@ -26,7 +26,7 @@ const handleDelete = () => {
 }
 
 return(<div className="m-5">
-    <h3>Are You Sure You Want To Delete This Post</h3>
+    <h3>Are You Sure You Want To Delete This Comment?</h3>
     <h6>Subject:</h6> {commentToDelete.subject}<br/>
     <h6>Author:</h6> {commentToDelete.userProfile?.displayName}
     <h6>User Creation Date:</h6> {commentToDelete.createDateTimeString}<br/>
