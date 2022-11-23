@@ -9,7 +9,18 @@ export const postOption = (body) => {
       body: JSON.stringify(body),
     }
 return post
-}
+};
+
+export const putOption = (body) => {
+  const post = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+return post
+};
 
 export const getCurrentUserId = () => JSON.parse(localStorage.getItem('userProfile')).id;
 
@@ -23,11 +34,13 @@ export const getUsersPosts = () => {
     .then((res) => res.json())
 };
 
+// Get published (Publish Date < Now) post by Id 
 export const getPostById = (id) => {
     return fetch(`${apiUrl}/Post/${id}`)
         .then((res) => res.json())
 };
 
+// Get all user's post by Id (any, published or un-published)
 export const getUserPostById = (id) => {
   return fetch(`${apiUrl}/Post/${id}/User/${getCurrentUserId()}`)
     .then((res) => res.json())
@@ -40,5 +53,10 @@ export const getPostByIdWithComments = (id) => {
 
 export const createPost = (postBody) => {
   return fetch(`${apiUrl}/Post`, postOption(postBody))
+        .then((res) => res.json())
+};
+
+export const updatePost = (postBody) => {
+  return fetch(`${apiUrl}/Post`, putOption(postBody))
         .then((res) => res.json())
 };
