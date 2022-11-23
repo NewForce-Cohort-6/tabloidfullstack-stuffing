@@ -1,61 +1,45 @@
 import React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { getAllCategories } from "../../Managers/CategoryManager";
-import { createPost, getCurrentUserId, getPostById } from "../../Managers/PostManager";
+import { getUserPostById, updatePost } from "../../Managers/PostManager";
 
 export const PostEdit = () => {
 
     const { id } = useParams();
-
-    const [post, setPost] = useState({});
-
-    const [categories, setCategories] = useState([]);
-    const [categoryRequiredNotice, setCategoryRequiredNotice] = useState(false);
-
     const navigate = useNavigate();
 
-    const titleRef = useRef();
-    const contentRef = useRef();
-    const categoryRef = useRef();
-    const imageLocationRef = useRef();
-    const publishDateRef = useRef();
-
-    const preApproval = true;
+    const [post, setPost] = useState({});
+    const [categories, setCategories] = useState([]);
 
     const getPost = () => {
-        //setPost({ id: id })
-        getPostById(id).then(p => setPost(p));
+        getUserPostById(id).then(post => {
+            setPost(post);
+        })
     };
-
+    
     const getCategories = () => {
         getAllCategories().then(c => setCategories(c));
-    };
-
-    const handleCategoryRequired = () => {
-        setCategoryRequiredNotice(true);
     };
 
     const handleSave = (e) => {
         e.preventDefault();
 
         const editedPost = {
-            title: titleRef.current.value,
-            content: contentRef.current.value,
-            categoryId: parseInt(categoryRef.current.value),
-            imageLocation: imageLocationRef.current.value,
-            incomingPublishDateTimeString: publishDateRef.current.value,
-            userProfileId: getCurrentUserId(),
-            isApproved: preApproval
+            title: post.title,
+            content: post.content,
+            categoryId: parseInt(post.categoryId),
+            imageLocation: post.imageLocation
+        };
 
-            //putPost(editedPost).then(post => navigate(`/my-posts/${post.id}`));
-        }
+        console.log(editedPost);
+        updatePost(editedPost).then(post => navigate(`/my-posts/${post.id}`));
     };
 
     const handleCancel = (e) => {
         e.preventDefault()
-        navigate("/")
+        navigate("/my-posts")
     };
 
     useEffect(() => {
@@ -70,32 +54,54 @@ export const PostEdit = () => {
                 <Form onSubmit={handleSave}>
                     <FormGroup>
                         <Label for="title">Title</Label>
-                        <Input type="text" name="title" required innerRef={titleRef} value={post.id} />
+                        <Input type="text" name="title" required value={post.title}
+                        onChange={(e) => {
+                            const postCopy = { ...post };
+                            postCopy.title = e.target.value;
+                            setPost(postCopy);
+                        }} />
                     </FormGroup>
                     <FormGroup>
                         <Label for="content">Content</Label>
-                        <Input type="textarea" name="content" required innerRef={contentRef} />
+                        <Input type="textarea" name="content" required value={post.content}
+                        onChange={(e) => {
+                            const postCopy = { ...post };
+                            postCopy.content = e.target.value;
+                            setPost(postCopy);
+                        }} />
                     </FormGroup>
                     <FormGroup>
                         <Label for="category">Category</Label>
-                        <Input type="select" name="category" defaultValue="none" required innerRef={categoryRef}>
+                        <Input type="select" name="category" defaultValue="none" required value={post.categoryId}
+                        onChange={(e) => {
+                            const postCopy = { ...post };
+                            postCopy.categoryId = e.target.value;
+                            setPost(postCopy);
+                        }}>
                             <option value="none" disabled hidden>Select a Category</option>
                             {categories.map((category) => (
                                 <option key={category.id} value={category.id}>{category.name}</option>
                             ))}
                         </Input>
                     </FormGroup>
-                    {categoryRequiredNotice ?
-                        <p className="text-danger">Category is required</p>
-                        : <></>}
                     <FormGroup>
                         <Label for="imageLocation">Header Image URL</Label>
-                        <Input type="url" name="imageLocation" innerRef={imageLocationRef} />
+                        <Input type="url" name="imageLocation" value={post.imageLocation}
+                        onChange={(e) => {
+                            const postCopy = { ...post };
+                            postCopy.imageLocation = e.target.value;
+                            setPost(postCopy);
+                        }} />
                     </FormGroup>
-                    <FormGroup>
+                    {/* <FormGroup>
                         <Label for="publishedDate">Published Date</Label>
-                        <Input type="date" name="date" innerRef={publishDateRef} />
-                    </FormGroup>
+                        <Input type="text" name="date" value={post.publishedDateTime}
+                        onChange={(e) => {
+                            const postCopy = { ...post };
+                            postCopy.publishedDateTime = e.target.value;
+                            setPost(postCopy);
+                        }} />
+                    </FormGroup> */}
                     <Button className="button mr-2">Save</Button>
                     <Button onClick={handleCancel} className="button">Cancel</Button>
                 </Form>
