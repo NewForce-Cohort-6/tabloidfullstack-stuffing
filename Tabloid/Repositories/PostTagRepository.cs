@@ -30,5 +30,7 @@ namespace Tabloid.Repositories
             }
         }
 
+        //We should add a get all by post so we can compare directly in the post tag manager view
+
     }
 }
