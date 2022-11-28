@@ -105,7 +105,7 @@ export const PostTags = ({ isMy }) => {
                             
                             post.tags.map((tag) => tag.id != )
                         
-                            
+                            THIS FRAGMENT from 96-112 or whatever will change and be implementing Tag.js
                             
                             
                             */}
