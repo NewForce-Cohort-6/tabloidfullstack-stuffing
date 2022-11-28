@@ -2,12 +2,13 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem } from "reactstrap";
-import { getPostById, getUserPostById } from "../../Managers/PostManager";
+import { Button, Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem } from "reactstrap";
+import { deletePost, getPostById, getUserPostById } from "../../Managers/PostManager";
 
 export const PostDetails = ({ isMy }) => {
 
     const [post, setPost] = useState({});
+    const [confirmDelete, setConfirmDelete] = useState(false);
     const { id } = useParams();
 
     const handleBrokenImage = (image) => {
@@ -21,6 +22,15 @@ export const PostDetails = ({ isMy }) => {
     const getPostForUser = () => {
         getUserPostById(id).then(usersPost => setPost(usersPost))
     };
+
+    const toggleDeleteConfirm = (e) => {
+        e.preventDefault();
+        setConfirmDelete(!confirmDelete);
+    }
+
+    const handleDelete = () => {
+        deletePost(post.id);
+    }
 
     useEffect(() => {
         if (isMy) {
@@ -52,9 +62,15 @@ export const PostDetails = ({ isMy }) => {
                     </CardText>
                 </CardBody>
                 <ListGroup flush>
+                    {post.publishDateTimeString ? 
                     <ListGroupItem>
                         Published on {post.publishDateTimeString}
                     </ListGroupItem>
+                    :
+                    <ListGroupItem>
+                        Un-published
+                    </ListGroupItem>
+                    }
                     <ListGroupItem>
                         Posted by {post.userProfile?.displayName}
                     </ListGroupItem>
@@ -74,6 +90,9 @@ export const PostDetails = ({ isMy }) => {
                             <CardLink href={`/my-posts/${id}/edit`}>
                                 Edit Post
                             </CardLink>
+                            <CardLink href={"javascript:void(0)"} onClick={toggleDeleteConfirm}>
+                                Delete Post
+                            </CardLink>
                         </>
                         :
                         <>
@@ -89,6 +108,23 @@ export const PostDetails = ({ isMy }) => {
                         </>
                     }
                 </CardBody>
+                {confirmDelete ?
+                    <ListGroup flush>
+                        <ListGroupItem className="text-danger">
+                            Are you sure you want to delete this post?
+                        </ListGroupItem>
+                        <ListGroup flush>
+                            <ListGroupItem>
+                                <Button className="mr-3 btn-danger" onClick={handleDelete}>
+                                    Delete
+                                </Button>
+                                <Button onClick={toggleDeleteConfirm}>
+                                    Cancel
+                                </Button>
+                            </ListGroupItem>
+                        </ListGroup>
+                    </ListGroup>
+                    : <></>}
             </Card>
         </section>
     )
