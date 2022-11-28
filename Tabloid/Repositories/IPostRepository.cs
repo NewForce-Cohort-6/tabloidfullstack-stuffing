@@ -12,6 +12,6 @@ namespace Tabloid.Repositories
         Post GetByIdWithComments(int id);
         void Add(Post post);
         void Update(Post post);
-
+        void Delete(int id);
     }
 }
