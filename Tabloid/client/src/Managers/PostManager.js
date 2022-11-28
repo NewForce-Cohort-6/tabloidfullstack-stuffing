@@ -54,3 +54,9 @@ export const updatePost = (post) => {
       body: JSON.stringify(post)
     })
 };
+
+export const deletePost = (postId) => {
+  return fetch(`${apiUrl}/Post/${postId}`, {
+    method: "DELETE"
+  })
+}
