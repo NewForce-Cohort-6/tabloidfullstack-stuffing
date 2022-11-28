@@ -1,7 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { updateToDeactivateUser } from "../../Managers/UserProfileManager";
+import { updateToActivateUser } from "../../Managers/UserProfileManager";
+
 
 export const UserProfileItem = ({ user }) => {
+    
+    
+    const handleDeactivate = () => { // or update IsActive to false
+        updateToDeactivateUser(user);
+    }
+    
+    const handleActivate = () => { //or update IsActive to true
+        updateToActivateUser(user);
+    }
+    
+    
     return (
         <tr>
             <th scope="row">
@@ -12,8 +26,15 @@ export const UserProfileItem = ({ user }) => {
             <td>
                 {user.displayName}
             </td>
+            
             <td>
                 {user.userType.name}
+            </td>
+            <td>{
+                user.isActive
+                ?<button onChange={handleDeactivate} className="btn btn-primary mt-2 mr-5">Deactivate</button>
+                :<button onChange={handleActivate} className="btn btn-primary mt-2 mr-5">Activate</button>
+            }
             </td>
         </tr>
     )

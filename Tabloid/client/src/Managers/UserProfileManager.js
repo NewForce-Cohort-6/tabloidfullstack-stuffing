@@ -54,6 +54,38 @@
       .then((res) => res.json())
   };
 
+  export const updateToDeactivateUser = (user) => {
+    return fetch(`${apiUrl}/api/${user.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        isActive: false
+      }),
+    })
+        .then((res) => res.json())
+        .then(()=> {
+          getAllUsers()
+      }
+    )
+  }
+  export const updateToActivateUser = (user) => {
+    return fetch(`${apiUrl}/api/${user.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        isActive: true
+      }),
+    })
+        .then((res) => res.json())
+        .then(()=> {
+          getAllUsers()
+      }
+    )
+  }
 
 
 
