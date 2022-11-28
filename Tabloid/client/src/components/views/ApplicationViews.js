@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { Category } from "../categories/Category";
 import CategoryNew from "../categories/CategoryNew"
 import { CategoryList } from "../categories/CategoryList";
 import Hello from "../Hello";
@@ -16,6 +15,7 @@ import { PostComments } from "../posts/PostComments";
 import { CommentNew } from "../comments/CommentNew";
 import { NewPost } from "../posts/PostForm";
 import { CommentEdit } from "../comments/CommentEdit";
+import { CommentDelete } from "../comments/CommentDelete";
 import { PostEdit } from "../posts/PostEdit";
 
 export default function ApplicationViews() {
