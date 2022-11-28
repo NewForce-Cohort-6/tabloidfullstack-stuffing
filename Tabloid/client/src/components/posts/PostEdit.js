@@ -10,12 +10,18 @@ export const PostEdit = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [post, setPost] = useState({});
+    const [post, setPost] = useState({
+        title: undefined,
+        content: undefined,
+        categoryId: undefined,
+        imageLocation: undefined
+    });
+
     const [categories, setCategories] = useState([]);
 
     const getPost = () => {
-        getUserPostById(id).then(post => {
-            setPost(post);
+        getUserPostById(id).then(p => {
+            setPost(p);
         })
     };
     
@@ -27,6 +33,7 @@ export const PostEdit = () => {
         e.preventDefault();
 
         const editedPost = {
+            id: post.id,
             title: post.title,
             content: post.content,
             categoryId: parseInt(post.categoryId),
@@ -92,15 +99,6 @@ export const PostEdit = () => {
                             setPost(postCopy);
                         }} />
                     </FormGroup>
-                    {/* <FormGroup>
-                        <Label for="publishedDate">Published Date</Label>
-                        <Input type="text" name="date" value={post.publishedDateTime}
-                        onChange={(e) => {
-                            const postCopy = { ...post };
-                            postCopy.publishedDateTime = e.target.value;
-                            setPost(postCopy);
-                        }} />
-                    </FormGroup> */}
                     <Button className="button mr-2">Save</Button>
                     <Button onClick={handleCancel} className="button">Cancel</Button>
                 </Form>
