@@ -6,6 +6,7 @@ import { Button, Card, CardBody, CardLink, CardTitle, Form, Input, Label, FormGr
 import { getPostByIdWithComments } from "../../Managers/PostManager";
 import { addPostTag } from "../../Managers/PostTagManager";
 import { getAllTags } from "../../Managers/TagManager";
+import { TagAndButton } from "../tags/Tag";
 
 
 export const PostTags = ({ isMy }) => {
@@ -90,26 +91,7 @@ export const PostTags = ({ isMy }) => {
                     {/* post?.tags?.length
                     ?post?.tags?.map((pt) => ) */}
                     {tags.map((tag) => (
-                        <>
-                            <tbody>
-                                <td>{tag.name}</td>
-                                <td>
-                                    <button className="btn btn-primary" >
-                                        Add Tag
-                                    </button>
-                                </td>
-                            </tbody>
-                            {/* if tag is is same as post tag tag id, render "remove" button, else render "add" button. For now, get C# JS and Funny to not have buttons*/}
-                            {/* look through list of tags, if tag exists on post, don't render button
-                            
-                            
-                            post.tags.map((tag) => tag.id != )
-                        
-                            THIS FRAGMENT from 96-112 or whatever will change and be implementing Tag.js
-                            
-                            
-                            */}
-                        </>
+                        <TagAndButton tag={tag} />
                     ))}
 
                 </Table>

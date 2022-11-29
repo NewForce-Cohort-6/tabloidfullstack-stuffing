@@ -15,7 +15,6 @@ export const PostDetails = ({ isMy }) => {
         image.target.src = defaultImage;
     };
 
-    //go and add tags to getuserpostbyId b/c of routes ismy etc.
     const getPost = () => {
         getPostByIdWithComments(id).then(post => setPost(post));
     };

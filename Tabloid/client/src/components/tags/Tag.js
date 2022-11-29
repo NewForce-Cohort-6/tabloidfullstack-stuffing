@@ -5,6 +5,15 @@
 
 import React from "react";
 
-export const TagAndButton = () => {
-    
+export const TagAndButton = ({tag}) => {
+    return (
+        <tbody>
+        <td>{tag.name}</td>
+        <td>
+            <button className="btn btn-primary" >
+                Add Tag
+            </button>
+        </td>
+    </tbody>
+    )
 }
