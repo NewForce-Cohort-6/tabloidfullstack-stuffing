@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { Category } from "../categories/Category";
 import CategoryNew from "../categories/CategoryNew"
 import { CategoryList } from "../categories/CategoryList";
 import Hello from "../Hello";
@@ -14,11 +13,10 @@ import TagDelete from "../tags/TagDelete";
 import TagEdit from "../tags/TagEdit";
 import { PostComments } from "../posts/PostComments";
 import { CommentNew } from "../comments/CommentNew";
-import { CommentDelete } from "../comments/CommentDelete";
-
 import { NewPost } from "../posts/PostForm";
-
-
+import { CommentEdit } from "../comments/CommentEdit";
+import { CommentDelete } from "../comments/CommentDelete";
+import { PostEdit } from "../posts/PostEdit";
 
 export default function ApplicationViews() {
 
@@ -41,10 +39,11 @@ export default function ApplicationViews() {
       <Route path ="/posts/:id/comments" element={<PostComments isMy={false}/>} />
       <Route path ="/my-posts/:id/addComment" element={<CommentNew isMy={true}/>} />
       <Route path ="/posts/:id/addComment" element={<CommentNew isMy={false}/>} />
+      <Route path ="/my-posts/:id/edit" element={<PostEdit />} />
       <Route path ="/commentDelete/:id" element={<CommentDelete />} />
-
       <Route path="/new-post" element={<NewPost />} />
       <Route path="/addComment" element={<CommentNew />} />
+      <Route path ="/commentEdit/:id" element={<CommentEdit />} />
     </Routes>
   );
 
