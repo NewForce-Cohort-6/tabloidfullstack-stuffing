@@ -60,5 +60,18 @@ namespace Tabloid.Controllers
                 new { email = userProfile.Email },
                 userProfile);
         }
+
+        [HttpPatch("{id}")]
+        public IActionResult Patch(int id, UserProfile userProfile)
+        {
+            
+
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(userProfile);
+        }
     }
 }
