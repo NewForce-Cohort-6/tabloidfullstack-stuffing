@@ -4,8 +4,11 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem } from "reactstrap";
 import { deletePost, getPostById, getUserPostById } from "../../Managers/PostManager";
+import { getCurrentUser } from "../../Managers/UserProfileManager";
 
 export const PostDetails = ({ isMy }) => {
+
+    const [isAdmin, setIsAdmin] = useState(false);
 
     const [post, setPost] = useState({});
     const [confirmDelete, setConfirmDelete] = useState(false);
@@ -26,6 +29,13 @@ export const PostDetails = ({ isMy }) => {
         getUserPostById(id).then(usersPost => setPost(usersPost))
     };
 
+    const giveAdminRights = () => {
+        const user = getCurrentUser();
+        if (user.userType.id === 1) {
+            setIsAdmin(true);
+        }
+    };
+
     const toggleDeleteConfirm = (e) => {
         e.preventDefault();
         setConfirmDelete(!confirmDelete);
@@ -33,7 +43,7 @@ export const PostDetails = ({ isMy }) => {
 
     const handleDelete = () => {
         deletePost(post.id);
-        navigate("/my-posts");
+        isMy ? navigate("/my-posts") : navigate("/posts");
     };
 
     useEffect(() => {
@@ -43,6 +53,7 @@ export const PostDetails = ({ isMy }) => {
         else {
             getPost();
         }
+        giveAdminRights();
     }, []);
 
     return (
@@ -66,14 +77,14 @@ export const PostDetails = ({ isMy }) => {
                     </CardText>
                 </CardBody>
                 <ListGroup flush>
-                    {post.publishDateTimeString ? 
-                    <ListGroupItem>
-                        Published on {post.publishDateTimeString}
-                    </ListGroupItem>
-                    :
-                    <ListGroupItem>
-                        Un-published
-                    </ListGroupItem>
+                    {post.publishDateTimeString ?
+                        <ListGroupItem>
+                            Published on {post.publishDateTimeString}
+                        </ListGroupItem>
+                        :
+                        <ListGroupItem>
+                            Un-published
+                        </ListGroupItem>
                     }
                     <ListGroupItem>
                         Posted by {post.userProfile?.displayName}
@@ -94,9 +105,6 @@ export const PostDetails = ({ isMy }) => {
                             <CardLink href={`/my-posts/${id}/edit`}>
                                 Edit Post
                             </CardLink>
-                            <CardLink href={"javascript:void(0)"} onClick={toggleDeleteConfirm}>
-                                Delete Post
-                            </CardLink>
                         </>
                         :
                         <>
@@ -110,6 +118,13 @@ export const PostDetails = ({ isMy }) => {
                                 Add Comment
                             </CardLink>
                         </>
+                    }
+                    {isAdmin || isMy ?
+                        <CardLink href={"javascript:void(0)"} onClick={toggleDeleteConfirm}>
+                            Delete Post
+                        </CardLink>
+                        :
+                        <></>
                     }
                 </CardBody>
                 {confirmDelete ?
