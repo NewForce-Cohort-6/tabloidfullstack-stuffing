@@ -54,7 +54,7 @@ namespace Tabloid.Controllers
         }
 
         // POST: CategoryController/Edit/5
-        [HttpPost]
+        [HttpPut("{id}")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Category category)
         {
