@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using System;
+using System.Threading.Tasks;
 using Tabloid.Models;
 using Tabloid.Repositories;
 
@@ -62,15 +65,15 @@ namespace Tabloid.Controllers
         }
 
         [HttpPatch("{id}")]
-        public IActionResult Patch(int id, UserProfile userProfile)
+        public  IActionResult Patch( int id, UserProfile userProfile )
         {
-            
 
+            _userRepository.UpdateIsActive(id, userProfile.IsActive);
             if (userProfile == null)
             {
                 return NotFound();
             }
-
+            
             return Ok(userProfile);
         }
     }

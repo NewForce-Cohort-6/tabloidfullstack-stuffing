@@ -32,8 +32,8 @@ export const UserProfileItem = ({ user }) => {
             </td>
             <td>{
                 user.isActive
-                ?<button onChange={handleDeactivate} className="btn btn-primary mt-2 mr-5">Deactivate</button>
-                :<button onChange={handleActivate} className="btn btn-primary mt-2 mr-5">Activate</button>
+                ?<button onClick={handleDeactivate} className="btn btn-primary mt-2 mr-5">Deactivate</button>
+                :<button onClick={handleActivate} className="btn btn-primary mt-2 mr-5">Activate</button>
             }
             </td>
         </tr>

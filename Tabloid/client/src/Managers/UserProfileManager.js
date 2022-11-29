@@ -77,7 +77,7 @@
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        isActive: true
+        isActive : true
       }),
     })
         .then((res) => res.json())

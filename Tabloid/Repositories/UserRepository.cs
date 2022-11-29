@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using Tabloid.Models;
 using Tabloid.Utils;
@@ -182,11 +184,32 @@ namespace Tabloid.Repositories
             }
         }
 
-       
+        public void UpdateIsActive(int id, bool IsActive)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                            UPDATE UserProfile
+                                    SET
+                                          IsActive = @isActive,
+                                    WHERE Id = @id";
+
+                    cmd.Parameters.AddWithValue("@isActive", IsActive);
+                    
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
         
-        
-        
-        
+
+
+
+
         /*
         public UserProfile GetByFirebaseUserId(string firebaseUserId)
         {
