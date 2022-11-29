@@ -57,20 +57,21 @@ export const UserProfileItem = ({ user, setUserProfile }) => {
             </td>
             <td>{
                 user.isActive
-                ?<CardLink href={"javascript:void(0)"} onClick={toggleConfirmDeactivate}>
-                Deactivate User
-                </CardLink>
-                :<CardLink href={"javascript:void(0)"} onClick={toggleConfirmActivate}>
-                Activate User
-                </CardLink>
+                    ?<CardLink href={"javascript:void(0)"} onClick={toggleConfirmDeactivate}>
+                    Deactivate User
+                    </CardLink>
+                    :<CardLink href={"javascript:void(0)"} onClick={toggleConfirmActivate}>
+                    Activate User
+                    </CardLink>
                 }
-
             </td>
             {
                 confirmDeactivate ?
                 <div>
                 <h5>Are you sure you want to Deactivate this User?</h5>
                 <button onClick={handleDeactivate} className="btn btn-primary mt-2 mr-5">Deactivate</button>
+                <a href="/users" className="btn btn-primary mt-2 mr-5">Go Back</a>
+
                 </div>
                 :""
             }
@@ -79,37 +80,10 @@ export const UserProfileItem = ({ user, setUserProfile }) => {
                 <div>
                 <h5>Are you sure you want to Activate this User?</h5>
                 <button onClick={handleActivate} className="btn btn-primary mt-2 mr-5">Activate</button>
+                <a href="/users" className="btn btn-primary mt-2 mr-5">Go Back</a>
                 </div>
                 :""
             }
-            
-            {/* {confirmDelete ?
-                    <ListGroup flush>
-                        <ListGroupItem className="text-danger">
-                            Are you sure you want to delete this post?
-                        </ListGroupItem>
-                        <ListGroup flush>
-                            <ListGroupItem>
-                                <Button className="mr-3 btn-danger" onClick={handleDelete}>
-                                    Delete
-                                </Button>
-                                <Button onClick={toggleDeleteConfirm}>
-                                    Cancel
-                                </Button>
-                            </ListGroupItem>
-                        </ListGroup>
-                    </ListGroup>
-                    : <></>} */}
-            
-            
-            
-            {/* <td>{
-                user.isActive
-                ?<button onClick={handleDeactivate} className="btn btn-primary mt-2 mr-5">Deactivate</button>
-                              
-                :<button onClick={handleActivate} className="btn btn-primary mt-2 mr-5">Activate</button>
-            }
-            </td> */}
         </tr>
     )
 }
