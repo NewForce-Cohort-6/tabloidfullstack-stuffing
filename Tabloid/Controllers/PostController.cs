@@ -76,10 +76,12 @@ namespace Tabloid.Controllers
             return NoContent();
         }
 
-        //// DELETE api/<PostController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        // DELETE api/<PostController>/5
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _postRepository.Delete(id);
+            return NoContent();
+        }
     }
 }
