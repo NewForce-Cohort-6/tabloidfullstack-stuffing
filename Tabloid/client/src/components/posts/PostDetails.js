@@ -61,31 +61,32 @@ export const PostDetails = ({ isMy }) => {
                 </ListGroup>
                 <CardBody>
                     {isMy ?
-                        <CardLink href="/my-posts">
-                            Go back to list
-                        </CardLink>
+                        <>
+                            <CardLink href="/my-posts">
+                                Go back to list
+                            </CardLink>
+                            <CardLink href={`/my-posts/${id}/comments`}>
+                                Comments
+                            </CardLink>
+                            <CardLink href={`/my-posts/${id}/addComment`}>
+                                Add Comment
+                            </CardLink>
+                            <CardLink href={`/my-posts/${id}/edit`}>
+                                Edit Post
+                            </CardLink>
+                        </>
                         :
-                        <CardLink href="/posts">
-                            Go back to list
-                        </CardLink>
-                    }
-                    {isMy ?
-                        <CardLink href={`/my-posts/${id}/comments`}>
-                            Comments
-                        </CardLink>
-                        :
-                        <CardLink href={`/posts/${id}/comments`}>
-                            Comments
-                        </CardLink>
-                    }
-                    {isMy ?
-                        <CardLink href={`/my-posts/${id}/addComment`}>
-                            Add Comment
-                        </CardLink>
-                        :
-                        <CardLink href={`/posts/${id}/addComment`}>
-                            Add Comment
-                        </CardLink>
+                        <>
+                            <CardLink href="/posts">
+                                Go back to list
+                            </CardLink>
+                            <CardLink href={`/posts/${id}/comments`}>
+                                Comments
+                            </CardLink>
+                            <CardLink href={`/posts/${id}/addComment`}>
+                                Add Comment
+                            </CardLink>
+                        </>
                     }
                 </CardBody>
             </Card>
