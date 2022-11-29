@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Tabloid.Models;
@@ -348,6 +349,46 @@ namespace Tabloid.Repositories
                     reader.Close();
 
                     return post;
+                }
+            }
+        }
+
+
+
+
+
+        public bool GetPostByCategoryId(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                       SELECT id FROM Post
+                        WHERE CategoryId = @id
+                        ";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    var reader = cmd.ExecuteReader();
+
+                    int Taco = 0;
+
+                    if (reader.Read())
+                    {
+                        if (!reader.IsDBNull(reader.GetOrdinal("id")))
+                        {
+                        Taco = 1;
+                        }
+                    }
+                     
+                    reader.Close();
+
+                    if(Taco > 0 )
+                    {
+                        return false;
+                    }
+
+                    return true;
                 }
             }
         }

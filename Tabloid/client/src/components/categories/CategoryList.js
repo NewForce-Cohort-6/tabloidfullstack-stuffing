@@ -31,7 +31,10 @@ export const CategoryList = () => {
                 </thead>
                 <tbody>
                     {categories.map((cat)=>(
+                        <>
                         <Category key={cat.id} category = {cat}/>
+                        <button className="btn btn-danger ml-3 mb-3" onClick={() => navigate(`/CatDelete/${cat.id}`)}>Delete</button>                                <button className="btn btn-primary ml-3 mb-3" onClick={() => navigate(`/CatEdit/${cat.id}`)}>Edit</button>
+                        </>
                     ))}
                     </tbody>
             </Table>

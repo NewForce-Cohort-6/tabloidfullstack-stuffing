@@ -106,7 +106,7 @@ namespace Tabloid.Repositories
                                       DELETE FROM Category
                                       WHERE Id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
-
+                    
                     cmd.ExecuteNonQuery();
                 }
             }

@@ -28,45 +28,50 @@ namespace Tabloid.Controllers
         {
             return Ok(_categoryRepository.GetAll());
         }
-        // GET api/<CategoryController>/5
+        // GET 
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            return Ok(_categoryRepository.GetCategoryById(id));
         }
 
-        // POST api/<CategoryController>
+        // ADD
         [HttpPost]
         public IActionResult Add(Category category)
         {
             _categoryRepository.AddCategory(category);
             return CreatedAtAction("Get", new { id = category.Id }, category);
         }
-        // GET: CategoryController/Edit/5
-        public ActionResult Edit(int id)
+
+        //PUT
+        [HttpPut("{id}")]
+        public IActionResult Edit(int id, Category category)
         {
-            Category category = _categoryRepository.GetCategoryById(id);
-            if (category == null)
+            if(id ! == category.Id)
             {
-                return NotFound();
+                return BadRequest();
             }
-            return Ok(category);
+            _categoryRepository.UpdateCategory(category);
+                return NoContent();
+            
+        }
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _categoryRepository.DeleteCategory(id);
+            return NoContent();
         }
 
-        // POST: CategoryController/Edit/5
-        [HttpPut("{id}")]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Category category)
-        {
-            try
-            {
-                _categoryRepository.UpdateCategory(category);
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception ex)
-            {
-                return Ok(category);
-            }
-        }
+      
     }
 }
+        //// GET: CategoryController/Edit/5
+        //public ActionResult Edit(int id)
+        //{
+        //    Category category = _categoryRepository.GetCategoryById(id);
+        //    if (category == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(category);
+        //}
