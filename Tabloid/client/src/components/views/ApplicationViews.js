@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import CategoryNew from "../categories/CategoryNew"
 import { CategoryList } from "../categories/CategoryList";
-import Hello from "../Hello";
 import UserProfiles from "../users/UserProfiles";
 import TagList from "../tags/TagList";
 import TagNew from "../tags/TagNew";
