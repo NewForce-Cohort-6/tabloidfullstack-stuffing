@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem } from "reactstrap";
-import { deletePost, getPostById, getUserPostById } from "../../Managers/PostManager";
+import { deletePost, getCurrentUserId, getPostById, getUserPostById } from "../../Managers/PostManager";
 import { getSubscriptions, subscribeToUser, unsubscribeFromUser } from "../../Managers/SubscriptionManager";
 import { getCurrentUser } from "../../Managers/UserProfileManager";
 
@@ -41,10 +41,10 @@ export const PostDetails = ({ isMy }) => {
         }
     };
 
-    const checkSubscription = (userProfileId) => {
+    const checkSubscription = (postProfileId) => {
         getSubscriptions()
             .then(subs => {
-                if (subs.find(sub => sub.id === userProfileId)) {
+                if (subs.find(sub => sub.providerUserProfileId === postProfileId)) {
                     setIsSubbed(true);
                 }
             })
@@ -57,12 +57,20 @@ export const PostDetails = ({ isMy }) => {
 
     const subscribe = (e) => {
         e.preventDefault();
-        subscribeToUser(post.userProfileId);
+        const body = {
+            subscriberUserProfileId: getCurrentUserId(),
+            providerUserProfileId: post.userProfileId
+        }
+        subscribeToUser(body);
+        setIsSubbed(true);
     };
 
     const unsubscribe = (e) => {
         e.preventDefault();
-        unsubscribeFromUser(post.userProfileId);
+        const body = {
+            // TODO: Figure out what to pass in the body to unsubscribe. End date can be handled on the backend.
+        }
+        unsubscribeFromUser(body);
     };
 
     const handleDelete = () => {

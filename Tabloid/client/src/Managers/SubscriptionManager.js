@@ -7,17 +7,17 @@ export const getSubscriptions = () => {
     .then((res) => res.json())
 };
 
-export const subscribeToUser = (userId) => {
+export const subscribeToUser = (body) => {
     return fetch(`${apiUrl}/Subscription`, {
-        method: "PUT",
+        method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(`{subscriberUserProfileId:${getCurrentUserId()}, providerUserProfileId: ${userId}}`)
+        body: JSON.stringify(body)
     })
         .then((res) => res.json())
 };
 
 export const unsubscribeFromUser = (userId) => {
-// TODO: Use a POST method to add a end date
+// TODO: Use a PUT method to add a end date
 }
