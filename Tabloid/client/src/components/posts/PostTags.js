@@ -21,13 +21,8 @@ export const PostTags = ({ isMy }) => {
         tagId: ""
     });
 
-    //I think this is similar to what we'll need eventually. 
-    //Can't wrap my head around what kind of form/button to use in the tag list table. 
-    //I tried reactstrap toggle switches and couldn't get them to appear. 
-    //Conditionally render an add button (think through that) but also have button both set state and save the tag?
-    //radio button or toggle for activate/deactivate?
-    //for now just a button
-    //do not nav back to comments.
+    //Conditionally render an add button 
+    //but also have button both set state and save the tag?
     const savePostTag = (event) => {
         event.preventDefault()
         const newPostTag = {
@@ -37,9 +32,9 @@ export const PostTags = ({ isMy }) => {
         addPostTag(newPostTag).then((t) => {
             {
                 isMy ?
-                    navigate(`/my-posts/${id}/comments`)
+                    navigate(`/my-posts/${id}`)
 
-                    : navigate(`/posts/${id}/comments`)
+                    : navigate(`/posts/${id}`)
             };
         });
     }
