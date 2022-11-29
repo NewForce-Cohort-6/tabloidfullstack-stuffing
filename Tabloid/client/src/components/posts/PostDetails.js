@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem } from "reactstrap";
 import { deletePost, getPostById, getUserPostById } from "../../Managers/PostManager";
 
@@ -11,6 +11,8 @@ export const PostDetails = ({ isMy }) => {
     const [confirmDelete, setConfirmDelete] = useState(false);
     const { id } = useParams();
 
+    const navigate = useNavigate();
+
     const handleBrokenImage = (image) => {
         const defaultImage = "https://contenthub-static.grammarly.com/blog/wp-content/uploads/2017/11/how-to-write-a-blog-post.jpeg";
         image.target.src = defaultImage;
@@ -19,6 +21,7 @@ export const PostDetails = ({ isMy }) => {
     const getPost = () => {
         getPostById(id).then(post => setPost(post));
     };
+
     const getPostForUser = () => {
         getUserPostById(id).then(usersPost => setPost(usersPost))
     };
@@ -26,11 +29,12 @@ export const PostDetails = ({ isMy }) => {
     const toggleDeleteConfirm = (e) => {
         e.preventDefault();
         setConfirmDelete(!confirmDelete);
-    }
+    };
 
     const handleDelete = () => {
         deletePost(post.id);
-    }
+        navigate("/my-posts");
+    };
 
     useEffect(() => {
         if (isMy) {
