@@ -235,15 +235,29 @@ namespace Tabloid.Repositories
             using (var conn = Connection)
             {
                 conn.Open();
+
+                // The first SQL command deletes the comments belonging to the post to be deleted
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        DELETE FROM Post
-                        WHERE Id = @id";
+                        DELETE FROM Comment
+                        WHERE PostId = @id";
 
                     cmd.Parameters.AddWithValue("@id", id);
 
                     cmd.ExecuteNonQuery();
+                }
+
+                // The second SQL command deletes the post itself
+                using (var cmd2 = conn.CreateCommand())
+                {
+                    cmd2.CommandText = @"
+                        DELETE FROM Post
+                        WHERE Id = @id";
+
+                    cmd2.Parameters.AddWithValue("@id", id);
+
+                    cmd2.ExecuteNonQuery();
                 }
             }
         }
