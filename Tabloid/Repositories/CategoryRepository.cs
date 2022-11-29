@@ -11,7 +11,7 @@ namespace Tabloid.Repositories
 {
     public class CategoryRepository : BaseRepository, ICategoryRepository
     {
-        public CategoryRepository(IConfiguration configuration) : base(configuration){}
+        public CategoryRepository(IConfiguration configuration) : base(configuration) { }
 
         public List<Category> GetAll()
         {
@@ -37,6 +37,41 @@ namespace Tabloid.Repositories
                 }
             }
         }
+        public Category GetCategoryById(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                       SELECT Id, [Name]
+                                       FROM Category
+                                       WHERE Id = @id";
+
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        Category category = new Category
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Name = reader.GetString(reader.GetOrdinal("Name"))
+                        };
+
+                        reader.Close();
+                        return category;
+                    }
+                    else
+                    {
+                        reader.Close();
+                        return null;
+                    }
+                }
+            }
+        }
         // Adding method to create a new category and add to database
         public void AddCategory(Category category)
         {
@@ -55,6 +90,45 @@ namespace Tabloid.Repositories
 
                     //category.Id = id;
                 }
+
+
+            }
+
+        }
+        public void DeleteCategory(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                      DELETE FROM Category
+                                      WHERE Id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public void UpdateCategory(Category category)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                       UPDATE Category
+                                       SET [Name] = @name
+                                       WHERE Id = @id";
+
+                    cmd.Parameters.AddWithValue("@name", category.Name);
+                    cmd.Parameters.AddWithValue("@id", category.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+
             }
         }
     }

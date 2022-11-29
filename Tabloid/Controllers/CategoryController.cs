@@ -42,5 +42,31 @@ namespace Tabloid.Controllers
             _categoryRepository.AddCategory(category);
             return CreatedAtAction("Get", new { id = category.Id }, category);
         }
+        // GET: CategoryController/Edit/5
+        public ActionResult Edit(int id)
+        {
+            Category category = _categoryRepository.GetCategoryById(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return Ok(category);
+        }
+
+        // POST: CategoryController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, Category category)
+        {
+            try
+            {
+                _categoryRepository.UpdateCategory(category);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                return Ok(category);
+            }
+        }
     }
 }
