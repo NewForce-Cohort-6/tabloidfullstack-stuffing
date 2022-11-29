@@ -22,7 +22,7 @@ export default function ApplicationViews() {
 
   return (
     <Routes>
-      <Route path="/" element={<PostList subscriptions={true} />} />
+      <Route path="/" element={<PostList subscriptions={true} isMy={false} />} />
       <Route path="/categories" element={<CategoryList />} />
       <Route path="/catForm" element={<CategoryNew />} />
       <Route path="/users" element={<UserProfiles />} />

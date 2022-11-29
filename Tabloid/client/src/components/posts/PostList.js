@@ -35,7 +35,7 @@ export const PostList = ({ isMy, subscriptions }) => {
         else {
             getPosts();
         }
-    }, [isMy]);
+    }, [isMy, subscriptions]);
 
     return (
         <div className="m-5">
