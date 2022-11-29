@@ -30,7 +30,7 @@ export default function UserProfiles (){
       </thead>
       <tbody>
           {userProfiles.map((user) => (
-            <UserProfileItem key={user.id} user={user} />
+            <UserProfileItem key={user.id} user={user} setUserProfile={setUserProfiles} />
           ))}
       </tbody>
     </Table>

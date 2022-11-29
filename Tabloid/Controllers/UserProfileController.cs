@@ -65,15 +65,27 @@ namespace Tabloid.Controllers
         }
 
         [HttpPatch("{id}")]
-        public  IActionResult Patch( int id, UserProfile userProfile )
+        public IActionResult Patch([FromRoute] int id, [FromBody] JsonPatchDocument userProfile)
         {
 
-            _userRepository.UpdateIsActive(id, userProfile.IsActive);
+            _userRepository.UpdateIsActive(id, userProfile);
             if (userProfile == null)
             {
                 return NotFound();
             }
-            
+
+            return Ok(userProfile);
+        }
+        [HttpPut("{id}")]
+        public IActionResult Put( int id, UserProfile userProfile)
+        {
+
+            _userRepository.UpdateIsActiveV2(id, userProfile);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+
             return Ok(userProfile);
         }
     }

@@ -1,19 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { updateToDeactivateUser } from "../../Managers/UserProfileManager";
+import { getAllUsers, updateToDeactivateUser } from "../../Managers/UserProfileManager";
 import { updateToActivateUser } from "../../Managers/UserProfileManager";
 
 
-export const UserProfileItem = ({ user }) => {
+export const UserProfileItem = ({ user, setUserProfile }) => {
     
     
     const handleDeactivate = () => { // or update IsActive to false
-        updateToDeactivateUser(user);
-    }
+        updateToDeactivateUser(user)
+        .then(()=> {
+            getAllUsers()
+        .then(allUsers => setUserProfile(allUsers))
+        
+        })}
     
     const handleActivate = () => { //or update IsActive to true
-        updateToActivateUser(user);
-    }
+        updateToActivateUser(user)
+        .then(()=> {
+            getAllUsers()
+            .then(allUsers => setUserProfile(allUsers))
+    })}
     
     
     return (

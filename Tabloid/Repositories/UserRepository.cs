@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
 using Tabloid.Models;
 using Tabloid.Utils;
@@ -72,7 +71,7 @@ namespace Tabloid.Repositories
                     cmd.CommandText = @"
                           SELECT up.Id AS 'UserId', up.FirstName, up.LastName, up.DisplayName, 
                                up.Email, up.CreateDateTime, up.ImageLocation, up.UserTypeId, 
-                               ut.Name AS UserTypeName
+                               ut.Name AS UserTypeName, up.IsActive
                           FROM UserProfile up
                                LEFT JOIN UserType ut on up.UserTypeId = ut.Id
                            WHERE up.Id = @Id";
@@ -91,6 +90,7 @@ namespace Tabloid.Repositories
                             LastName = DbUtils.GetString(reader, "LastName"),
                             Email = DbUtils.GetString(reader, "Email"),
                             CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime"),
+                            IsActive = reader.GetBoolean(reader.GetOrdinal("IsActive")),
                             ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
                             UserTypeId = DbUtils.GetInt(reader, "UserTypeId"),
                             UserType = new UserType()
@@ -184,8 +184,12 @@ namespace Tabloid.Repositories
             }
         }
 
-        public void UpdateIsActive(int id, bool IsActive)
+        public void UpdateIsActive(int id, JsonPatchDocument userProfile)
+          
         {
+            var user = GetById(id);
+            userProfile.ApplyTo(user);
+
             using (var conn = Connection)
             {
                 conn.Open();
@@ -194,10 +198,10 @@ namespace Tabloid.Repositories
                     cmd.CommandText = @"
                             UPDATE UserProfile
                                     SET
-                                          IsActive = @isActive,
+                                          IsActive = @isActive
                                     WHERE Id = @id";
 
-                    cmd.Parameters.AddWithValue("@isActive", IsActive);
+                    cmd.Parameters.AddWithValue("@isActive", user.IsActive);
                     
                     cmd.Parameters.AddWithValue("@id", id);
 
@@ -205,7 +209,32 @@ namespace Tabloid.Repositories
                 }
             }
         }
-        
+        public void UpdateIsActiveV2(int id, UserProfile userProfile)
+
+        {
+          
+
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                            UPDATE UserProfile
+                                    SET
+                                          IsActive = @isActive
+                                    WHERE Id = @id";
+
+                    cmd.Parameters.AddWithValue("@isActive", userProfile.IsActive);
+
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
 
 
 

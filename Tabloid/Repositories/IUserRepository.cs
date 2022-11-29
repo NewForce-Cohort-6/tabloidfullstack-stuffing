@@ -9,7 +9,8 @@ namespace Tabloid.Repositories
         void Add(UserProfile userProfile);
         UserProfile GetByEmail(string email);
         UserProfile GetById(int id);
-        void UpdateIsActive(int id, bool IsActive);
+        void UpdateIsActive(int id, JsonPatchDocument userProfile);
+        void UpdateIsActiveV2(int id, UserProfile userProfile);
         List<UserProfile> GetAll();
     }
 }
