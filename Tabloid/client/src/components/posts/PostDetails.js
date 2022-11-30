@@ -76,7 +76,7 @@ export const PostDetails = ({ isMy }) => {
             // TODO: Figure out what to pass in the body to unsubscribe. End date can be handled on the backend.
         }
         unsubscribeFromUser(body);
-        //setIsSubbed(false);
+        setIsSubbed(false);
     };
 
     const handleDelete = () => {

@@ -21,6 +21,12 @@ export const subscribeToUser = (body) => {
 };
 
 // Un-subscribing means adding an end date value to the Subscription entry
-export const unsubscribeFromUser = (userId) => {
-// TODO: Use a PUT method to add a end date
+export const unsubscribeFromUser = (post) => {
+    return fetch(`${apiUrl}/Post/${post.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(post)
+      })
 }
