@@ -2,8 +2,8 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem } from "reactstrap";
-import { deletePost, getPostById, getUserPostById } from "../../Managers/PostManager";
+import { Button, Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem, ListGroupItemHeading } from "reactstrap";
+import { deletePost, getPostById, getPostByIdWithComments, getUserPostById } from "../../Managers/PostManager";
 import { getCurrentUser } from "../../Managers/UserProfileManager";
 
 export const PostDetails = ({ isMy }) => {
@@ -105,6 +105,9 @@ export const PostDetails = ({ isMy }) => {
                             <CardLink href={`/my-posts/${id}/edit`}>
                                 Edit Post
                             </CardLink>
+                            <CardLink href={`/my-posts/${id}/tags`}>
+                                Tags
+                            </CardLink>
                         </>
                         :
                         <>
@@ -116,6 +119,9 @@ export const PostDetails = ({ isMy }) => {
                             </CardLink>
                             <CardLink href={`/posts/${id}/addComment`}>
                                 Add Comment
+                            </CardLink>
+                            <CardLink href={`/posts/${id}/tags`}>
+                                Manage Tags
                             </CardLink>
                         </>
                     }
