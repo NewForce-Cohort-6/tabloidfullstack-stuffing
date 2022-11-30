@@ -18,11 +18,13 @@ import { CommentDelete } from "../comments/CommentDelete";
 import { PostEdit } from "../posts/PostEdit";
 import CatDelete from "../categories/CategoryDelete";
 import CatEdit from "../categories/CategoryEdit";
+import Hello from "../Hello";
 
 export default function ApplicationViews() {
 
   return (
     <Routes>
+      {/* <Route path="/" element={<Hello />} /> */}
       <Route path="/" element={<PostList subscriptions={true} isMy={false} />} />
       <Route path="/categories" element={<CategoryList />} />
       <Route path="/catForm" element={<CategoryNew />} />
