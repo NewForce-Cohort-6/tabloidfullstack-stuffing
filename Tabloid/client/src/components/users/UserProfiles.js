@@ -25,11 +25,12 @@ export default function UserProfiles (){
           <th>Full Name</th>
           <th>Display Name</th>
           <th>User Type</th>
+          <th>Activate/Deactivate</th>
         </tr>
       </thead>
       <tbody>
           {userProfiles.map((user) => (
-            <UserProfileItem key={user.id} user={user} />
+            <UserProfileItem key={user.id} user={user} setUserProfile={setUserProfiles} />
           ))}
       </tbody>
     </Table>

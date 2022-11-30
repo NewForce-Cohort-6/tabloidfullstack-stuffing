@@ -54,6 +54,31 @@
       .then((res) => res.json())
   };
 
+  export const updateToDeactivateUser = (user) => {
+    user.isActive = false
+    return fetch(`${apiUrl}/api/userProfile/${user.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+        .then((res) => res.json())
+        
+      
+    
+  }
+  export const updateToActivateUser = (user) => {
+   user.isActive = true
+    return fetch(`${apiUrl}/api/userProfile/${user.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+        
+  }
 
 
 

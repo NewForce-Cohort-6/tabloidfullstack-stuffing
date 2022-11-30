@@ -386,7 +386,8 @@ namespace Tabloid.Repositories
                                 ImageLocation = DbUtils.GetString(reader, "HeaderImage"),
                                 UserProfileId = DbUtils.GetInt(reader, "PostUserProfileId"),
                                 CategoryId = DbUtils.GetInt(reader, "CategoryId"),
-
+                                IsApproved = reader.GetBoolean(reader.GetOrdinal("IsApproved")),
+                                
                                 UserProfile = new UserProfile()
                                 {
                                     Id = DbUtils.GetInt(reader, "PostUserProfileId"),
