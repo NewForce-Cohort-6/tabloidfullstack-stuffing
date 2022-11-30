@@ -16,6 +16,7 @@ export default function Login({ setIsLoggedIn }) {
         console.log(r)
         if (r.isActive == 0){  //conditional to prevent deactivated users from entering the application, stop here at the alert
           alert("Your account has been deactivated, contact admin for support.")
+          
         }
         else if (r) {  //if a user is active hit here and navigate into application
           setIsLoggedIn(true)
