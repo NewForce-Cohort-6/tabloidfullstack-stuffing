@@ -9,6 +9,28 @@
 import React from "react";
 
 export const TagAndButton = ({tag}) => {
+
+    //Conditionally render an add button 
+    //but also have button both set state and save the tag?
+    const savePostTag = (event) => {
+        event.preventDefault()
+        const newPostTag = {
+            postId: id,
+            tagId: postTag.tagId
+        }
+        addPostTag(newPostTag).then((t) => {
+            {
+                isMy ?
+                    navigate(`/my-posts/${id}`)
+
+                    : navigate(`/posts/${id}`)
+            };
+        });
+    }
+
+
+
+
     return (
         <tbody>
         <td>{tag.name}</td>

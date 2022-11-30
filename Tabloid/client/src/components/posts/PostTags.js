@@ -21,23 +21,23 @@ export const PostTags = ({ isMy }) => {
         tagId: ""
     });
 
-    //Conditionally render an add button 
-    //but also have button both set state and save the tag?
-    const savePostTag = (event) => {
-        event.preventDefault()
-        const newPostTag = {
-            postId: id,
-            tagId: postTag.tagId
-        }
-        addPostTag(newPostTag).then((t) => {
-            {
-                isMy ?
-                    navigate(`/my-posts/${id}`)
+    // //Conditionally render an add button 
+    // //but also have button both set state and save the tag?
+    // const savePostTag = (event) => {
+    //     event.preventDefault()
+    //     const newPostTag = {
+    //         postId: id,
+    //         tagId: postTag.tagId
+    //     }
+    //     addPostTag(newPostTag).then((t) => {
+    //         {
+    //             isMy ?
+    //                 navigate(`/my-posts/${id}`)
 
-                    : navigate(`/posts/${id}`)
-            };
-        });
-    }
+    //                 : navigate(`/posts/${id}`)
+    //         };
+    //     });
+    // }
 
     const getTags = () => {
         getAllTags().then(allTags => setTags(allTags));
@@ -86,7 +86,10 @@ export const PostTags = ({ isMy }) => {
                     {/* post?.tags?.length
                     ?post?.tags?.map((pt) => ) */}
                     {tags.map((tag) => (
-                        <TagAndButton tag={tag} />
+                        <TagAndButton 
+                        tag={tag}
+                        //send other things I need to Tag.js
+                         />
                     ))}
 
                 </Table>
