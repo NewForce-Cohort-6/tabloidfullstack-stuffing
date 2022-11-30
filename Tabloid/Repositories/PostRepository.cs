@@ -52,6 +52,7 @@ namespace Tabloid.Repositories
             }
         }
 
+        //add tags to this one
         public Post GetPublishedPostById(int id)
         {
             using (var conn = Connection)
@@ -235,6 +236,7 @@ namespace Tabloid.Repositories
             }
         }
 
+        //add tags to this one
         public List<Post> GetUsersSubscribedPosts(int userProfileId)
         {
             using (var conn = Connection)

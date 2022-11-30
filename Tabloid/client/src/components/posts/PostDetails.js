@@ -9,6 +9,9 @@ import { deletePost, getCurrentUserId, getPostById, getUserPostById } from "../.
 import { getSubscriptions, subscribeToUser, unsubscribeFromUser } from "../../Managers/SubscriptionManager";
 import { getCurrentUser } from "../../Managers/UserProfileManager";
 
+
+//go and fix the doubled import lines 
+
 export const PostDetails = ({ isMy }) => {
 
     const [isAdmin, setIsAdmin] = useState(false);
@@ -29,6 +32,7 @@ export const PostDetails = ({ isMy }) => {
     //create sep chunk that gets the tags associated with the post so I can print at end of post detail view
     const getPost = () => {
         // getPostByIdWithComments(id).then(post => setPost(post));
+        //go and add tags to getpostbyid and subscription
         getPostById(id).then(post => {
             setPost(post);
             checkSubscription(post.userProfileId);
