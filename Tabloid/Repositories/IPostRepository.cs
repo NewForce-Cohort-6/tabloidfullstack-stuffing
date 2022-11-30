@@ -13,6 +13,7 @@ namespace Tabloid.Repositories
         List<Post> GetUsersSubscribedPosts(int userProfileId);
         void Add(Post post);
         void Update(Post post);
+        bool GetPostByCategoryId(int id);
         void Delete(int id);
     }
 }
