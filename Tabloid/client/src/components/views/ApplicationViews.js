@@ -19,6 +19,7 @@ import { PostEdit } from "../posts/PostEdit";
 import CatDelete from "../categories/CategoryDelete";
 import CatEdit from "../categories/CategoryEdit";
 import Hello from "../Hello";
+import { UserProfileTypeEdit } from "../users/UserProfileTypeEdit";
 
 export default function ApplicationViews() {
 
@@ -49,6 +50,7 @@ export default function ApplicationViews() {
       <Route path="/new-post" element={<NewPost />} />
       <Route path="/addComment" element={<CommentNew />} />
       <Route path ="/commentEdit/:id" element={<CommentEdit />} />
+      <Route path="/editUserProfileType" element={<UserProfileTypeEdit />} />
     </Routes>
   );
 
