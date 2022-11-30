@@ -23,6 +23,7 @@ export const getUsersPosts = () => {
     .then((res) => res.json())
 };
 
+// Get all posts from authors in which the current user is subscribed to
 export const getSubscribedPosts = () => {
   return fetch(`${apiUrl}/Post/Subscribed/${getCurrentUserId()}`)
     .then((res) => res.json())

@@ -18,11 +18,13 @@ export const PostDetails = ({ isMy }) => {
 
     const navigate = useNavigate();
 
+    // Replaces post header image url if broken
     const handleBrokenImage = (image) => {
         const defaultImage = "https://contenthub-static.grammarly.com/blog/wp-content/uploads/2017/11/how-to-write-a-blog-post.jpeg";
         image.target.src = defaultImage;
     };
 
+    // Gets published and active post by id and then checks if current user is subscribed to that posts author
     const getPost = () => {
         getPostById(id).then(post => {
             setPost(post);
@@ -30,10 +32,12 @@ export const PostDetails = ({ isMy }) => {
         })
     };
 
+    // Gets current user post by id to allow an un-published or non-active post to be fetched
     const getPostForUser = () => {
         getUserPostById(id).then(usersPost => setPost(usersPost))
     };
 
+    // Checks if the current user is an admin and changes isAdmin state if they are
     const giveAdminRights = () => {
         const user = getCurrentUser();
         if (user.userType.id === 1) {
@@ -41,6 +45,7 @@ export const PostDetails = ({ isMy }) => {
         }
     };
 
+    // Checks if the current user is subscribed to the post
     const checkSubscription = (postProfileId) => {
         getSubscriptions()
             .then(subs => {
@@ -71,6 +76,7 @@ export const PostDetails = ({ isMy }) => {
             // TODO: Figure out what to pass in the body to unsubscribe. End date can be handled on the backend.
         }
         unsubscribeFromUser(body);
+        //setIsSubbed(false);
     };
 
     const handleDelete = () => {
@@ -78,6 +84,7 @@ export const PostDetails = ({ isMy }) => {
         isMy ? navigate("/my-posts") : navigate("/posts");
     };
 
+    // Conditionally fetches the post and gives admin rights upon initial render of component
     useEffect(() => {
         if (isMy) {
             getPostForUser();
