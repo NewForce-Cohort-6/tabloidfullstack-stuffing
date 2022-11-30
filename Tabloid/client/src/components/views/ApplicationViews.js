@@ -16,6 +16,8 @@ import { NewPost } from "../posts/PostForm";
 import { CommentEdit } from "../comments/CommentEdit";
 import { CommentDelete } from "../comments/CommentDelete";
 import { PostEdit } from "../posts/PostEdit";
+import CatDelete from "../categories/CategoryDelete";
+import CatEdit from "../categories/CategoryEdit";
 
 export default function ApplicationViews() {
 
@@ -24,6 +26,8 @@ export default function ApplicationViews() {
       <Route path="/" element={<PostList subscriptions={true} isMy={false} />} />
       <Route path="/categories" element={<CategoryList />} />
       <Route path="/catForm" element={<CategoryNew />} />
+      <Route path="/CatDelete/:id" element={<CatDelete />} />
+      <Route path="/CatEdit/:id" element={<CatEdit />} />
       <Route path="/users" element={<UserProfiles />} />
       <Route path="/userProfile/:id" element={<UserProfileDetails />} />
       <Route path="/tags" element={<TagList />} />

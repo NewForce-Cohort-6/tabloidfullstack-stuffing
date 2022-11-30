@@ -82,6 +82,11 @@ namespace Tabloid.Controllers
             _postRepository.Update(post);
             return NoContent();
         }
+        [HttpGet("CanIDelete/{id}")]
+        public IActionResult CanIDeleteACategory(int id)
+        {
+            return Ok(_postRepository.GetPostByCategoryId(id));
+        }
 
         // DELETE api/<PostController>/5
         [HttpDelete("{id}")]
