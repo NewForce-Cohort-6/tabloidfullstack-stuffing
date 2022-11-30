@@ -16,10 +16,10 @@ export const PostTags = ({ isMy }) => {
 
     const navigate = useNavigate();
 
-    const [postTag, setPostTag] = useState({
-        postId: id,
-        tagId: ""
-    });
+    // const [postTag, setPostTag] = useState({
+    //     postId: id,
+    //     tagId: ""
+    // });
 
     // //Conditionally render an add button 
     // //but also have button both set state and save the tag?
@@ -89,6 +89,7 @@ export const PostTags = ({ isMy }) => {
                         <TagAndButton 
                         tag={tag}
                         //send other things I need to Tag.js
+                        id={id}
                          />
                     ))}
 

@@ -7,16 +7,32 @@
 //if it exists in PostTag table for the postId in question, do not render button
 
 import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { addPostTag } from "../../Managers/PostTagManager";
+import { getAllTags } from "../../Managers/TagManager";
 
-export const TagAndButton = ({tag}) => {
+export const TagAndButton = ({ isMy, tag, id}) => {
+
+    // const [postTag, setPostTag] = useState({
+    //     postId: id,
+    //     tagId: tag.id
+    // });
+
+    // useEffect(() => {
+    //     getAllTags
+    // }, [])
+
+    const navigate = useNavigate();
 
     //Conditionally render an add button 
     //but also have button both set state and save the tag?
-    const savePostTag = (event) => {
-        event.preventDefault()
+    const savePostTag = () => {
+        // event.preventDefault()
         const newPostTag = {
             postId: id,
-            tagId: postTag.tagId
+            tagId: tag.id
         }
         addPostTag(newPostTag).then((t) => {
             {
@@ -35,7 +51,7 @@ export const TagAndButton = ({tag}) => {
         <tbody>
         <td>{tag.name}</td>
         <td>
-            <button className="btn btn-primary" >
+            <button className="btn btn-primary" onClick={()=>{ savePostTag() }}>
                 Add Tag
             </button>
         </td>
