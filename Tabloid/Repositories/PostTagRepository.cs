@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using Tabloid.Models;
 
 namespace Tabloid.Repositories
@@ -31,6 +32,33 @@ namespace Tabloid.Repositories
         }
 
         //We should add a get all by post so we can compare directly in the post tag manager view
+        public List<PostTag> GetAllPostTags()
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT Id, PostId, TagId FROM PostTag";
+                    var reader = cmd.ExecuteReader();
+
+                    List<PostTag> postTags = new List<PostTag>();
+
+                    while (reader.Read())
+                    {
+                        postTags.Add(new PostTag()
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            PostId = reader.GetInt32(reader.GetOrdinal("PostId")),
+                            TagId = reader.GetInt32(reader.GetOrdinal("TagId")),
+
+                        });
+                    }
+                    reader.Close();
+                    return postTags;
+                }
+            }
+        }
 
     }
 }

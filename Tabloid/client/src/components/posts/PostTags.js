@@ -14,20 +14,19 @@ export const PostTags = ({ isMy }) => {
     const [tags, setTags] = useState([]);
     const { id } = useParams();
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     // const [postTag, setPostTag] = useState({
     //     postId: id,
-    //     tagId: ""
+    //     tagId: tag.id
     // });
 
-    // //Conditionally render an add button 
-    // //but also have button both set state and save the tag?
-    // const savePostTag = (event) => {
-    //     event.preventDefault()
+    // //Still need to conditionally render an add button 
+    // //but also have buttons both set state and save the tag?
+    // const savePostTag = () => {
     //     const newPostTag = {
     //         postId: id,
-    //         tagId: postTag.tagId
+    //         tagId: tag.Id
     //     }
     //     addPostTag(newPostTag).then((t) => {
     //         {
@@ -47,7 +46,7 @@ export const PostTags = ({ isMy }) => {
         getTags();
     }, []);
 
-
+    //this is confusing, BUT: I added tags to the getPostWithComments method, so think of this as getPostWithCommentsAndTags
     const getPostWithComments = () => {
         getPostByIdWithComments(id).then(post => setPost(post));
     };
