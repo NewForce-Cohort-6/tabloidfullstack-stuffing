@@ -47,7 +47,7 @@ namespace Tabloid.Controllers
         [HttpPut("{id}")]
         public IActionResult Edit(int id, Category category)
         {
-            if(id ! == category.Id)
+            if(id  != category.Id)
             {
                 return BadRequest();
             }
