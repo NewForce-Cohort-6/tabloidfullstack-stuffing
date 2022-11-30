@@ -11,6 +11,7 @@ export const UserProfileItem = ({ user, setUserProfile }) => {
     
     const [confirmDeactivate, setConfirmDeactivate] = useState(false);
     const [confirmActivate, setConfirmActivate] = useState(false);
+    
 
 
     
@@ -22,6 +23,8 @@ export const UserProfileItem = ({ user, setUserProfile }) => {
         e.preventDefault();
         setConfirmActivate(!confirmActivate);
     };
+    
+   
     
     const handleDeactivate = () => { // or update IsActive to false
         updateToDeactivateUser(user)
@@ -39,6 +42,8 @@ export const UserProfileItem = ({ user, setUserProfile }) => {
             .then(allUsers => setUserProfile(allUsers))
             .then(allUsers => setConfirmActivate(!confirmActivate));
     })}
+    
+    
     
     
     return (
@@ -70,7 +75,7 @@ export const UserProfileItem = ({ user, setUserProfile }) => {
                 <div>
                 <h5>Are you sure you want to Deactivate this User?</h5>
                 <button onClick={handleDeactivate} className="btn btn-primary mt-2 mr-5">Deactivate</button>
-                <a href="/users" className="btn btn-primary mt-2 mr-5">Go Back</a>
+                <button className="btn btn-primary mt-2 mr-5" onClick={toggleConfirmDeactivate}>Cancel</button>
 
                 </div>
                 :""
@@ -80,7 +85,8 @@ export const UserProfileItem = ({ user, setUserProfile }) => {
                 <div>
                 <h5>Are you sure you want to Activate this User?</h5>
                 <button onClick={handleActivate} className="btn btn-primary mt-2 mr-5">Activate</button>
-                <a href="/users" className="btn btn-primary mt-2 mr-5">Go Back</a>
+                <button className="btn btn-primary mt-2 mr-5" onClick={toggleConfirmActivate}>Cancel</button>
+
                 </div>
                 :""
             }
