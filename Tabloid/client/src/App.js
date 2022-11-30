@@ -6,12 +6,12 @@ import { useEffect } from 'react';
 import Authorize from './components/views/Authorize';
 
 function App() {
-  const [ isLoggedIn, setIsLoggedIn ] = useState(true);
+  const [ isLoggedIn, setIsLoggedIn ] = useState(false);
 
 
-  useEffect(()=>{
-    if(!localStorage.getItem("userProfile")){
-      setIsLoggedIn(false)
+  useEffect(()=>{   //fixed bug...changed initial state to false
+    if(localStorage.getItem("userProfile")){
+      setIsLoggedIn(true)
       
     }
   },[isLoggedIn])

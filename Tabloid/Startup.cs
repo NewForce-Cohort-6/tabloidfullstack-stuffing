@@ -26,7 +26,7 @@ namespace Tabloid
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<ITagRepository, TagRepository>();
             services.AddTransient<ICommentRepository, CommentRepository>();
-
+            services.AddTransient<ISubscriptionRepository, SubscriptionRepository>();
 
             services.AddTransient<IPostRepository, PostRepository>();
             services.AddTransient<IPostTagRepository, PostTagRepository>();
@@ -57,6 +57,7 @@ namespace Tabloid
                 });
             }
 
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();

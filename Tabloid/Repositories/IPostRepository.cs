@@ -10,8 +10,10 @@ namespace Tabloid.Repositories
         List<Post> GetPostsByUser(int id);
         Post GetUserPostById(int userProfileId, int id);
         Post GetByIdWithComments(int id);
+        List<Post> GetUsersSubscribedPosts(int userProfileId);
         void Add(Post post);
         void Update(Post post);
+        bool GetPostByCategoryId(int id);
         void Delete(int id);
     }
 }

@@ -23,6 +23,11 @@ export const getUsersPosts = () => {
     .then((res) => res.json())
 };
 
+export const getSubscribedPosts = () => {
+  return fetch(`${apiUrl}/Post/Subscribed/${getCurrentUserId()}`)
+    .then((res) => res.json())
+};
+
 // Get published (Publish Date < Now) post by Id 
 export const getPostById = (id) => {
   return fetch(`${apiUrl}/Post/${id}`)
@@ -48,12 +53,12 @@ export const createPost = (postBody) => {
 
 export const updatePost = (post) => {
   return fetch(`${apiUrl}/Post/${post.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(post)
-    })
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(post)
+  })
 };
 
 export const deletePost = (postId) => {

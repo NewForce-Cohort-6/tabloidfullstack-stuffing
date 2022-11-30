@@ -56,6 +56,13 @@ namespace Tabloid.Controllers
             return Ok(_postRepository.GetUserPostById(userProfileId, id));
         }
 
+        // GET: api/<PostController>/Subscribed/6
+        [HttpGet("Subscribed/{userProfileId}")]
+        public IActionResult GetSubscribed(int userProfileId)
+        {
+            return Ok(_postRepository.GetUsersSubscribedPosts(userProfileId));
+        }
+
         // POST: api/<PostController>
         [HttpPost]
         public IActionResult Create(Post post)
@@ -74,6 +81,11 @@ namespace Tabloid.Controllers
             }
             _postRepository.Update(post);
             return NoContent();
+        }
+        [HttpGet("CanIDelete/{id}")]
+        public IActionResult CanIDeleteACategory(int id)
+        {
+            return Ok(_postRepository.GetPostByCategoryId(id));
         }
 
         // DELETE api/<PostController>/5

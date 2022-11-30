@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using System;
+using System.Threading.Tasks;
 using Tabloid.Models;
 using Tabloid.Repositories;
 
@@ -59,6 +62,31 @@ namespace Tabloid.Controllers
                 "GetByEmail",
                 new { email = userProfile.Email },
                 userProfile);
+        }
+
+        [HttpPatch("{id}")]
+        public IActionResult Patch([FromRoute] int id, [FromBody] JsonPatchDocument userProfile)
+        {
+
+            _userRepository.UpdateIsActive(id, userProfile);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(userProfile);
+        }
+        [HttpPut("{id}")]
+        public IActionResult Put( int id, UserProfile userProfile)
+        {
+
+            _userRepository.UpdateIsActiveV2(id, userProfile);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(userProfile);
         }
     }
 }
