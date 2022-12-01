@@ -79,7 +79,17 @@
     })
         
   }
+  export const updateUserProfileType = (user) => {
+    return fetch(`${apiUrl}/userProfile/${user.id}`, {
+     method: "PUT",
+     headers: {
+      "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user) 
+    })
+  };
 
+  
 
 
   // return (

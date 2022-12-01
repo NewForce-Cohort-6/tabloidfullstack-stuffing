@@ -58,7 +58,7 @@ export const UserProfileItem = ({ user, setUserProfile }) => {
             </td>
             
             <td>
-                {user.userType.name}  <Link to="/editUserProfileType">Edit</Link>
+                {user.userType.name}  <Link to={`/editUserProfileType/${user.id}`}>Edit</Link>
             </td>
             <td>{
                 user.isActive
