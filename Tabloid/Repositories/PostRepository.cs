@@ -191,13 +191,13 @@ namespace Tabloid.Repositories
                               u.Email, u.CreateDateTime, u.ImageLocation AS AvatarImage,
                               u.UserTypeId, 
                               ut.[Name] AS UserTypeName,
-                              s.SubscriberUserProfileId, s.ProviderUserProfileId
+                              s.SubscriberUserProfileId, s.ProviderUserProfileId, s.EndDateTime
                          FROM Subscription s
                               LEFT JOIN Post p ON s.ProviderUserProfileId = p.UserProfileId
                               LEFT JOIN Category c ON p.CategoryId = c.id
                               LEFT JOIN UserProfile u ON p.UserProfileId = u.id
                               LEFT JOIN UserType ut ON u.UserTypeId = ut.id
-                        WHERE s.SubscriberUserProfileId = @userProfileId AND PublishDateTime<SYSDATETIME() AND p.IsApproved = 1";
+                        WHERE s.SubscriberUserProfileId = @userProfileId AND PublishDateTime<SYSDATETIME() AND p.IsApproved = 1 AND s.EndDateTime IS NULL";
 
                     cmd.Parameters.AddWithValue("@userProfileId", userProfileId);
                     var reader = cmd.ExecuteReader();
