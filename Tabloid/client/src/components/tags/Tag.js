@@ -35,12 +35,7 @@ export const TagAndButton = ({ isMy, tag, id}) => {
             tagId: tag.id
         }
         addPostTag(newPostTag).then((t) => {
-            {
-                isMy ?
-                    navigate(`/my-posts/${id}`)
-
-                    : navigate(`/posts/${id}`)
-            };
+            navigate(`/my-posts/${id}`)
         });
     }
 

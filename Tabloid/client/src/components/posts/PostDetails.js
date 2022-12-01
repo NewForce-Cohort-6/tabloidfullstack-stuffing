@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem, ListGroupItemHeading } from "reactstrap";
-import { deletePost, getPostById, getPostByIdWithComments, getUserPostById } from "../../Managers/PostManager";
-import { Button, Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem } from "reactstrap";
+// import { Button, Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem } from "reactstrap";
+// import { deletePost, getPostById, getPostByIdWithComments, getUserPostById } from "../../Managers/PostManager";
 import { deletePost, getCurrentUserId, getPostById, getUserPostById } from "../../Managers/PostManager";
 import { getSubscriptions, subscribeToUser, unsubscribeFromUser } from "../../Managers/SubscriptionManager";
 import { getCurrentUser } from "../../Managers/UserProfileManager";
@@ -28,6 +28,10 @@ export const PostDetails = ({ isMy }) => {
         image.target.src = defaultImage;
     };
 
+    //remove "manage tags" from all post detail views from Posts list
+    //get list of tags for all posts to print at bottom of post detail view from Posts list
+    //what is happening between "add tag" and post detail view in My Posts list that is causing an issue.
+    //just need to call getUserPostsById in 46? that would let the user deal with unapproved and unpublished.
     //I need to go back in and figure out where the getpostbyidwithcomments AND or tags in general 
     //create sep chunk that gets the tags associated with the post so I can print at end of post detail view
     const getPost = () => {
