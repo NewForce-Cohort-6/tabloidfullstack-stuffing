@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import CategoryNew from "../categories/CategoryNew"
 import { CategoryList } from "../categories/CategoryList";
 import UserProfiles from "../users/UserProfiles";
@@ -18,13 +18,17 @@ import { CommentDelete } from "../comments/CommentDelete";
 import { PostEdit } from "../posts/PostEdit";
 import CatDelete from "../categories/CategoryDelete";
 import CatEdit from "../categories/CategoryEdit";
-import Hello from "../Hello";
 
 export default function ApplicationViews() {
 
   return (
     <Routes>
-      {/* <Route path="/" element={<Hello />} /> */}
+      {localStorage.getItem("userProfile") ?
+        <Route path="/" element={<PostList subscriptions={true} isMy={false} />} />
+        :
+        <Route path="/" element={<Navigate to="/login" />} />
+      }
+      <Route path="*" element={<Navigate to="/" />} />
       <Route path="/" element={<PostList subscriptions={true} isMy={false} />} />
       <Route path="/categories" element={<CategoryList />} />
       <Route path="/catForm" element={<CategoryNew />} />
@@ -40,15 +44,15 @@ export default function ApplicationViews() {
       <Route path="/my-posts" element={<PostList isMy={true} />} />
       <Route path="/posts/:id" element={<PostDetails isMy={false} />} />
       <Route path="/my-posts/:id" element={<PostDetails isMy={true} />} />
-      <Route path ="/my-posts/:id/comments" element={<PostComments isMy={true}/>} />
-      <Route path ="/posts/:id/comments" element={<PostComments isMy={false}/>} />
-      <Route path ="/my-posts/:id/addComment" element={<CommentNew isMy={true}/>} />
-      <Route path ="/posts/:id/addComment" element={<CommentNew isMy={false}/>} />
-      <Route path ="/my-posts/:id/edit" element={<PostEdit />} />
-      <Route path ="/commentDelete/:id" element={<CommentDelete />} />
+      <Route path="/my-posts/:id/comments" element={<PostComments isMy={true} />} />
+      <Route path="/posts/:id/comments" element={<PostComments isMy={false} />} />
+      <Route path="/my-posts/:id/addComment" element={<CommentNew isMy={true} />} />
+      <Route path="/posts/:id/addComment" element={<CommentNew isMy={false} />} />
+      <Route path="/my-posts/:id/edit" element={<PostEdit />} />
+      <Route path="/commentDelete/:id" element={<CommentDelete />} />
       <Route path="/new-post" element={<NewPost />} />
       <Route path="/addComment" element={<CommentNew />} />
-      <Route path ="/commentEdit/:id" element={<CommentEdit />} />
+      <Route path="/commentEdit/:id" element={<CommentEdit />} />
     </Routes>
   );
 
