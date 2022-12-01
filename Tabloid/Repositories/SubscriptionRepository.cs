@@ -50,10 +50,11 @@ namespace Tabloid.Repositories
                                 EndDateTime = @end
                             WHERE Id = @id";
 
+                    cmd.Parameters.AddWithValue("id", subscription.Id);
                     cmd.Parameters.AddWithValue("@subId", subscription.SubscriberUserProfileId);
                     cmd.Parameters.AddWithValue("@provId", subscription.ProviderUserProfileId);
                     cmd.Parameters.AddWithValue("@begin", subscription.BeginDateTime);
-                    cmd.Parameters.AddWithValue("@endDateTime", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@end", DateTime.Now);
 
                     cmd.ExecuteNonQuery();
                 }
@@ -93,6 +94,46 @@ namespace Tabloid.Repositories
                     reader.Close();
 
                     return subscriptions;
+                }
+            }
+        }
+
+        public Subscription GetUserSubscriptionForPost(int id, int postId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                       SELECT s.Id, s.SubscriberUserProfileId, s.ProviderUserProfileId, 
+                              s.BeginDateTime, s.EndDateTime,
+                              u.FirstName, u.LastName, u.DisplayName, 
+                              u.Email, u.CreateDateTime, u.ImageLocation AS AvatarImage,
+                              u.UserTypeId,
+                              u.Id,
+                              p.Id,
+                              ut.[Name] AS UserTypeName
+                         FROM Subscription s
+                              LEFT JOIN UserProfile u ON s.ProviderUserProfileId = u.Id
+                              LEFT JOIN UserType ut ON u.UserTypeId = ut.id
+                              LEFT JOIN Post p ON s.ProviderUserProfileId = p.UserProfileId  
+                         WHERE s.SubscriberUserProfileId = @id AND p.Id = @postId AND s.EndDateTime IS NULL";
+
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@postId", postId);
+                    var reader = cmd.ExecuteReader();
+
+                    Subscription subscription = null;
+
+                    if (reader.Read())
+                    {
+                        subscription = NewSubscriptionFromReader(reader);
+                    }
+
+                    reader.Close();
+
+                    return subscription;
                 }
             }
         }
