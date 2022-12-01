@@ -11,7 +11,7 @@ function App() {
 
   useEffect(()=>{  
     if(!localStorage.getItem("userProfile")){
-      setIsLoggedIn(true)
+      setIsLoggedIn(false)
       
     }
   },[isLoggedIn])
