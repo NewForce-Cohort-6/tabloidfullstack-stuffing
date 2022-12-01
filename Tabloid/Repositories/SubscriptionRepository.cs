@@ -34,6 +34,32 @@ namespace Tabloid.Repositories
             }
         }
 
+        public void Update(Subscription subscription)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        UPDATE Subscription
+                            SET
+                                SubscriberUserProfileId = @subId,
+                                ProviderUserProfileId = @provId,
+                                BeginDateTime = @begin,
+                                EndDateTime = @end
+                            WHERE Id = @id";
+
+                    cmd.Parameters.AddWithValue("@subId", subscription.SubscriberUserProfileId);
+                    cmd.Parameters.AddWithValue("@provId", subscription.ProviderUserProfileId);
+                    cmd.Parameters.AddWithValue("@begin", subscription.BeginDateTime);
+                    cmd.Parameters.AddWithValue("@endDateTime", DateTime.Now);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         public List<Subscription> GetUserSubscriptions(int id)
         {
             using (var conn = Connection)
