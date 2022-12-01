@@ -9,7 +9,7 @@ function App() {
   const [ isLoggedIn, setIsLoggedIn ] = useState(true);
 
 
-  useEffect(()=>{
+  useEffect(()=>{  
     if(!localStorage.getItem("userProfile")){
       setIsLoggedIn(false)
       
