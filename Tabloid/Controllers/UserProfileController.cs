@@ -88,5 +88,20 @@ namespace Tabloid.Controllers
 
             return Ok(userProfile);
         }
+
+        [HttpPut("{id}/updateUserType")]
+        public IActionResult PutUpdateUserType(int id, UserProfile userProfile)
+        {
+
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+            _userRepository.UpdateUserType(id, userProfile);
+            return Ok(userProfile);
+        }
+
+
+
     }
 }

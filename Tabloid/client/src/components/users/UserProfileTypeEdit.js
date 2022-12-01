@@ -1,16 +1,15 @@
 import userEvent from "@testing-library/user-event";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, FormGroup, Label, Input, Form, Dropdown, DropdownToggle, DropdownMenu,DropdownItem,  } from "reactstrap";
+import { Button, FormGroup, Label, Input, Form, } from "reactstrap";
 import { getSingleUser, updateUserProfileType } from "../../Managers/UserProfileManager";
+import { getAllUserTypes } from "../../Managers/UserTypeManager";
 
 export const UserProfileTypeEdit = () => {
     const navigate = useNavigate();
     const { id } = useParams();
-    
-    const [dropdownOpen, setDropdownOpen] = useState(false);  //for toggling dropdown option
-    const toggle = () => setDropdownOpen((prevState) => !prevState);
-    
+    const [userTypes, setUserTypes] = useState([]);
+;    
     const [userProfile, setUserProfile] = useState({
             id: 0,
             displayName: "",
@@ -22,17 +21,28 @@ export const UserProfileTypeEdit = () => {
             userTypeId: 0,
             isActive: undefined
     });
-
-    const getUserProfile = () => {
+  
+   const getUserProfile = () => {
         getSingleUser(id).then(p => {
             setUserProfile(p);
         })
     };
-    useEffect(() => {
+    useEffect(()=> {
         getUserProfile();
+        
+    }, []);
+        
+    const getUserTypes = () => {
+        getAllUserTypes().then(t => {
+            setUserTypes(t)});
+    };
+    useEffect(()=> {
+        
+        getUserTypes();
     }, []);
     
-    const handleSaveAdmin = (e) => {
+    
+    const handleSave = (e) => {
         e.preventDefault();
 
         const editedUserProfile = {
@@ -43,10 +53,11 @@ export const UserProfileTypeEdit = () => {
             email: userProfile.email,
             imageLocation: userProfile.imageLocation,
             createDateTime: userProfile.createDateTime,
-            userTypeId: 1,
+            userTypeId: parseInt(userProfile.userTypeId),
             isActive: userProfile.isActive
 
         };
+        console.log(editedUserProfile)
         updateUserProfileType(editedUserProfile); //updateUserProfile needs to go in Manager
         navigate("/users");
     };
@@ -58,28 +69,25 @@ export const UserProfileTypeEdit = () => {
         <section className="mx-5 mb-5 mt-3 ">
             <h3>Edit User Type For : {userProfile.displayName}</h3>
             <div className="border mt-3 p-3">
-                <Form >
+                <Form onSubmit={handleSave} >
                     <FormGroup>
+
+                        <Label for="userType">Current User Type is {userProfile?.userType?.name}</Label>
+                            <Input type="select" name="userType" defaultValue="none" required value={userProfile.userTypeId}
+                            onChange={(e) => {
+                                const userProfileCopy = { ...userProfile };
+                                userProfileCopy.userTypeId = e.target.value;
+                                setUserProfile(userProfileCopy);
+                            }}>
+                                <option value="none" disabled hidden>Select a User Type</option>
+                                {userTypes.map((userType) => (
+                                    <option key={userType.id} value={userType.id}>{userType.name}</option>
+                                ))}
+                            </Input>
+
                         
-                        <Label for="userType.name">Current User Type is {userProfile?.userType?.name}</Label>
-                        <Dropdown isOpen={dropdownOpen} toggle={toggle} >
-                        <DropdownToggle caret>Chose Type</DropdownToggle>
-                        <DropdownMenu >
-                            
-                            <DropdownItem onClick={handleSaveAdmin}>Admin</DropdownItem>
-                            {/* <DropdownItem onClick={handleSave}>Author</DropdownItem> */}
-                            
-                        </DropdownMenu>
-                        </Dropdown>
-                        
-                        
-                        {/* <Input type="text" name="userprofile.userType.name" required value={userProfile?.userType?.name}
-                        onChange={(e) => {
-                            const userProfileCopy = { ...userProfile };
-                            userProfileCopy.userType.name= e.target.value;
-                            setUserProfile(userProfileCopy);
-                        }} /> */}
                     </FormGroup>
+                    <Button className="button mr-2">Save</Button>
                     <Button onClick={() => navigate(`/users`)} >Cancel</Button>
                 </Form>
             </div>
