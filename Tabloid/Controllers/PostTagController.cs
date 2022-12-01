@@ -17,10 +17,10 @@ namespace Tabloid.Controllers
             _postTagRepo = postTagRepo;
         }
 
-        [HttpGet]
-        public IActionResult GetAllPostTags()
+        [HttpGet("{id}")]
+        public IActionResult GetAllPostTagsByPostId(int id)
         {
-            return Ok(_postTagRepo.GetAllPostTags());
+            return Ok(_postTagRepo.GetAllPostTagsByPostId(id));
         }
 
         // GET api/<PostTagController>/5

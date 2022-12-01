@@ -10,14 +10,14 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { addPostTag } from "../../Managers/PostTagManager";
+import { addPostTag, getAllPostTags } from "../../Managers/PostTagManager";
 import { getAllTags } from "../../Managers/TagManager";
 
-export const TagAndButton = ({ tag, id}) => {
+export const TagAndButton = ({ tag, id }) => {
 
     const navigate = useNavigate();
 
-    var thisPost = id;
+    // var thisPost = id;
 
     const [postTags, setPostTags] = useState([])
 
@@ -34,8 +34,13 @@ export const TagAndButton = ({ tag, id}) => {
         });
     }
 
+    //I think I need to filter this? so it's only a list of post tags for this post
     const getTagsForThisPost = () => {
-        getAllPostTags().then(allPostTags => setPostTags(allPostTags));
+        getAllPostTags(id).then(allPostTags => {
+
+            debugger
+            setPostTags(allPostTags);
+        } )
     };
 
     useEffect(() => {
@@ -46,24 +51,28 @@ export const TagAndButton = ({ tag, id}) => {
 
 
     return (
-        {
-            
-            ? <>
-            <tbody>
-            <td>{tag.name}</td>
-            </tbody>
-            </>
-            : <>
-            <tbody>
-            <td>{tag.name}</td>
-            <td>
-                <button className="btn btn-primary" onClick={()=>{ savePostTag() }}>
-                    Add Tag
-                </button>
-            </td>
-        </tbody>
-            </>
-        }
 
+            //if the tag is not a postTag, render the add button
+            // ? <>
+            // <tbody>
+            //     <td>{tag.name}</td>
+            // </tbody>
+            // </>
+            // : <>
+                <tbody>
+                    <td>{tag.name}</td>
+                    <td>
+                        {
+                        !postTags.some(x => x.tagId === tag.id)
+                        ?
+                        <button className="btn btn-primary" onClick={() => { savePostTag() }}>
+                            Add Tag
+                        </button>
+                        :
+                        <></>
+                        }
+                    </td>
+                </tbody>
+            // </>
     )
 }

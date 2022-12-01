@@ -32,14 +32,16 @@ namespace Tabloid.Repositories
         }
 
         //We should add a get all by post so we can compare directly in the post tag manager view
-        public List<PostTag> GetAllPostTags()
+        public List<PostTag> GetAllPostTagsByPostId(int id)
         {
             using (var conn = Connection)
             {
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT Id, PostId, TagId FROM PostTag";
+                    cmd.CommandText = "SELECT pt.Id as PostTagId, pt.PostId, pt.TagId,\r\np.id as PostId\r\nFROM PostTag pt\r\nLEFT JOIN Post p on pt.PostId = p.Id\r\nwhere p.id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+
                     var reader = cmd.ExecuteReader();
 
                     List<PostTag> postTags = new List<PostTag>();
@@ -48,9 +50,10 @@ namespace Tabloid.Repositories
                     {
                         postTags.Add(new PostTag()
                         {
-                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Id = reader.GetInt32(reader.GetOrdinal("PostTagId")),
                             PostId = reader.GetInt32(reader.GetOrdinal("PostId")),
                             TagId = reader.GetInt32(reader.GetOrdinal("TagId")),
+
 
                         });
                     }

@@ -11,7 +11,7 @@ export const addPostTag = (singlePostTag) => {
     });
 };
 
-export const getAllPostTags = () => {
-    return fetch(`${baseUrl}/PostTag`)
+export const getAllPostTags = (id) => {
+    return fetch(`${baseUrl}/PostTag/${id}`)
         .then((res) => res.json())
 };
