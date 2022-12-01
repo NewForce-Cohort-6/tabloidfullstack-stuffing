@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, CardLink, CardTitle, Form, Input, Label, FormGroup, ListGroup, ListGroupItem, Table } from "reactstrap";
 import { getPostByIdWithComments } from "../../Managers/PostManager";
-import { addPostTag } from "../../Managers/PostTagManager";
+import { addPostTag, getAllPostTags } from "../../Managers/PostTagManager";
 import { getAllTags } from "../../Managers/TagManager";
 import { TagAndButton } from "../tags/Tag";
 
@@ -12,6 +12,8 @@ import { TagAndButton } from "../tags/Tag";
 export const PostTags = ({ isMy }) => {
     const [post, setPost] = useState({});
     const [tags, setTags] = useState([]);
+    const [postTags, setPostTags] = useState([])
+
     const { id } = useParams();
 
     const getTags = () => {
@@ -20,6 +22,16 @@ export const PostTags = ({ isMy }) => {
 
     useEffect(() => {
         getTags();
+    }, []);
+
+    const getTagsForThisPost = () => {
+        getAllPostTags(id).then(allPostTags => {
+            setPostTags(allPostTags);
+        } )
+    };
+
+    useEffect(() => {
+        getTagsForThisPost();
     }, []);
 
     //this is confusing, BUT: I added tags to the getPostWithComments method, so think of this as getPostWithCommentsAndTags
@@ -65,6 +77,7 @@ export const PostTags = ({ isMy }) => {
                         tag={tag}
                         //send other things I need to Tag.js
                         id={id}
+                        postTags={postTags}
                          />
                     ))}
 

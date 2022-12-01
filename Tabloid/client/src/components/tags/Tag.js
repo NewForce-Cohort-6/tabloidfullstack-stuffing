@@ -13,13 +13,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { addPostTag, getAllPostTags } from "../../Managers/PostTagManager";
 import { getAllTags } from "../../Managers/TagManager";
 
-export const TagAndButton = ({ tag, id }) => {
+export const TagAndButton = ({ tag, id, postTags }) => {
 
     const navigate = useNavigate();
 
     // var thisPost = id;
 
-    const [postTags, setPostTags] = useState([])
+    // const [postTags, setPostTags] = useState([])
 
     //Conditionally render an add button 
     //but also have button both set state and save the tag?
@@ -35,17 +35,17 @@ export const TagAndButton = ({ tag, id }) => {
     }
 
     //I think I need to filter this? so it's only a list of post tags for this post
-    const getTagsForThisPost = () => {
-        getAllPostTags(id).then(allPostTags => {
+    // const getTagsForThisPost = () => {
+    //     getAllPostTags(id).then(allPostTags => {
 
-            debugger
-            setPostTags(allPostTags);
-        } )
-    };
+    //         debugger
+    //         setPostTags(allPostTags);
+    //     } )
+    // };
 
-    useEffect(() => {
-        getTagsForThisPost();
-    }, []);
+    // useEffect(() => {
+    //     getTagsForThisPost();
+    // }, []);
 
 
 
