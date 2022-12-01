@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem } from "reactstrap";
 import { deletePost, getCurrentUserId, getPostById, getUserPostById } from "../../Managers/PostManager";
-import { getSubscriptions, subscribeToUser, unsubscribeFromUser } from "../../Managers/SubscriptionManager";
+import { getSubscriptionForPost, subscribeToUser, unsubscribeFromUser } from "../../Managers/SubscriptionManager";
 import { getCurrentUser } from "../../Managers/UserProfileManager";
 
 export const PostDetails = ({ isMy }) => {
@@ -12,6 +12,7 @@ export const PostDetails = ({ isMy }) => {
     const [isAdmin, setIsAdmin] = useState(false);
 
     const [post, setPost] = useState({});
+    const [sub, setSub] = useState({});
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [isSubbed, setIsSubbed] = useState(false);
     const { id } = useParams();
@@ -28,7 +29,7 @@ export const PostDetails = ({ isMy }) => {
     const getPost = () => {
         getPostById(id).then(post => {
             setPost(post);
-            checkSubscription(post.userProfileId);
+            checkAndGetSubscription();
         })
     };
 
@@ -45,14 +46,14 @@ export const PostDetails = ({ isMy }) => {
         }
     };
 
-    // Checks if the current user is subscribed to the post
-    const checkSubscription = (postProfileId) => {
-        getSubscriptions()
-            .then(subs => {
-                if (subs.find(sub => sub.providerUserProfileId === postProfileId)) {
-                    setIsSubbed(true);
-                }
-            })
+    // Checks if the current user is subscribed to the post and if so sets subscription to state
+    const checkAndGetSubscription = () => {
+        getSubscriptionForPost(id).then(postSub => {
+            if (postSub.id) {
+                setSub(postSub);
+                setIsSubbed(true);
+            }
+        })
     };
 
     const toggleDeleteConfirm = (e) => {
@@ -72,11 +73,9 @@ export const PostDetails = ({ isMy }) => {
 
     const unsubscribe = (e) => {
         e.preventDefault();
-        const body = {
-            // TODO: Figure out what to pass in the body to unsubscribe. End date can be handled on the backend.
-        }
-        unsubscribeFromUser(body);
-        setIsSubbed(false);
+        unsubscribeFromUser(sub).then(() => {
+            setIsSubbed(false);
+        });
     };
 
     const handleDelete = () => {
