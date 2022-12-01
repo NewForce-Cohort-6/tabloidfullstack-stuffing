@@ -151,7 +151,7 @@ export const PostDetails = ({ isMy }) => {
                                 Edit Post
                             </CardLink>
                             <CardLink href={`/my-posts/${id}/tags`}>
-                                Tags
+                                Manage Tags
                             </CardLink>
                         </>
                         :
@@ -164,9 +164,6 @@ export const PostDetails = ({ isMy }) => {
                             </CardLink>
                             <CardLink href={`/posts/${id}/addComment`}>
                                 Add Comment
-                            </CardLink>
-                            <CardLink href={`/posts/${id}/tags`}>
-                                Manage Tags
                             </CardLink>
                             {isSubbed ?
                                 <CardLink href={"javascript:void(0)"} onClick={unsubscribe}>

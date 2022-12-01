@@ -14,30 +14,6 @@ export const PostTags = ({ isMy }) => {
     const [tags, setTags] = useState([]);
     const { id } = useParams();
 
-    // const navigate = useNavigate();
-
-    // const [postTag, setPostTag] = useState({
-    //     postId: id,
-    //     tagId: tag.id
-    // });
-
-    // //Still need to conditionally render an add button 
-    // //but also have buttons both set state and save the tag?
-    // const savePostTag = () => {
-    //     const newPostTag = {
-    //         postId: id,
-    //         tagId: tag.Id
-    //     }
-    //     addPostTag(newPostTag).then((t) => {
-    //         {
-    //             isMy ?
-    //                 navigate(`/my-posts/${id}`)
-
-    //                 : navigate(`/posts/${id}`)
-    //         };
-    //     });
-    // }
-
     const getTags = () => {
         getAllTags().then(allTags => setTags(allTags));
     };

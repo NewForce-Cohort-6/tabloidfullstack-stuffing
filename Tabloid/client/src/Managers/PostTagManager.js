@@ -10,3 +10,8 @@ export const addPostTag = (singlePostTag) => {
         body: JSON.stringify(singlePostTag),
     });
 };
+
+export const getAllPostTags = () => {
+    return fetch(`${baseUrl}/PostTag`)
+        .then((res) => res.json())
+};

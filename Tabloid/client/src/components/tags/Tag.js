@@ -13,18 +13,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { addPostTag } from "../../Managers/PostTagManager";
 import { getAllTags } from "../../Managers/TagManager";
 
-export const TagAndButton = ({ isMy, tag, id}) => {
-
-    // const [postTag, setPostTag] = useState({
-    //     postId: id,
-    //     tagId: tag.id
-    // });
-
-    // useEffect(() => {
-    //     getAllTags
-    // }, [])
+export const TagAndButton = ({ tag, id}) => {
 
     const navigate = useNavigate();
+
+    var thisPost = id;
+
+    const [postTags, setPostTags] = useState([])
 
     //Conditionally render an add button 
     //but also have button both set state and save the tag?
@@ -39,17 +34,36 @@ export const TagAndButton = ({ isMy, tag, id}) => {
         });
     }
 
+    const getTagsForThisPost = () => {
+        getAllPostTags().then(allPostTags => setPostTags(allPostTags));
+    };
+
+    useEffect(() => {
+        getTagsForThisPost();
+    }, []);
+
 
 
 
     return (
-        <tbody>
-        <td>{tag.name}</td>
-        <td>
-            <button className="btn btn-primary" onClick={()=>{ savePostTag() }}>
-                Add Tag
-            </button>
-        </td>
-    </tbody>
+        {
+            
+            ? <>
+            <tbody>
+            <td>{tag.name}</td>
+            </tbody>
+            </>
+            : <>
+            <tbody>
+            <td>{tag.name}</td>
+            <td>
+                <button className="btn btn-primary" onClick={()=>{ savePostTag() }}>
+                    Add Tag
+                </button>
+            </td>
+        </tbody>
+            </>
+        }
+
     )
 }
