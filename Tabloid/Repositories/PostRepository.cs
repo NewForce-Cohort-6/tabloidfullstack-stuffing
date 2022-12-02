@@ -361,13 +361,15 @@ namespace Tabloid.Repositories
                                           Title = @title,
                                           Content = @content,
                                           ImageLocation = @imageLocation,
-                                          CategoryId = @categoryId
+                                          CategoryId = @categoryId,
+                                          IsApproved = @isApproved
                                     WHERE Id = @id";
 
                     cmd.Parameters.AddWithValue("@title", post.Title);
                     cmd.Parameters.AddWithValue("@content", post.Content);
                     cmd.Parameters.AddWithValue("@imageLocation", DbUtils.ValueOrDBNull(post.ImageLocation));
                     cmd.Parameters.AddWithValue("@categoryId", post.CategoryId);
+                    cmd.Parameters.AddWithValue("@isApproved", post.IsApproved);
                     cmd.Parameters.AddWithValue("@id", post.Id);
 
                     cmd.ExecuteNonQuery();

@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem, ListGroupItemHeading } from "reactstrap";
-import { deletePost, getCurrentUserId, getPostById, getUserPostById } from "../../Managers/PostManager";
+import { deletePost, getCurrentUserId, getPostById, getUserPostById, updatePost } from "../../Managers/PostManager";
 import { getSubscriptionForPost, subscribeToUser, unsubscribeFromUser } from "../../Managers/SubscriptionManager";
 import { getCurrentUser } from "../../Managers/UserProfileManager";
 
@@ -55,6 +55,37 @@ export const PostDetails = ({ isMy }) => {
                 setIsSubbed(true);
             }
         })
+    };
+
+    const toggleApproval = (e) => {
+        e.preventDefault();
+
+        let editedPost = {};
+
+        if (post.isApproved) {
+            editedPost = {
+                id: post.id,
+                title: post.title,
+                content: post.content,
+                categoryId: parseInt(post.categoryId),
+                imageLocation: post.imageLocation,
+                isApproved: false
+            };
+            console.log(editedPost);
+        }
+        else {
+            editedPost = {
+                id: post.id,
+                title: post.title,
+                content: post.content,
+                categoryId: parseInt(post.categoryId),
+                imageLocation: post.imageLocation,
+                isApproved: true
+            };
+        }
+        updatePost(editedPost).then(() => {
+            isMy ? navigate("/my-posts") : navigate("/posts");
+        });
     };
 
     const toggleDeleteConfirm = (e) => {
@@ -177,6 +208,20 @@ export const PostDetails = ({ isMy }) => {
                         :
                         <></>
                     }
+                    {isAdmin && !post.isApproved ?
+                        <CardLink href={"javascript:void(0)"} onClick={toggleApproval}>
+                            Approve Post
+                        </CardLink>
+                        :
+                        <></>
+                    }
+                    {isAdmin && post.isApproved ?
+                        <CardLink href={"javascript:void(0)"} onClick={toggleApproval}>
+                            Un-approve Post
+                        </CardLink>
+                        :
+                        <></>
+                    }
                 </CardBody>
                 {confirmDelete ?
                     <ListGroup flush>
@@ -200,23 +245,23 @@ export const PostDetails = ({ isMy }) => {
 
                 <ListGroup flush>
                     <ListGroupItemHeading>Tags</ListGroupItemHeading>
-                {
-                    post?.tags?.length
-                        ? post?.tags?.map((t) => (<>
-                            <Card key={t.id}
-                                style={{
-                                    width: '18rem'
-                                }}
-                            >
+                    {
+                        post?.tags?.length
+                            ? post?.tags?.map((t) => (<>
+                                <Card key={t.id}
+                                    style={{
+                                        width: '18rem'
+                                    }}
+                                >
                                     <ListGroup flush>
-                                    <ListGroupItem>
-                                        <h6>{t.name}</h6><br />
-                                    </ListGroupItem>
-                                </ListGroup>
-                            </Card></>
-                        ))
-                        : <h6>No tags have been associated with this post</h6>
-                }
+                                        <ListGroupItem>
+                                            <h6>{t.name}</h6><br />
+                                        </ListGroupItem>
+                                    </ListGroup>
+                                </Card></>
+                            ))
+                            : <h6>No tags have been associated with this post</h6>
+                    }
                 </ListGroup>
             </section>
         </section>
