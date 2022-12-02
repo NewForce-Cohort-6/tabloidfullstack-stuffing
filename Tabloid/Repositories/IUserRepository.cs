@@ -11,6 +11,7 @@ namespace Tabloid.Repositories
         UserProfile GetById(int id);
         void UpdateIsActive(int id, JsonPatchDocument userProfile);
         void UpdateIsActiveV2(int id, UserProfile userProfile);
+        void UpdateUserType(int id, UserProfile userProfile);
         List<UserProfile> GetAll();
     }
 }
