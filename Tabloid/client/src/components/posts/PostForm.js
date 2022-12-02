@@ -4,8 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { getAllCategories } from "../../Managers/CategoryManager";
 import { createPost, getCurrentUserId } from "../../Managers/PostManager";
+import { getCurrentUser } from "../../Managers/UserProfileManager";
 
 export const NewPost = () => {
+
+    const [preApproval, setPreApproval] = useState(false);
 
     const [categories, setCategories] = useState([]);
     const [categoryRequiredNotice, setCategoryRequiredNotice] = useState(false);
@@ -18,10 +21,16 @@ export const NewPost = () => {
     const imageLocationRef = useRef();
     const publishDateRef = useRef();
 
-    const preApproval = true;
-    
     const getCategories = () => {
         getAllCategories().then(c => setCategories(c));
+    };
+
+    // Checks if the current user is an admin and allows the post to be pre-approved
+    const giveAdminRights = () => {
+        const user = getCurrentUser();
+        if (user.userType.id === 1) {
+            setPreApproval(true);
+        }
     };
 
     const handleCategoryRequired = () => {
@@ -57,6 +66,7 @@ export const NewPost = () => {
 
     useEffect(() => {
         getCategories();
+        giveAdminRights();
     }, []);
 
     return (
