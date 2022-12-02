@@ -11,6 +11,7 @@ import UserProfileDetails from "../users/UserProfileDetails";
 import TagDelete from "../tags/TagDelete";
 import TagEdit from "../tags/TagEdit";
 import { PostComments } from "../posts/PostComments";
+import { PostTags } from "../posts/PostTags";
 import { CommentNew } from "../comments/CommentNew";
 import { NewPost } from "../posts/PostForm";
 import { CommentEdit } from "../comments/CommentEdit";
@@ -47,12 +48,14 @@ export default function ApplicationViews() {
       <Route path="/my-posts" element={<PostList isMy={true} />} />
       <Route path="/posts/:id" element={<PostDetails isMy={false} />} />
       <Route path="/my-posts/:id" element={<PostDetails isMy={true} />} />
-      <Route path="/my-posts/:id/comments" element={<PostComments isMy={true} />} />
-      <Route path="/posts/:id/comments" element={<PostComments isMy={false} />} />
-      <Route path="/my-posts/:id/addComment" element={<CommentNew isMy={true} />} />
-      <Route path="/posts/:id/addComment" element={<CommentNew isMy={false} />} />
-      <Route path="/my-posts/:id/edit" element={<PostEdit />} />
-      <Route path="/commentDelete/:id" element={<CommentDelete />} />
+      <Route path ="/my-posts/:id/comments" element={<PostComments isMy={true}/>} />
+      <Route path ="/posts/:id/comments" element={<PostComments isMy={false}/>} />
+      <Route path ="/my-posts/:id/addComment" element={<CommentNew isMy={true}/>} />
+      <Route path ="/posts/:id/addComment" element={<CommentNew isMy={false}/>} />
+      <Route path ="/my-posts/:id/tags" element={<PostTags isMy={true}/>} />
+      <Route path ="/posts/:id/tags" element={<PostTags isMy={false}/>} />
+      <Route path ="/my-posts/:id/edit" element={<PostEdit />} />
+      <Route path ="/commentDelete/:id" element={<CommentDelete />} />
       <Route path="/new-post" element={<NewPost />} />
       <Route path="/addComment" element={<CommentNew />} />
       <Route path ="/commentEdit/:id" element={<CommentEdit />} />

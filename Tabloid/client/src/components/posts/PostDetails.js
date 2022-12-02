@@ -2,10 +2,15 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem } from "reactstrap";
+import { Button, Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem, ListGroupItemHeading } from "reactstrap";
+// import { Button, Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem } from "reactstrap";
+// import { deletePost, getPostById, getPostByIdWithComments, getUserPostById } from "../../Managers/PostManager";
 import { deletePost, getCurrentUserId, getPostById, getUserPostById } from "../../Managers/PostManager";
 import { getSubscriptions, subscribeToUser, unsubscribeFromUser } from "../../Managers/SubscriptionManager";
 import { getCurrentUser } from "../../Managers/UserProfileManager";
+
+
+//go and fix the doubled import lines 
 
 export const PostDetails = ({ isMy }) => {
 
@@ -23,7 +28,15 @@ export const PostDetails = ({ isMy }) => {
         image.target.src = defaultImage;
     };
 
+    //remove "manage tags" from all post detail views from Posts list
+    //get list of tags for all posts to print at bottom of post detail view from Posts list
+    //what is happening between "add tag" and post detail view in My Posts list that is causing an issue.
+    //just need to call getUserPostsById in 46? that would let the user deal with unapproved and unpublished.
+    //I need to go back in and figure out where the getpostbyidwithcomments AND or tags in general 
+    //create sep chunk that gets the tags associated with the post so I can print at end of post detail view
     const getPost = () => {
+        // getPostByIdWithComments(id).then(post => setPost(post));
+        //go and add tags to getpostbyid and subscription
         getPostById(id).then(post => {
             setPost(post);
             checkSubscription(post.userProfileId);
@@ -137,6 +150,9 @@ export const PostDetails = ({ isMy }) => {
                             <CardLink href={`/my-posts/${id}/edit`}>
                                 Edit Post
                             </CardLink>
+                            <CardLink href={`/my-posts/${id}/tags`}>
+                                Manage Tags
+                            </CardLink>
                         </>
                         :
                         <>
@@ -186,6 +202,29 @@ export const PostDetails = ({ isMy }) => {
                     </ListGroup>
                     : <></>}
             </Card>
+            <section>
+
+                <ListGroup flush>
+                    <ListGroupItemHeading>Tags</ListGroupItemHeading>
+                {
+                    post?.tags?.length
+                        ? post?.tags?.map((t) => (<>
+                            <Card key={t.id}
+                                style={{
+                                    width: '18rem'
+                                }}
+                            >
+                                    <ListGroup flush>
+                                    <ListGroupItem>
+                                        <h6>{t.name}</h6><br />
+                                    </ListGroupItem>
+                                </ListGroup>
+                            </Card></>
+                        ))
+                        : <h6>No tags have been associated with this post</h6>
+                }
+                </ListGroup>
+            </section>
         </section>
     )
 }
