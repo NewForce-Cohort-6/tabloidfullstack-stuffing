@@ -19,6 +19,7 @@ import { CommentDelete } from "../comments/CommentDelete";
 import { PostEdit } from "../posts/PostEdit";
 import CatDelete from "../categories/CategoryDelete";
 import CatEdit from "../categories/CategoryEdit";
+import { UserProfileTypeEdit } from "../users/UserProfileTypeEdit";
 
 export default function ApplicationViews() {
 
@@ -31,6 +32,8 @@ export default function ApplicationViews() {
       }
       <Route path="*" element={<Navigate to="/" />} />
       <Route path="/" element={<PostList subscriptions={true} isMy={false} />} />
+          
+      
       <Route path="/categories" element={<CategoryList />} />
       <Route path="/catForm" element={<CategoryNew />} />
       <Route path="/CatDelete/:id" element={<CatDelete />} />
@@ -55,7 +58,9 @@ export default function ApplicationViews() {
       <Route path ="/commentDelete/:id" element={<CommentDelete />} />
       <Route path="/new-post" element={<NewPost />} />
       <Route path="/addComment" element={<CommentNew />} />
-      <Route path="/commentEdit/:id" element={<CommentEdit />} />
+      <Route path ="/commentEdit/:id" element={<CommentEdit />} />
+      <Route path="/editUserProfileType/:id" element={<UserProfileTypeEdit />} />
+     
     </Routes>
   );
 
