@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, } from "react-router-dom";
 import { getAllUsers, updateToDeactivateUser } from "../../Managers/UserProfileManager";
 import { updateToActivateUser } from "../../Managers/UserProfileManager";
-import { CardLink } from "reactstrap";
+import { CardLink, Button } from "reactstrap";
 
 
 
@@ -58,7 +58,7 @@ export const UserProfileItem = ({ user, setUserProfile }) => {
             </td>
             
             <td>
-                {user.userType.name}
+                {user.userType.name}  <Link to={`/editUserProfileType/${user.id}`}>Edit</Link>
             </td>
             <td>{
                 user.isActive
@@ -70,12 +70,15 @@ export const UserProfileItem = ({ user, setUserProfile }) => {
                     </CardLink>
                 }
             </td>
+            <td>
+                
+            </td>
             {
                 confirmDeactivate ?
                 <div>
                 <h5>Are you sure you want to Deactivate this User?</h5>
                 <button onClick={handleDeactivate} className="btn btn-primary mt-2 mr-5">Deactivate</button>
-                <button className="btn btn-primary mt-2 mr-5" onClick={toggleConfirmDeactivate}>Cancel</button>
+                <Button  onClick={toggleConfirmDeactivate}>Cancel</Button>
 
                 </div>
                 :""
@@ -85,7 +88,7 @@ export const UserProfileItem = ({ user, setUserProfile }) => {
                 <div>
                 <h5>Are you sure you want to Activate this User?</h5>
                 <button onClick={handleActivate} className="btn btn-primary mt-2 mr-5">Activate</button>
-                <button className="btn btn-primary mt-2 mr-5" onClick={toggleConfirmActivate}>Cancel</button>
+                <Button  onClick={toggleConfirmActivate}>Cancel</Button>
 
                 </div>
                 :""

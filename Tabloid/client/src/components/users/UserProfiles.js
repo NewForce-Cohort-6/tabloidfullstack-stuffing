@@ -26,6 +26,7 @@ export default function UserProfiles (){
           <th>Display Name</th>
           <th>User Type</th>
           <th>Activate/Deactivate</th>
+          
         </tr>
       </thead>
       <tbody>

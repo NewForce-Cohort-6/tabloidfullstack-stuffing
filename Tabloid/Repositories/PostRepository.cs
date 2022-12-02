@@ -5,6 +5,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Tabloid.Models;
 using Tabloid.Utils;
+using System.Linq;
 
 namespace Tabloid.Repositories
 {
@@ -51,6 +52,7 @@ namespace Tabloid.Repositories
             }
         }
 
+        //add tags to this one
         public Post GetPublishedPostById(int id)
         {
             using (var conn = Connection)
@@ -59,7 +61,7 @@ namespace Tabloid.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                       SELECT p.Id, p.Title, p.Content, 
+                           SELECT p.Id, p.Title, p.Content, 
                               p.ImageLocation AS HeaderImage,
                               p.CreateDateTime, p.PublishDateTime, p.IsApproved,
                               p.CategoryId, p.UserProfileId,
@@ -67,11 +69,15 @@ namespace Tabloid.Repositories
                               u.FirstName, u.LastName, u.DisplayName, 
                               u.Email, u.CreateDateTime, u.ImageLocation AS AvatarImage,
                               u.UserTypeId, 
-                              ut.[Name] AS UserTypeName
+                              ut.[Name] AS UserTypeName,
+                              pt.Id as PostTagId, pt.PostId as PostTagPostId, pt.TagId as PostTagTagId,
+                              t.Id AS TagId, t.Name
                          FROM Post p
                               LEFT JOIN Category c ON p.CategoryId = c.id
                               LEFT JOIN UserProfile u ON p.UserProfileId = u.id
                               LEFT JOIN UserType ut ON u.UserTypeId = ut.id
+                              LEFT JOIN PostTag pt ON pt.PostId = p.id
+                              LEFT JOIN Tag t ON t.Id = pt.TagId
                         WHERE IsApproved = 1 AND PublishDateTime < SYSDATETIME()
                               AND p.id = @id";
 
@@ -80,9 +86,60 @@ namespace Tabloid.Repositories
 
                     Post post = null;
 
-                    if (reader.Read())
+                    //if (reader.Read())
+                    //{
+                    //    post = NewPostFromReader(reader);
+                    //}
+
+                    while (reader.Read())
                     {
-                        post = NewPostFromReader(reader);
+                        if (post == null)
+                        {
+                            post = new Post()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Content = reader.GetString(reader.GetOrdinal("Content")),
+                                ImageLocation = DbUtils.GetString(reader, "HeaderImage"),
+                                CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
+                                PublishDateTime = DbUtils.GetNullableDateTime(reader, "PublishDateTime"),
+                                IsApproved = reader.GetBoolean(reader.GetOrdinal("IsApproved")),
+                                CategoryId = reader.GetInt32(reader.GetOrdinal("CategoryId")),
+                                Category = new Category()
+                                {
+                                    Id = reader.GetInt32(reader.GetOrdinal("CategoryId")),
+                                    Name = reader.GetString(reader.GetOrdinal("CategoryName"))
+                                },
+                                UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
+                                UserProfile = new UserProfile()
+                                {
+                                    Id = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
+                                    FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                                    LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                                    DisplayName = reader.GetString(reader.GetOrdinal("DisplayName")),
+                                    Email = reader.GetString(reader.GetOrdinal("Email")),
+                                    CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
+                                    ImageLocation = DbUtils.GetString(reader, "AvatarImage"),
+                                    UserTypeId = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
+                                    UserType = new UserType()
+                                    {
+                                        Id = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
+                                        Name = reader.GetString(reader.GetOrdinal("UserTypeName"))
+                                    }
+                                },
+                                Tags = new List<Tag>()
+                            };
+                        }
+
+                        if (DbUtils.IsNotDbNull(reader, "TagId") && !post.Tags.Any(x => x.Id == DbUtils.GetNullableInt(reader, "TagId")))
+                        {
+                            post.Tags.Add(new Tag
+                            {
+                                Id = DbUtils.GetInt(reader, "TagId"),
+                                Name = DbUtils.GetString(reader, "Name"),
+                            });
+                        }
+
                     }
 
                     reader.Close();
@@ -134,6 +191,7 @@ namespace Tabloid.Repositories
             }
         }
 
+        //Adding tags to this method because of the way we need to associate tags with posts in both Posts and MyPosts
         public Post GetUserPostById(int userProfileId, int id)
         {
             using (var conn = Connection)
@@ -142,7 +200,7 @@ namespace Tabloid.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                       SELECT p.Id, p.Title, p.Content, 
+                                              SELECT p.Id, p.Title, p.Content, 
                               p.ImageLocation AS HeaderImage,
                               p.CreateDateTime, p.PublishDateTime, p.IsApproved,
                               p.CategoryId, p.UserProfileId,
@@ -150,11 +208,17 @@ namespace Tabloid.Repositories
                               u.FirstName, u.LastName, u.DisplayName, 
                               u.Email, u.CreateDateTime, u.ImageLocation AS AvatarImage,
                               u.UserTypeId, 
-                              ut.[Name] AS UserTypeName
-                         FROM Post p
+                              ut.[Name] AS UserTypeName,
+
+                         pt.Id as PostTagId, pt.PostId as PostTagPostId, pt.TagId as PostTagTagId,
+
+                              t.Id AS TagId, t.Name
+                           FROM Post p
                               LEFT JOIN Category c ON p.CategoryId = c.id
                               LEFT JOIN UserProfile u ON p.UserProfileId = u.id
                               LEFT JOIN UserType ut ON u.UserTypeId = ut.id
+                               LEFT JOIN PostTag pt ON pt.PostId = p.id
+                               LEFT JOIN Tag t ON t.Id = pt.TagId
                         WHERE p.id = @id AND p.UserProfileId = @userProfileId";
 
                     cmd.Parameters.AddWithValue("@id", id);
@@ -163,9 +227,61 @@ namespace Tabloid.Repositories
 
                     Post post = null;
 
-                    if (reader.Read())
+                    //replacing this with longer chunk because I'm not sure how to handle adding tags to this method otherwise.
+                    //if (reader.Read())
+                    //{
+                    //    post = NewPostFromReader(reader);
+                    //}
+
+                    while (reader.Read())
                     {
-                        post = NewPostFromReader(reader);
+                        if (post == null)
+                        {
+                            post = new Post()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Content = reader.GetString(reader.GetOrdinal("Content")),
+                                ImageLocation = DbUtils.GetString(reader, "HeaderImage"),
+                                CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
+                                PublishDateTime = DbUtils.GetNullableDateTime(reader, "PublishDateTime"),
+                                IsApproved = reader.GetBoolean(reader.GetOrdinal("IsApproved")),
+                                CategoryId = reader.GetInt32(reader.GetOrdinal("CategoryId")),
+                                Category = new Category()
+                                {
+                                    Id = reader.GetInt32(reader.GetOrdinal("CategoryId")),
+                                    Name = reader.GetString(reader.GetOrdinal("CategoryName"))
+                                },
+                                UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
+                                UserProfile = new UserProfile()
+                                {
+                                    Id = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
+                                    FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                                    LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                                    DisplayName = reader.GetString(reader.GetOrdinal("DisplayName")),
+                                    Email = reader.GetString(reader.GetOrdinal("Email")),
+                                    CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
+                                    ImageLocation = DbUtils.GetString(reader, "AvatarImage"),
+                                    UserTypeId = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
+                                    UserType = new UserType()
+                                    {
+                                        Id = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
+                                        Name = reader.GetString(reader.GetOrdinal("UserTypeName"))
+                                    }
+                                },
+                                Tags = new List<Tag>()
+                            };
+                        }
+                       
+                        if (DbUtils.IsNotDbNull(reader, "TagId") && !post.Tags.Any(x => x.Id == DbUtils.GetNullableInt(reader, "TagId")))
+                        {
+                            post.Tags.Add(new Tag
+                            {
+                                Id = DbUtils.GetInt(reader, "TagId"),
+                                Name = DbUtils.GetString(reader, "Name"),
+                            });
+                        }
+
                     }
 
                     reader.Close();
@@ -175,6 +291,7 @@ namespace Tabloid.Repositories
             }
         }
 
+        //add tags to this one?
         public List<Post> GetUsersSubscribedPosts(int userProfileId)
         {
             using (var conn = Connection)
@@ -342,6 +459,7 @@ namespace Tabloid.Repositories
             };
         }
 
+        //Should I rename to GetByIdWithCommentsAndTags? This adds a post's associated tag list to this method.
         public Post GetByIdWithComments(int id)
         {
             using (var conn = Connection)
@@ -360,11 +478,18 @@ namespace Tabloid.Repositories
                               u.UserTypeId, 
 
                               c.Id AS CommentId, c.Subject, c.Content AS CommentContent, c.UserProfileId AS CommentUserProfileId, c.PostId AS PostId, c.CreateDateTime AS CommentCreateDateTime,
-                              up.DisplayName AS CommentDisplayName, up.id AS CommentUserProfileId
+                              up.DisplayName AS CommentDisplayName, up.id AS CommentUserProfileId,
+
+                              pt.Id as PostTagId, pt.PostId as PostTagPostId, pt.TagId as PostTagTagId,
+
+                              t.Id AS TagId, t.Name
                            FROM Post p
                                LEFT JOIN UserProfile u ON p.UserProfileId = u.id
                                LEFT JOIN Comment c on c.PostId = p.id
                                LEFT JOIN UserProfile up ON c.UserProfileId = up.id
+                               LEFT JOIN PostTag pt ON pt.PostId = p.id
+                               LEFT JOIN Tag t ON t.Id = pt.TagId
+
                                WHERE p.Id = @Id";
 
                     DbUtils.AddParameter(cmd, "@Id", id);
@@ -398,7 +523,8 @@ namespace Tabloid.Repositories
                                     CreateDateTime = DbUtils.GetDateTime(reader, "UserProfileCreateDateTime"),
                                     ImageLocation = DbUtils.GetString(reader, "AvatarImage")
                                 },
-                                Comments = new List<Comment>()
+                                Comments = new List<Comment>(),
+                                Tags = new List<Tag>()
                             };
                         }
                         if (DbUtils.IsNotDbNull(reader, "CommentId"))
@@ -417,6 +543,14 @@ namespace Tabloid.Repositories
                                     Id = DbUtils.GetInt(reader, "CommentUserProfileId"),
                                     DisplayName = DbUtils.GetString(reader, "CommentDisplayName")
                                 }
+                            });
+                        }
+                        if (DbUtils.IsNotDbNull(reader, "TagId") && !post.Tags.Any(x => x.Id == DbUtils.GetNullableInt(reader, "TagId")))
+                        {
+                            post.Tags.Add(new Tag
+                            {
+                                Id = DbUtils.GetInt(reader, "TagId"),
+                                Name = DbUtils.GetString(reader, "Name"),
                             });
                         }
 

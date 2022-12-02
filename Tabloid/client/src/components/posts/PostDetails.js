@@ -2,10 +2,15 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem } from "reactstrap";
+import { Button, Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem, ListGroupItemHeading } from "reactstrap";
+// import { Button, Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem } from "reactstrap";
+// import { deletePost, getPostById, getPostByIdWithComments, getUserPostById } from "../../Managers/PostManager";
 import { deletePost, getCurrentUserId, getPostById, getUserPostById } from "../../Managers/PostManager";
 import { getSubscriptionForPost, subscribeToUser, unsubscribeFromUser } from "../../Managers/SubscriptionManager";
 import { getCurrentUser } from "../../Managers/UserProfileManager";
+
+
+//go and fix the doubled import lines 
 
 export const PostDetails = ({ isMy }) => {
 
@@ -27,6 +32,8 @@ export const PostDetails = ({ isMy }) => {
 
     // Gets published and active post by id and then checks if current user is subscribed to that posts author
     const getPost = () => {
+        // getPostByIdWithComments(id).then(post => setPost(post));
+        //go and add tags to getpostbyid and subscription
         getPostById(id).then(post => {
             setPost(post);
             checkAndGetSubscription();
@@ -143,6 +150,9 @@ export const PostDetails = ({ isMy }) => {
                             <CardLink href={`/my-posts/${id}/edit`}>
                                 Edit Post
                             </CardLink>
+                            <CardLink href={`/my-posts/${id}/tags`}>
+                                Manage Tags
+                            </CardLink>
                         </>
                         :
                         <>
@@ -192,6 +202,29 @@ export const PostDetails = ({ isMy }) => {
                     </ListGroup>
                     : <></>}
             </Card>
+            <section>
+
+                <ListGroup flush>
+                    <ListGroupItemHeading>Tags</ListGroupItemHeading>
+                {
+                    post?.tags?.length
+                        ? post?.tags?.map((t) => (<>
+                            <Card key={t.id}
+                                style={{
+                                    width: '18rem'
+                                }}
+                            >
+                                    <ListGroup flush>
+                                    <ListGroupItem>
+                                        <h6>{t.name}</h6><br />
+                                    </ListGroupItem>
+                                </ListGroup>
+                            </Card></>
+                        ))
+                        : <h6>No tags have been associated with this post</h6>
+                }
+                </ListGroup>
+            </section>
         </section>
     )
 }
