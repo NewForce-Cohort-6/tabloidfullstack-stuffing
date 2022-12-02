@@ -3,14 +3,10 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem, ListGroupItemHeading } from "reactstrap";
-// import { Button, Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem } from "reactstrap";
-// import { deletePost, getPostById, getPostByIdWithComments, getUserPostById } from "../../Managers/PostManager";
 import { deletePost, getCurrentUserId, getPostById, getUserPostById } from "../../Managers/PostManager";
 import { getSubscriptionForPost, subscribeToUser, unsubscribeFromUser } from "../../Managers/SubscriptionManager";
 import { getCurrentUser } from "../../Managers/UserProfileManager";
 
-
-//go and fix the doubled import lines 
 
 export const PostDetails = ({ isMy }) => {
 
@@ -32,8 +28,6 @@ export const PostDetails = ({ isMy }) => {
 
     // Gets published and active post by id and then checks if current user is subscribed to that posts author
     const getPost = () => {
-        // getPostByIdWithComments(id).then(post => setPost(post));
-        //go and add tags to getpostbyid and subscription
         getPostById(id).then(post => {
             setPost(post);
             checkAndGetSubscription();

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Tabloid.Models;
@@ -52,7 +51,6 @@ namespace Tabloid.Repositories
             }
         }
 
-        //add tags to this one
         public Post GetPublishedPostById(int id)
         {
             using (var conn = Connection)
@@ -85,11 +83,6 @@ namespace Tabloid.Repositories
                     var reader = cmd.ExecuteReader();
 
                     Post post = null;
-
-                    //if (reader.Read())
-                    //{
-                    //    post = NewPostFromReader(reader);
-                    //}
 
                     while (reader.Read())
                     {
@@ -191,7 +184,6 @@ namespace Tabloid.Repositories
             }
         }
 
-        //Adding tags to this method because of the way we need to associate tags with posts in both Posts and MyPosts
         public Post GetUserPostById(int userProfileId, int id)
         {
             using (var conn = Connection)
@@ -226,12 +218,6 @@ namespace Tabloid.Repositories
                     var reader = cmd.ExecuteReader();
 
                     Post post = null;
-
-                    //replacing this with longer chunk because I'm not sure how to handle adding tags to this method otherwise.
-                    //if (reader.Read())
-                    //{
-                    //    post = NewPostFromReader(reader);
-                    //}
 
                     while (reader.Read())
                     {
@@ -291,7 +277,6 @@ namespace Tabloid.Repositories
             }
         }
 
-        //add tags to this one?
         public List<Post> GetUsersSubscribedPosts(int userProfileId)
         {
             using (var conn = Connection)
@@ -459,7 +444,6 @@ namespace Tabloid.Repositories
             };
         }
 
-        //Should I rename to GetByIdWithCommentsAndTags? This adds a post's associated tag list to this method.
         public Post GetByIdWithComments(int id)
         {
             using (var conn = Connection)
@@ -562,10 +546,6 @@ namespace Tabloid.Repositories
             }
         }
 
-
-
-
-
         public bool GetPostByCategoryId(int id)
         {
             using (var conn = Connection)
@@ -580,19 +560,19 @@ namespace Tabloid.Repositories
                     cmd.Parameters.AddWithValue("@id", id);
                     var reader = cmd.ExecuteReader();
 
-                    int Taco = 0;
+                    int nullCheck = 0;
 
                     if (reader.Read())
                     {
                         if (!reader.IsDBNull(reader.GetOrdinal("id")))
                         {
-                        Taco = 1;
+                        nullCheck = 1;
                         }
                     }
                      
                     reader.Close();
 
-                    if(Taco > 0 )
+                    if(nullCheck > 0 )
                     {
                         return false;
                     }
