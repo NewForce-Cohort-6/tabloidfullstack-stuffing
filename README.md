@@ -26,6 +26,8 @@ DEFAULT 1;
 ![image](https://user-images.githubusercontent.com/106984214/202237041-04ee6d04-9973-4ef9-b917-93118c9ac386.png)
 
 ### WireFrame
+![image](https://user-images.githubusercontent.com/106984214/205365993-5b5b7168-439e-4844-a0fc-67dc680f3b2f.png)
+
 https://miro.com/app/board/uXjVPCnnyWQ=/
 
 ![Tabloid Web API](https://user-images.githubusercontent.com/106984214/202562706-93692f42-6d20-410d-91e6-2b1c883192d8.png)
