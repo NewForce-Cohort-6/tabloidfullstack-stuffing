@@ -30,5 +30,5 @@ DEFAULT 1;
 
 
 
-![Tabloid Web API](https://user-images.githubusercontent.com/106984214/202562706-93692f42-6d20-410d-91e6-2b1c883192d8.png)
+
 
