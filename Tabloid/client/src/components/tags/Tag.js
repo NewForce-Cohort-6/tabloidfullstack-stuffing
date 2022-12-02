@@ -1,11 +1,3 @@
-//make the tag list tags and buttons in here so that each tag knows its id and manages its own state
-//this is for each item in the tag manager page that I STARTED in PostTags.js
-//tag, button
-//send props to this component? might be changing state.
-//sending tag list info to this component
-//should send post tag info as well?
-//if it exists in PostTag table for the postId in question, do not render button
-
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -31,7 +23,7 @@ export const TagAndButton = ({ tag, id, postTags }) => {
     }
 
     const handleDeletePostTag = () => {
-        deletePostTag(id)
+        deletePostTag()
             .then(() => {
                 navigate(`/my-posts/${id}`)
             })
@@ -51,7 +43,7 @@ export const TagAndButton = ({ tag, id, postTags }) => {
                             Add Tag
                         </button>
                         :
-                        <button className="btn btn-primary" onClick={() => { handleDeletePostTag() }}>
+                        <button value={tag.id} className="btn btn-primary" onClick={() => { handleDeletePostTag(tag.id) }}>
                         Remove Tag
                         </button>
                         }
