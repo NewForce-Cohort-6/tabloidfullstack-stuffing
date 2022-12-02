@@ -23,6 +23,13 @@ namespace Tabloid.Controllers
             return Ok(_subscriptionRepository.GetUserSubscriptions(id));
         }
 
+        // GET api/<SubscriptionController>/5/Post/6
+        [HttpGet("{id}/Post/{postId}")]
+        public IActionResult GetUserSubByPost([FromRoute] int id, [FromRoute] int postId)
+        {
+            return Ok(_subscriptionRepository.GetUserSubscriptionForPost(id, postId));
+        }
+
         // POST api/<SubscriptionController>
         [HttpPost]
         public IActionResult Post([FromBody] Subscription subscription)
@@ -31,5 +38,17 @@ namespace Tabloid.Controllers
             return CreatedAtAction("Get", new { id = subscription.Id }, subscription);
         }
 
+        // PUT api/<SubscriptionController>/5
+        [HttpPut("{id}")]
+        public IActionResult Put([FromRoute] int id, [FromBody] Subscription subscription)
+        {
+            if (id != subscription.Id)
+            {
+                return BadRequest();
+            }
+            _subscriptionRepository.Update(subscription);
+            return NoContent();
+        }
     }
+
 }

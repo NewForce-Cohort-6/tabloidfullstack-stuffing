@@ -1,10 +1,13 @@
-﻿using Tabloid.Models;
+﻿using System.Collections.Generic;
+using Tabloid.Models;
 
 namespace Tabloid.Repositories
 {
     public interface ISubscriptionRepository
     {
+        List<Subscription> GetUserSubscriptions(int id);
+        Subscription GetUserSubscriptionForPost(int id, int postId);
         void Add(Subscription subscription);
-        System.Collections.Generic.List<Subscription> GetUserSubscriptions(int id);
+        void Update(Subscription subscription);
     }
 }

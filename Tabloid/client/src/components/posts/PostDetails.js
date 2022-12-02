@@ -3,50 +3,43 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem, ListGroupItemHeading } from "reactstrap";
-// import { Button, Card, CardBody, CardLink, CardText, CardTitle, ListGroup, ListGroupItem } from "reactstrap";
-// import { deletePost, getPostById, getPostByIdWithComments, getUserPostById } from "../../Managers/PostManager";
 import { deletePost, getCurrentUserId, getPostById, getUserPostById } from "../../Managers/PostManager";
-import { getSubscriptions, subscribeToUser, unsubscribeFromUser } from "../../Managers/SubscriptionManager";
+import { getSubscriptionForPost, subscribeToUser, unsubscribeFromUser } from "../../Managers/SubscriptionManager";
 import { getCurrentUser } from "../../Managers/UserProfileManager";
 
-
-//go and fix the doubled import lines 
 
 export const PostDetails = ({ isMy }) => {
 
     const [isAdmin, setIsAdmin] = useState(false);
 
     const [post, setPost] = useState({});
+    const [sub, setSub] = useState({});
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [isSubbed, setIsSubbed] = useState(false);
     const { id } = useParams();
 
     const navigate = useNavigate();
 
+    // Replaces post header image url if broken
     const handleBrokenImage = (image) => {
         const defaultImage = "https://contenthub-static.grammarly.com/blog/wp-content/uploads/2017/11/how-to-write-a-blog-post.jpeg";
         image.target.src = defaultImage;
     };
 
-    //remove "manage tags" from all post detail views from Posts list
-    //get list of tags for all posts to print at bottom of post detail view from Posts list
-    //what is happening between "add tag" and post detail view in My Posts list that is causing an issue.
-    //just need to call getUserPostsById in 46? that would let the user deal with unapproved and unpublished.
-    //I need to go back in and figure out where the getpostbyidwithcomments AND or tags in general 
-    //create sep chunk that gets the tags associated with the post so I can print at end of post detail view
+    // Gets published and active post by id and then checks if current user is subscribed to that posts author
     const getPost = () => {
-        // getPostByIdWithComments(id).then(post => setPost(post));
-        //go and add tags to getpostbyid and subscription
         getPostById(id).then(post => {
             setPost(post);
-            checkSubscription(post.userProfileId);
+            checkAndGetSubscription();
         })
     };
 
+    // Gets current user post by id to allow an un-published or non-active post to be fetched
     const getPostForUser = () => {
         getUserPostById(id).then(usersPost => setPost(usersPost))
     };
 
+    // Checks if the current user is an admin and changes isAdmin state if they are
     const giveAdminRights = () => {
         const user = getCurrentUser();
         if (user.userType.id === 1) {
@@ -54,13 +47,14 @@ export const PostDetails = ({ isMy }) => {
         }
     };
 
-    const checkSubscription = (postProfileId) => {
-        getSubscriptions()
-            .then(subs => {
-                if (subs.find(sub => sub.providerUserProfileId === postProfileId)) {
-                    setIsSubbed(true);
-                }
-            })
+    // Checks if the current user is subscribed to the post and if so sets subscription to state
+    const checkAndGetSubscription = () => {
+        getSubscriptionForPost(id).then(postSub => {
+            if (postSub.id) {
+                setSub(postSub);
+                setIsSubbed(true);
+            }
+        })
     };
 
     const toggleDeleteConfirm = (e) => {
@@ -80,10 +74,9 @@ export const PostDetails = ({ isMy }) => {
 
     const unsubscribe = (e) => {
         e.preventDefault();
-        const body = {
-            // TODO: Figure out what to pass in the body to unsubscribe. End date can be handled on the backend.
-        }
-        unsubscribeFromUser(body);
+        unsubscribeFromUser(sub).then(() => {
+            setIsSubbed(false);
+        });
     };
 
     const handleDelete = () => {
@@ -91,6 +84,7 @@ export const PostDetails = ({ isMy }) => {
         isMy ? navigate("/my-posts") : navigate("/posts");
     };
 
+    // Conditionally fetches the post and gives admin rights upon initial render of component
     useEffect(() => {
         if (isMy) {
             getPostForUser();

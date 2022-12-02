@@ -22,9 +22,9 @@ export const PostList = ({ isMy, subscriptions }) => {
     }
 
     // Conditionally populate posts state with all posts, subscribed posts, or only the user's posts
-    // The booleans isMy and subscribed are passed in as a prop from the route
+    // The booleans isMy and subscribed are passed in as props from the route
     // isMy is true if the route is "/my-posts" and false if it is "/posts"
-    // isMy is also listed in the dependency array so if the user changes routes without navigating away from the component it will update the list
+    // Both props are also listed in the dependency array so if the user changes routes without navigating away from the component it will update the list
     useEffect(() => {
         if (isMy) {
             getPostsForUser();
