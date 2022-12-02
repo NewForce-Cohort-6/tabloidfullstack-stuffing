@@ -2,7 +2,7 @@ import { getCurrentUserId } from "./PostManager";
 
 const apiUrl = "https://localhost:5001/api";
 
-// Get subscriptions for the current user, currently unsu
+// Get subscriptions for the current user
 export const getSubscriptions = () => {
     return fetch(`${apiUrl}/Subscription/${getCurrentUserId()}`)
     .then((res) => res.json())
@@ -16,7 +16,7 @@ export const getSubscriptionForPost = (postId) => {
 	.catch((error) => {
 		throw error;
 	});
-}
+};
 
 // Subscribing means adding a new entry to the Subscription table
 export const subscribeToUser = (body) => {
@@ -39,4 +39,4 @@ export const unsubscribeFromUser = (sub) => {
         },
         body: JSON.stringify(sub)
       })
-}
+};
