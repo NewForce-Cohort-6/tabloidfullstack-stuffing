@@ -13,6 +13,11 @@ https://github.com/NewForce-Cohort-6/tabloidfullstack-stuffing/blob/main/SQL/01_
 
 https://github.com/NewForce-Cohort-6/tabloidfullstack-stuffing/blob/main/SQL/02_Tabloid_Seed_Data.sql
 
+New Query:
+ALTER TABLE UserProfile
+ADD IsActive bit NOT NULL
+DEFAULT 1;
+
 
 3. Install your dependencies by running `npm install` from the same directory as your `package.json` file
 
